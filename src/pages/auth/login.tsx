@@ -15,6 +15,7 @@ import {
   Link,
   Text,
   InputRightElement,
+  Flex,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { IoEyeSharp, IoEyeOffSharp } from 'react-icons/io5';
@@ -26,14 +27,14 @@ export default function Login({}: Props): ReactElement {
   const handleClick = () => setShow(!show);
 
   return (
-    <Box height="100%" width="100%">
-      <Container size="container.lg" centerContent>
+    <Flex flex={1}>
+      <Container size="container.lg" centerContent height="100%">
         <VStack
           justifyContent="center"
           alignItems="center"
           direction="column"
           spacing="1.25rem"
-          boxSize="md"
+          boxSize={['xs', 'md']}
         >
           <Heading color="gray.600" size="lg">
             Log In
@@ -81,6 +82,6 @@ export default function Login({}: Props): ReactElement {
           </NextLink>
         </VStack>
       </Container>
-    </Box>
+    </Flex>
   );
 }

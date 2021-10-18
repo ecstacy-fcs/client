@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider>
       <Flex minH="100vh" direction="column">
         <Header />
-        <Flex flexGrow={1}>
+        <Flex flex={1}>
           <Component {...pageProps} />
         </Flex>
         <Footer />
