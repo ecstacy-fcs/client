@@ -1,14 +1,7 @@
-import React from 'react';
-import {
-  Box,
-  Container,
-  Flex,
-  Heading,
-  HStack,
-  Link,
-  Button,
-} from '@chakra-ui/react';
+import { Box, Button, Container, Flex, HStack, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import React from 'react';
+import Logo from './Logo';
 
 interface Props {}
 
@@ -17,17 +10,7 @@ const Header = (props: Props) => {
     <Box borderBottom="1px" borderColor="gray.200">
       <Container maxW="container.lg" py="5">
         <Flex alignItems="center" justifyContent="space-between">
-          <NextLink href="/" passHref>
-            <Heading
-              as="h1"
-              color="purple.500"
-              fontWeight="800"
-              cursor="pointer"
-              size="lg"
-            >
-              Ecstacy
-            </Heading>
-          </NextLink>
+          <Logo />
           <HStack
             spacing="3"
             alignItems="center"
