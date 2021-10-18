@@ -1,8 +1,8 @@
-import '../styles/globals.css';
-import Header from '~/components/Header';
-import Footer from '~/components/Footer';
-import type { AppProps } from 'next/app';
-import { ChakraProvider, Flex } from '@chakra-ui/react';
+import "../styles/globals.css";
+import Header from "~/components/Header";
+import Footer from "~/components/Footer";
+import type { AppProps } from "next/app";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 // import theme from '~/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {

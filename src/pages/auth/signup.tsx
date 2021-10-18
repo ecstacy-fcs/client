@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -12,8 +11,9 @@ import {
   Link,
   Text,
   useColorModeValue as mode,
-} from '@chakra-ui/react';
-import React, { ReactElement } from 'react';
+} from "@chakra-ui/react";
+import React, { ReactElement } from "react";
+import NextLink from "next/link";
 
 interface Props {}
 
@@ -25,16 +25,16 @@ export default function Signup({}: Props): ReactElement {
       overflow="hidden"
       width="100%"
       height="100%"
-      bg={mode('gray.50', 'inherit')}
+      bg={mode("gray.50", "inherit")}
     >
       <Box
         overflowY="auto"
         flex="1"
-        py={{ base: '10', md: '16' }}
-        px={{ base: '6', md: '10' }}
+        py={{ base: "10", md: "16" }}
+        px={{ base: "6", md: "10" }}
       >
         <Box maxW="sm" mx="auto">
-          <Box textAlign="center" mb={{ base: '10', md: '16' }}>
+          <Box textAlign="center" mb={{ base: "10", md: "16" }}>
             <Heading
               as="h1"
               size="xl"
@@ -45,10 +45,13 @@ export default function Signup({}: Props): ReactElement {
             </Heading>
             <Text
               mt="3"
-              color={mode('gray.600', 'gray.400')}
+              color={mode("gray.600", "gray.400")}
               fontWeight="medium"
             >
-              Already have one? <Link color="purple">Login!</Link>
+              Already have one?{" "}
+              <NextLink href="/auth/login" passHref>
+                <Link color="purple.600">Login!</Link>
+              </NextLink>
             </Text>
           </Box>
           <form
@@ -67,7 +70,7 @@ export default function Signup({}: Props): ReactElement {
                   autoComplete="email"
                   required
                   placeholder="Email address"
-                  bg={mode('white', 'gray.700')}
+                  bg={mode("white", "gray.700")}
                   fontSize="md"
                   roundedBottom="0"
                 />
@@ -80,7 +83,7 @@ export default function Signup({}: Props): ReactElement {
                   autoComplete="current-password"
                   required
                   size="lg"
-                  bg={mode('white', 'gray.700')}
+                  bg={mode("white", "gray.700")}
                   fontSize="md"
                   rounded="0"
                   placeholder="Password"
@@ -94,7 +97,7 @@ export default function Signup({}: Props): ReactElement {
                   autoComplete="current-password"
                   required
                   size="lg"
-                  bg={mode('white', 'gray.700')}
+                  bg={mode("white", "gray.700")}
                   fontSize="md"
                   roundedTop="0"
                   placeholder="Confirm password"

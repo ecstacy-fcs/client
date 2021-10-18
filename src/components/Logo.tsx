@@ -1,5 +1,5 @@
-import { Heading } from '@chakra-ui/layout';
-import NextLink from 'next/link';
+import { Heading } from "@chakra-ui/layout";
+import NextLink from "next/link";
 
 export const Logo = () => {
   return (
