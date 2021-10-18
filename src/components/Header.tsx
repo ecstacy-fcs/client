@@ -4,31 +4,51 @@ import {
   Container,
   Flex,
   Heading,
-  Spacer,
   HStack,
+  Link,
+  Button,
 } from '@chakra-ui/react';
+import NextLink from 'next/link';
 
 interface Props {}
 
 const Header = (props: Props) => {
   return (
     <Box borderBottom="1px" borderColor="gray.200">
-      <Container maxW="container.xl" py="5">
+      <Container maxW="container.lg" py="5">
         <Flex alignItems="center" justifyContent="space-between">
-          <Heading as="h1" color="blue.600" fontWeight="800">
-            Ecstacy
-          </Heading>
+          <NextLink href="/" passHref>
+            <Heading
+              as="h1"
+              color="purple.500"
+              fontWeight="800"
+              cursor="pointer"
+              size="lg"
+            >
+              Ecstacy
+            </Heading>
+          </NextLink>
           <HStack
-            spacing="2"
+            spacing="3"
             alignItems="center"
             justifyContent="space-between"
           >
-            <Heading as="h2" size="md" color="gray.700" fontWeight="medium">
-              Shop
-            </Heading>
-            <Heading as="h2" size="md" color="gray.700" fontWeight="medium">
-              Sell
-            </Heading>
+            <NextLink href="/" passHref>
+              <Link fontSize="md" color="gray.700" fontWeight="medium">
+                Shop
+              </Link>
+            </NextLink>
+            <NextLink href="/" passHref>
+              <Link fontSize="md" color="gray.700" fontWeight="medium">
+                Sell
+              </Link>
+            </NextLink>
+            <NextLink href="/auth/login" passHref>
+              <Button colorScheme="purple" size="sm">
+                {' '}
+                Log In
+              </Button>
+            </NextLink>
           </HStack>
         </Flex>
       </Container>
