@@ -12,6 +12,7 @@ specifiers:
   prettier: ^2.4.1
   react: 17.0.2
   react-dom: 17.0.2
+  react-icons: ^4.3.1
   typescript: 4.4.3
 
 dependencies:
@@ -23,6 +24,7 @@ dependencies:
   pnpm: 6.17.2
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-icons: 4.3.1_react@17.0.2
 
 devDependencies:
   '@types/react': 17.0.24
@@ -3140,6 +3142,14 @@ packages:
       use-sidecar: 1.0.5_react@17.0.2
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /react-icons/4.3.1_react@17.0.2:
+    resolution: {integrity: sha512-cB10MXLTs3gVuXimblAdI71jrJx8njrJZmNMEMC+sQu5B/BIOmlsAjskdqpn81y8UBVEGuHODd7/ci5DvoSzTQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /react-is/16.13.1:
