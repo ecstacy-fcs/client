@@ -1,8 +1,14 @@
 import "../styles/globals.css";
 import Header from "~/components/Header";
 import Footer from "~/components/Footer";
+import Page from "~/components/Page";
 import type { AppProps } from "next/app";
-import { ChakraProvider, Flex } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  Flex,
+  Box,
+  useColorModeValue as mode,
+} from "@chakra-ui/react";
 // import theme from '~/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -10,9 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider>
       <Flex minH="100vh" direction="column">
         <Header />
-        <Flex flex={1} direction="column" height="100%">
+        <Page>
           <Component {...pageProps} />
-        </Flex>
+        </Page>
         <Footer />
       </Flex>
     </ChakraProvider>

@@ -1,7 +1,18 @@
-import { Box, Button, Container, Flex, HStack, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  HStack,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Link,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 import Logo from "./Logo";
+import { SearchIcon } from "@chakra-ui/icons";
 
 interface Props {}
 
@@ -11,6 +22,13 @@ const Header = (props: Props) => {
       <Container maxW="container.lg" py="5">
         <Flex alignItems="center" justifyContent="space-between">
           <Logo />
+          <InputGroup maxW="lg">
+            <InputLeftElement
+              pointerEvents="none"
+              children={<SearchIcon color="gray.400" />}
+            />
+            <Input variant="filled" type="search" />
+          </InputGroup>
           <HStack
             spacing="3"
             alignItems="center"
@@ -28,7 +46,6 @@ const Header = (props: Props) => {
             </NextLink>
             <NextLink href="/auth/login" passHref>
               <Button colorScheme="purple" size="sm">
-                {" "}
                 Log In
               </Button>
             </NextLink>
