@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "paths": {
-      "@/components/*": ["./components/*"]
+      "~/components/*": ["./components/*"]
     }
   },
   "include": ["**/*.d.ts", "**/*.tsx", "**/*.ts", "src"],
