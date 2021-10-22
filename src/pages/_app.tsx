@@ -3,12 +3,7 @@ import Header from "~/components/Header";
 import Footer from "~/components/Footer";
 import Page from "~/components/Page";
 import type { AppProps } from "next/app";
-import {
-  ChakraProvider,
-  Flex,
-  Box,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
 // import theme from '~/theme';
 
 function MyApp({ Component, pageProps }: AppProps) {
