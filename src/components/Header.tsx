@@ -22,7 +22,7 @@ const Header = (props: Props) => {
       <Container maxW="container.lg" py="5">
         <Flex alignItems="center" justifyContent="space-between">
           <Logo />
-          <InputGroup maxW="lg">
+          <InputGroup maxW="lg" marginX="3">
             <InputLeftElement
               pointerEvents="none"
               children={<SearchIcon color="gray.400" />}

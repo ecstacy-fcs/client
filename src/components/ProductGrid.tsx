@@ -1,20 +1,25 @@
+import { SimpleGrid, SimpleGridProps } from "@chakra-ui/react";
 import React from "react";
-import { Product } from "../types";
-import { SimpleGrid, GridItem } from "@chakra-ui/react";
-import ProductCard from "./ProductCard";
 
-interface Props {
-  products: Product[];
-}
+export const ProductGrid = (props: SimpleGridProps) => {
+  const columns = React.useMemo(() => {
+    const count = React.Children.toArray(props.children).filter(
+      React.isValidElement
+    ).length;
+    return {
+      sm: Math.min(1, count),
+      base: Math.min(2, count),
+      md: Math.min(3, count),
+      lg: Math.min(4, count),
+    };
+  }, [props.children]);
 
-const ProductGrid = (props: Props) => {
   return (
-    <SimpleGrid columns={{ base: 1, md: 4 }} spacing="6">
-      {props.products.map((product) => (
-        <ProductCard {...product} />
-      ))}
-    </SimpleGrid>
+    <SimpleGrid
+      columns={columns}
+      columnGap={{ base: "4", md: "6" }}
+      rowGap={{ base: "8", md: "10" }}
+      {...props}
+    />
   );
 };
-
-export default ProductGrid;
