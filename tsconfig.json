@@ -17,7 +17,8 @@
     "baseUrl": "src",
     "paths": {
       "~/components/*": ["./components/*"],
-      "~/types/*": ["./types/*"]
+      "~/types/*": ["./types/*"],
+      "~/lib/*": ["./lib/*"]
     }
   },
   "include": ["**/*.d.ts", "**/*.tsx", "**/*.ts", "src"],

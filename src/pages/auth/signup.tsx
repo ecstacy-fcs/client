@@ -16,6 +16,8 @@ import {
 import React, { ReactElement } from "react";
 import NextLink from "next/link";
 import { Formik, Form, Field } from "formik";
+import validate from "~/lib/validate";
+import url from "~/lib/url";
 
 interface Props {}
 
@@ -27,50 +29,22 @@ interface SignUpData {
 }
 
 export default function Signup({}: Props): ReactElement {
-  const validate = {
-    fullName: (value: string) => {
-      let error;
-      if (!value) {
-        error = "Required";
-      } else if (value.length > 50) {
-        error = "Must be 50 characters or less.";
-      }
-      return error;
-    },
-    email: (value: string) => {
-      let error;
-      if (!value) {
-        error = "Required";
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-        error = "Invalid email address";
-      } else if (value.length > 320) {
-        error = "Must be 320 characters or less";
-      }
-      return error;
-    },
-    password: (value: string) => {
-      let error;
-      if (!value) {
-        error = "Required";
-      } else if (
-        !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,22}$/.test(
-          value
-        )
-      ) {
-        error =
-          "Invalid password. Password must have between 8-22 characters, at least one uppercase letter, one lowercase letter, one number and one special character.";
-      }
-      return error;
-    },
-    confirmPassword: (value: string, password: string) => {
-      let error;
-      if (!value) {
-        error = "Required";
-      } else if (password !== value) {
-        error = "Passwords don't match.";
-      }
-      return error;
-    },
+  const onSignUp = async (values: SignUpData) => {
+    const result = await fetch(`http://localhost:5000/auth/register`, {
+      method: "POST",
+      // mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({
+        name: values.fullName,
+        email: values.email,
+        password: values.password,
+      }),
+    });
+    const res = await result.json();
+    console.log(res);
   };
 
   return (
@@ -95,10 +69,7 @@ export default function Signup({}: Props): ReactElement {
             confirmPassword: "",
           } as SignUpData
         }
-        onSubmit={(values) => {
-          alert(JSON.stringify(values, null, 2));
-          console.log(values);
-        }}
+        onSubmit={onSignUp}
       >
         {(props) => (
           <Form>
