@@ -5,6 +5,7 @@ import Header from "~/components/Header";
 import { Product } from "../types";
 import { ProductGrid } from "~/components/ProductGrid";
 import { ProductCard } from "~/components/ProductCard";
+import Page from "~/components/Page";
 
 const Home: NextPage = () => {
   const products: Product[] = [
@@ -65,22 +66,24 @@ const Home: NextPage = () => {
   ];
 
   return (
-    <Box mx="auto">
-      <Heading
-        as="h1"
-        color="gray.800"
-        fontWeight="extrabold"
-        letterSpacing="tight"
-        size="xl"
-      >
-        Marketplace
-      </Heading>
-      <ProductGrid marginTop="10">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </ProductGrid>
-    </Box>
+    <Page>
+      <Box mx="auto">
+        <Heading
+          as="h1"
+          color="gray.800"
+          fontWeight="extrabold"
+          letterSpacing="tight"
+          size="xl"
+        >
+          Marketplace
+        </Heading>
+        <ProductGrid marginTop="10">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </ProductGrid>
+      </Box>
+    </Page>
   );
 };
 
