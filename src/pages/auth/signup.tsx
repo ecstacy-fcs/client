@@ -1,23 +1,21 @@
 import {
   Box,
   Button,
-  Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
-  LightMode,
-  Stack,
   Link,
+  Stack,
   Text,
-  FormErrorMessage,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React, { ReactElement } from "react";
+import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
-import { Formik, Form, Field } from "formik";
+import React, { ReactElement } from "react";
+import { fetcher } from "~/lib/api";
 import validate from "~/lib/validate";
-import url from "~/lib/url";
 
 interface Props {}
 
@@ -30,21 +28,12 @@ interface SignUpData {
 
 export default function Signup({}: Props): ReactElement {
   const onSignUp = async (values: SignUpData) => {
-    const result = await fetch(`http://localhost:5000/auth/register`, {
-      method: "POST",
-      // mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({
-        name: values.fullName,
-        email: values.email,
-        password: values.password,
-      }),
+    const result = await fetcher("auth/register", "POST", {
+      name: values.fullName,
+      email: values.email,
+      password: values.password,
     });
-    const res = await result.json();
-    console.log(res);
+    console.log(result);
   };
 
   return (
