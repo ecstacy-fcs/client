@@ -50,7 +50,7 @@ export const ProductCard = (props: Props) => {
       </Stack>
       <Stack align="center">
         <Button colorScheme="purple" isFullWidth>
-          Add to cart
+          View Product
         </Button>
       </Stack>
     </Stack>
