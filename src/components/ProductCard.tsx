@@ -15,6 +15,7 @@ import {
 import * as React from "react";
 import { PriceTag } from "./PriceTag";
 import { Product } from "../types";
+import NextLink from "next/link";
 
 interface Props {
   product: Product;
@@ -49,9 +50,11 @@ export const ProductCard = (props: Props) => {
         </Stack>
       </Stack>
       <Stack align="center">
-        <Button colorScheme="purple" isFullWidth>
-          View Product
-        </Button>
+        <NextLink href={`/products/${product.id}`}>
+          <Button colorScheme="purple" isFullWidth>
+            View Product
+          </Button>
+        </NextLink>
       </Stack>
     </Stack>
   );

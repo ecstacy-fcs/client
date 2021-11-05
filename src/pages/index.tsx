@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { Box, Heading } from "@chakra-ui/react";
 import Header from "~/components/Header";
-
+import Link from "next/link";
 import { Product } from "../types";
 import { ProductGrid } from "~/components/ProductGrid";
 import { ProductCard } from "~/components/ProductCard";
@@ -17,8 +17,7 @@ const Home: NextPage = () => {
       seller: "Ananya",
       title: "Premium Watch",
       category: "Fashion",
-      description: "Does what normal watches do, at 10 times the price"
-
+      description: "Does what normal watches do, at 10 times the price",
     },
     {
       id: "1234",
@@ -29,7 +28,7 @@ const Home: NextPage = () => {
       seller: "Ananya",
       title: "Premium Watch",
       category: "Fashion",
-      description: "Does what normal watches do, at 10 times the price"
+      description: "Does what normal watches do, at 10 times the price",
     },
     {
       id: "1234",
@@ -40,7 +39,7 @@ const Home: NextPage = () => {
       seller: "Ananya",
       title: "Premium Watch",
       category: "Fashion",
-      description: "Does what normal watches do, at 10 times the price"
+      description: "Does what normal watches do, at 10 times the price",
     },
     {
       id: "1234",
@@ -51,7 +50,7 @@ const Home: NextPage = () => {
       seller: "Ananya",
       title: "Premium Watch",
       category: "Fashion",
-      description: "Does what normal watches do, at 10 times the price"
+      description: "Does what normal watches do, at 10 times the price",
     },
     {
       id: "1234",
@@ -62,7 +61,7 @@ const Home: NextPage = () => {
       seller: "Ananya",
       title: "Premium Watch",
       category: "Fashion",
-      description: "Does what normal watches do, at 10 times the price"
+      description: "Does what normal watches do, at 10 times the price",
     },
     {
       id: "1234",
@@ -73,7 +72,7 @@ const Home: NextPage = () => {
       seller: "Ananya",
       title: "Premium Watch",
       category: "Fashion",
-      description: "Does what normal watches do, at 10 times the price"
+      description: "Does what normal watches do, at 10 times the price",
     },
   ];
 
