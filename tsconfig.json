@@ -18,7 +18,8 @@
     "paths": {
       "~/components/*": ["./components/*"],
       "~/types/*": ["./types/*"],
-      "~/lib/*": ["./lib/*"]
+      "~/lib/*": ["./lib/*"],
+      "~/hooks/*": ["./hooks/*"]
     }
   },
   "include": ["**/*.d.ts", "**/*.tsx", "**/*.ts", "src"],
