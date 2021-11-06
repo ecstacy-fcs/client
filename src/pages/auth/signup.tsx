@@ -10,12 +10,13 @@ import {
   Stack,
   Text,
   useColorModeValue as mode,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
 import React, { ReactElement } from "react";
 import Page from "~/components/Page";
-import { fetcher } from "~/lib/api";
+import { useAuth } from "~/hooks/useAuth";
 import validate from "~/lib/validate";
 
 interface Props {}
@@ -28,14 +29,7 @@ interface SignUpData {
 }
 
 export default function Signup({}: Props): ReactElement {
-  const onSignUp = async (values: SignUpData) => {
-    const result = await fetcher("auth/register", "POST", {
-      name: values.fullName,
-      email: values.email,
-      password: values.password,
-    });
-    console.log(result);
-  };
+  const { signUp } = useAuth();
 
   return (
     <Page>
@@ -65,7 +59,7 @@ export default function Signup({}: Props): ReactElement {
               confirmPassword: "",
             } as SignUpData
           }
-          onSubmit={onSignUp}
+          onSubmit={signUp}
         >
           {(props) => (
             <Form>

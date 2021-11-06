@@ -4,7 +4,7 @@ import Footer from "~/components/Footer";
 import Page from "~/components/Page";
 import type { AppProps } from "next/app";
 import { ChakraProvider, Flex } from "@chakra-ui/react";
-// import theme from '~/theme';
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

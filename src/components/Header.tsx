@@ -13,10 +13,15 @@ import NextLink from "next/link";
 import React from "react";
 import Logo from "./Logo";
 import { SearchIcon } from "@chakra-ui/icons";
+import { useUser } from "~/hooks/useUser";
+import { useAuth } from "~/hooks/useAuth";
 
 interface Props {}
 
 const Header = (props: Props) => {
+  const { user } = useUser();
+  const { logout } = useAuth();
+
   return (
     <Box borderBottom="1px" borderColor="gray.200">
       <Container maxW="container.lg" py="5">
@@ -44,11 +49,17 @@ const Header = (props: Props) => {
                 Sell
               </Link>
             </NextLink>
-            <NextLink href="/auth/login" passHref>
-              <Button colorScheme="purple" size="sm">
-                Log In
+            {user ? (
+              <Button colorScheme="purple" size="sm" onClick={logout}>
+                Log Out
               </Button>
-            </NextLink>
+            ) : (
+              <NextLink href="/auth/login" passHref>
+                <Button colorScheme="purple" size="sm">
+                  Log In
+                </Button>
+              </NextLink>
+            )}
           </HStack>
         </Flex>
       </Container>

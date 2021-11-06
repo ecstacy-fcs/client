@@ -3,13 +3,13 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   IconButton,
   Input,
   InputGroup,
   InputRightElement,
-  LightMode,
   Link,
   Stack,
   Text,
@@ -21,7 +21,8 @@ import { ReactElement, useState } from "react";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import NextLink from "next/link";
 import Page from "~/components/Page";
-import { fetcher } from "~/lib/api";
+import { useRouter } from "next/router";
+import { useAuth } from "~/hooks/useAuth";
 
 interface Props {}
 
@@ -31,15 +32,14 @@ interface LoginData {
 }
 
 export default function Signup({}: Props): ReactElement {
+  const { login } = useAuth();
+  const router = useRouter();
   const [show, setShow] = useState<boolean>(false);
   const handleClick = () => setShow(!show);
 
   const onLogin = async (values: LoginData) => {
-    const result = await fetcher("auth/register", "POST", {
-      email: values.email,
-      password: values.password,
-    });
-    console.log(result);
+    login(values);
+    router.push("/");
   };
 
   return (
@@ -61,70 +61,94 @@ export default function Signup({}: Props): ReactElement {
             </NextLink>
           </Text>
         </Box>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <Stack spacing="-px">
-            <FormControl id="email-address">
-              <FormLabel srOnly>Email address</FormLabel>
-              <Input
+        <Formik initialValues={{ email: "", password: "" }} onSubmit={onLogin}>
+          {(props) => (
+            <Form>
+              <Stack spacing="-px">
+                <Field name="email" validate={validate.email}>
+                  {({ field, form }: any) => (
+                    <FormControl
+                      id="email-address"
+                      isInvalid={form.errors.email && form.touched.email}
+                    >
+                      <FormLabel srOnly htmlFor="email">
+                        Email address
+                      </FormLabel>
+                      <Input
+                        size="lg"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        placeholder="Email address"
+                        bg={mode("white", "gray.700")}
+                        fontSize="md"
+                        roundedBottom="0"
+                        {...field}
+                      />
+                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name="password" validate={validate.password}>
+                  {({ field, form }: any) => (
+                    <FormControl
+                      id="password"
+                      isInvalid={form.errors.password && form.touched.password}
+                    >
+                      <FormLabel srOnly htmlFor="password">
+                        Password
+                      </FormLabel>
+                      <InputGroup size="md">
+                        <Input
+                          type={show ? "text" : "password"}
+                          name="password"
+                          autoComplete="current-password"
+                          required
+                          size="lg"
+                          bg={mode("white", "gray.700")}
+                          fontSize="md"
+                          roundedTop="0"
+                          placeholder="Password"
+                          {...field}
+                        />
+                        <InputRightElement width="3.5rem">
+                          <IconButton
+                            h="1.75rem"
+                            onClick={handleClick}
+                            icon={show ? <IoEyeOffSharp /> : <IoEyeSharp />}
+                            aria-label={
+                              show ? "Hide password" : "Show password"
+                            }
+                          />
+                        </InputRightElement>
+                      </InputGroup>
+                      <FormErrorMessage>
+                        {form.errors.password}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
+              </Stack>
+              <Flex align="center" justify="space-between" mt="8">
+                <Link fontSize="sm" color="red.600">
+                  Forgot password?
+                </Link>
+              </Flex>
+              <Button
                 size="lg"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                placeholder="Email address"
-                bg={mode("white", "gray.700")}
+                type="submit"
+                mt="8"
+                w="full"
+                colorScheme="purple"
                 fontSize="md"
-                roundedBottom="0"
-              />
-            </FormControl>
-            <FormControl id="password">
-              <FormLabel srOnly>Password</FormLabel>
-              <InputGroup size="md">
-                <Input
-                  type={show ? "text" : "password"}
-                  name="password"
-                  autoComplete="current-password"
-                  required
-                  size="lg"
-                  bg={mode("white", "gray.700")}
-                  fontSize="md"
-                  roundedTop="0"
-                  placeholder="Password"
-                />
-                <InputRightElement width="3.5rem">
-                  <IconButton
-                    h="1.75rem"
-                    onClick={handleClick}
-                    icon={show ? <IoEyeOffSharp /> : <IoEyeSharp />}
-                    aria-label={show ? "Hide password" : "Show password"}
-                  />
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-          </Stack>
-          <Flex align="center" justify="space-between" mt="8">
-            <Link fontSize="sm" color="red.600">
-              Forgot password?
-            </Link>
-          </Flex>
-          <LightMode>
-            <Button
-              size="lg"
-              type="submit"
-              mt="8"
-              w="full"
-              colorScheme="purple"
-              fontSize="md"
-              fontWeight="bold"
-            >
-              Login
-            </Button>
-          </LightMode>
-        </form>
+                fontWeight="bold"
+              >
+                Login
+              </Button>
+            </Form>
+          )}
+        </Formik>
       </Box>
     </Page>
   );
