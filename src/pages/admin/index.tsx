@@ -21,9 +21,42 @@ import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { IoCart, IoCash, IoBag, IoSettingsSharp, IoCheckmarkCircle } from "react-icons/io5";
+import { RequestCard } from "~/components/RequestCard";
+import { ProductGrid } from "~/components/ProductGrid";
+import { Seller } from "../../types";
 
 const Home: NextPage = () => {
   const { isOpen, toggle } = useMobileMenuState();
+  const sellers: Seller[] = [
+      {
+        name: "Seller 1",
+        id: "1",
+        email: "seller1@email.com",
+        kyc: "kyc.com",
+        avatar: "https://source.unsplash.com/random/100x100",
+      },
+      {
+        name: "Seller 1",
+        id: "2",
+        email: "seller1@email.com",
+        kyc: "kyc.com",
+        avatar: "https://source.unsplash.com/random/100x100",
+      },
+      {
+        name: "Seller 1",
+        id: "3",
+        email: "seller1@email.com",
+        kyc: "kyc.com",
+        avatar: "https://source.unsplash.com/random/100x100",
+      },
+      {
+        name: "Seller 1",
+        id: "4",
+        email: "seller1@email.com",
+        kyc: "kyc.com",
+        avatar: "https://source.unsplash.com/random/100x100",
+      }
+  ];
   return (
     <Flex
       height="100vh"
@@ -114,15 +147,18 @@ const Home: NextPage = () => {
               px="10"
               pt={{ md: 1, base: 8 }}
             >
-              <Heading size="lg" fontWeight="extrabold" mb="6">
-                Inventory
-              </Heading>
               <Box
                 flex="1"
                 borderWidth="3px"
                 borderStyle="dashed"
                 rounded="xl"
-              />
+              >
+                <ProductGrid >
+                    {sellers.map((seller) => (
+                        <RequestCard seller={seller} />
+                    ))}
+                </ProductGrid>
+              </Box>
             </Flex>
           </Flex>
         </Box>

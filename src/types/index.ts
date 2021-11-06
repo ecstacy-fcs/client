@@ -8,4 +8,8 @@ export interface Product {
 
 export interface Seller {
   name: string;
+  id: string;
+  kyc: string;
+  email: string;
+  avatar: string;
 }
