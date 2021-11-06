@@ -10,11 +10,11 @@ import {
   Stack,
   Text,
   useColorModeValue as mode,
-  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
-import React, { ReactElement } from "react";
+import { useRouter } from "next/router";
+import React, { ReactElement, useState } from "react";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
 import validate from "~/lib/validate";
@@ -29,7 +29,16 @@ interface SignUpData {
 }
 
 export default function Signup({}: Props): ReactElement {
+  const [loading, setLoading] = useState<boolean>(false);
   const { signUp } = useAuth();
+  const router = useRouter();
+
+  const onSubmit = async (values: SignUpData) => {
+    setLoading(true);
+    const success = await signUp(values);
+    setLoading(false);
+    if (success) router.push("/");
+  };
 
   return (
     <Page>
@@ -59,7 +68,7 @@ export default function Signup({}: Props): ReactElement {
               confirmPassword: "",
             } as SignUpData
           }
-          onSubmit={signUp}
+          onSubmit={onSubmit}
         >
           {(props) => (
             <Form>
@@ -187,6 +196,7 @@ export default function Signup({}: Props): ReactElement {
                 colorScheme="purple"
                 fontSize="md"
                 fontWeight="bold"
+                isLoading={loading}
               >
                 Sign up
               </Button>

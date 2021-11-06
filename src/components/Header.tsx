@@ -1,3 +1,4 @@
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -10,17 +11,23 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import React from "react";
-import Logo from "./Logo";
-import { SearchIcon } from "@chakra-ui/icons";
-import { useUser } from "~/hooks/useUser";
+import React, { useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
+import { useUser } from "~/hooks/useUser";
+import Logo from "./Logo";
 
 interface Props {}
 
 const Header = (props: Props) => {
-  const { user } = useUser();
+  const [loggingOut, setLoggingOut] = useState<boolean>(false);
+  const { user, isLoading } = useUser();
   const { logout } = useAuth();
+
+  const onLogout = async () => {
+    setLoggingOut(true);
+    await logout();
+    setLoggingOut(false);
+  };
 
   return (
     <Box borderBottom="1px" borderColor="gray.200">
@@ -50,12 +57,17 @@ const Header = (props: Props) => {
               </Link>
             </NextLink>
             {user ? (
-              <Button colorScheme="purple" size="sm" onClick={logout}>
+              <Button
+                colorScheme="purple"
+                size="sm"
+                onClick={onLogout}
+                isLoading={isLoading || loggingOut}
+              >
                 Log Out
               </Button>
             ) : (
               <NextLink href="/auth/login" passHref>
-                <Button colorScheme="purple" size="sm">
+                <Button colorScheme="purple" size="sm" isLoading={isLoading}>
                   Log In
                 </Button>
               </NextLink>

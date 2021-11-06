@@ -15,14 +15,14 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { Formik, Form, Field } from "formik";
-import validate from "~/lib/validate";
+import { Field, Form, Formik } from "formik";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { ReactElement, useState } from "react";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
-import NextLink from "next/link";
 import Page from "~/components/Page";
-import { useRouter } from "next/router";
 import { useAuth } from "~/hooks/useAuth";
+import validate from "~/lib/validate";
 
 interface Props {}
 
@@ -36,10 +36,13 @@ export default function Signup({}: Props): ReactElement {
   const router = useRouter();
   const [show, setShow] = useState<boolean>(false);
   const handleClick = () => setShow(!show);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const onLogin = async (values: LoginData) => {
-    login(values);
-    router.push("/");
+  const submit = async (values: LoginData) => {
+    setLoading(true);
+    const success = await login(values);
+    setLoading(false);
+    if (success) router.push("/");
   };
 
   return (
@@ -61,7 +64,7 @@ export default function Signup({}: Props): ReactElement {
             </NextLink>
           </Text>
         </Box>
-        <Formik initialValues={{ email: "", password: "" }} onSubmit={onLogin}>
+        <Formik initialValues={{ email: "", password: "" }} onSubmit={submit}>
           {(props) => (
             <Form>
               <Stack spacing="-px">
@@ -143,6 +146,7 @@ export default function Signup({}: Props): ReactElement {
                 colorScheme="purple"
                 fontSize="md"
                 fontWeight="bold"
+                isLoading={loading}
               >
                 Login
               </Button>
