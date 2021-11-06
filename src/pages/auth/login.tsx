@@ -15,16 +15,32 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import { Formik, Form, Field } from "formik";
+import validate from "~/lib/validate";
 import { ReactElement, useState } from "react";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import NextLink from "next/link";
 import Page from "~/components/Page";
+import { fetcher } from "~/lib/api";
 
 interface Props {}
+
+interface LoginData {
+  email: string;
+  password: string;
+}
 
 export default function Signup({}: Props): ReactElement {
   const [show, setShow] = useState<boolean>(false);
   const handleClick = () => setShow(!show);
+
+  const onLogin = async (values: LoginData) => {
+    const result = await fetcher("auth/register", "POST", {
+      email: values.email,
+      password: values.password,
+    });
+    console.log(result);
+  };
 
   return (
     <Page>
@@ -47,7 +63,6 @@ export default function Signup({}: Props): ReactElement {
         </Box>
         <form
           onSubmit={(e) => {
-            // add submit logic here
             e.preventDefault();
           }}
         >

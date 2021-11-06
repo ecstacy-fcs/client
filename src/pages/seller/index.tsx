@@ -20,7 +20,12 @@ import { ScrollArea } from "~/components/ScrollArea";
 import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
-import { IoAddCircle, IoFileTrayFull, IoSettingsSharp } from "react-icons/io5";
+import {
+  IoAddCircle,
+  IoFileTrayFull,
+  IoGrid,
+  IoSettingsSharp,
+} from "react-icons/io5";
 
 const Home: NextPage = () => {
   const { isOpen, toggle } = useMobileMenuState();
@@ -65,16 +70,13 @@ const Home: NextPage = () => {
             </SidebarLink>
             <Stack pb="6">
               <NavSectionTitle>Actions</NavSectionTitle>
-              <SidebarLink icon={<IoFileTrayFull />}>Inventory</SidebarLink>
+              <SidebarLink icon={<IoGrid />}>Dashboard</SidebarLink>
+              <SidebarLink icon={<IoFileTrayFull />}>All Products</SidebarLink>
               <SidebarLink icon={<IoAddCircle />}>Add a Product</SidebarLink>
             </Stack>
             <Stack pb="6">
               <NavSectionTitle>Profile</NavSectionTitle>
               <SidebarLink icon={<IoSettingsSharp />}>Settings</SidebarLink>
-              <SidebarLink icon={<BsFillBookmarksFill />}>
-                Bookmarks
-              </SidebarLink>
-              <SidebarLink icon={<BsPencilSquare />}>Drafts</SidebarLink>
             </Stack>
           </ScrollArea>
         </Box>
@@ -114,7 +116,7 @@ const Home: NextPage = () => {
               pt={{ md: 1, base: 8 }}
             >
               <Heading size="lg" fontWeight="extrabold" mb="6">
-                Inventory
+                Dashboard
               </Heading>
               <Box
                 flex="1"
