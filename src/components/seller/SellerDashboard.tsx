@@ -1,6 +1,6 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import React from "react";
-import { Seller } from "../types";
+import { Seller } from "../../types";
 import SellerApprovalStatus from "./SellerApprovalStatus";
 
 interface Props {

@@ -2,7 +2,7 @@ import { Heading, Text } from "@chakra-ui/react";
 import React from "react";
 import { KeyedMutator } from "swr";
 import { fetcher } from "~/lib/api";
-import { FileInput } from "./FileInput";
+import { FileInput } from "../FileInput";
 
 interface Props {
   mutate: KeyedMutator<{

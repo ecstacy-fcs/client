@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Heading,
   Spinner,
   Stack,
   useColorModeValue as mode,
@@ -20,15 +19,13 @@ import { MobileMenuButton } from "~/components/MobileMenuButton";
 import { NavSectionTitle } from "~/components/NavSectionTitle";
 import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
-import SellerApprovalStatus from "~/components/SellerApprovalStatus";
-import SellerDashboard from "~/components/SellerDashboard";
-import SellerProposalUpload from "~/components/SellerProposalUpload";
+import SellerDashboard from "~/components/seller/SellerDashboard";
+import SellerProposalUpload from "~/components/seller/SellerProposalUpload";
 import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { useSeller } from "~/hooks/useSeller";
 import { useUser } from "~/hooks/useUser";
-import { fetcher } from "~/lib/api";
 
 const Home: NextPage = () => {
   const router = useRouter();

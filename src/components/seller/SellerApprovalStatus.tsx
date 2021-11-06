@@ -1,6 +1,5 @@
-import { Heading, Stack, Tag, Text } from "@chakra-ui/react";
+import { Stack, Tag, Text } from "@chakra-ui/react";
 import React, { ReactElement } from "react";
-import { Seller } from "../types";
 
 interface Props {
   approved: boolean;
