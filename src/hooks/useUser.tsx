@@ -7,7 +7,14 @@ export const useUser = () => {
     error,
     mutate,
     isValidating,
-  } = useSWR("auth/user", fetcher, {
+  } = useSWR<{
+    data?: {
+      id: string;
+      name: string;
+      email: string;
+      verified: boolean;
+    };
+  }>("auth/user", fetcher, {
     revalidateOnFocus: false,
   });
 

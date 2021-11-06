@@ -14,11 +14,12 @@ import {
   Stack,
   Text,
   useColorModeValue as mode,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
@@ -37,6 +38,7 @@ export default function Signup({}: Props): ReactElement {
   const [show, setShow] = useState<boolean>(false);
   const handleClick = () => setShow(!show);
   const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
 
   const submit = async (values: LoginData) => {
     setLoading(true);
@@ -44,6 +46,20 @@ export default function Signup({}: Props): ReactElement {
     setLoading(false);
     if (success) router.push("/");
   };
+
+  useEffect(() => {
+    const { query } = router;
+    if (query.verified) {
+      toast({
+        position: "top",
+        title: "Email verified!",
+        description: "Your email ID has been verified, please login",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [router.query]);
 
   return (
     <Page>
