@@ -1,48 +1,67 @@
-import type { NextPage } from "next";
 import {
-  Avatar,
   Box,
   Flex,
   Heading,
+  Spinner,
   Stack,
-  Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import * as React from "react";
-import {
-  BsFillBookmarksFill,
-  BsFillInboxFill,
-  BsPencilSquare,
-  BsSearch,
-} from "react-icons/bs";
-import { MobileMenuButton } from "~/components/MobileMenuButton";
-import { NavSectionTitle } from "~/components/NavSectionTitle";
-import { ScrollArea } from "~/components/ScrollArea";
-import { SidebarLink } from "~/components/SidebarLink";
-import { UserInfo } from "~/components/UserInfo";
-import { useMobileMenuState } from "~/hooks/useMobileMenuState";
+import { BsSearch } from "react-icons/bs";
 import {
   IoAddCircle,
   IoFileTrayFull,
   IoGrid,
   IoSettingsSharp,
 } from "react-icons/io5";
+import { MobileMenuButton } from "~/components/MobileMenuButton";
+import { NavSectionTitle } from "~/components/NavSectionTitle";
+import Page from "~/components/Page";
+import { ScrollArea } from "~/components/ScrollArea";
+import SellerApprovalStatus from "~/components/SellerApprovalStatus";
+import SellerDashboard from "~/components/SellerDashboard";
+import SellerProposalUpload from "~/components/SellerProposalUpload";
+import { SidebarLink } from "~/components/SidebarLink";
+import { UserInfo } from "~/components/UserInfo";
+import { useMobileMenuState } from "~/hooks/useMobileMenuState";
+import { useSeller } from "~/hooks/useSeller";
 import { useUser } from "~/hooks/useUser";
-import { FileInput } from "~/components/FileInput";
 import { fetcher } from "~/lib/api";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const { isOpen, toggle } = useMobileMenuState();
-  const { user, isLoading } = useUser();
+  const { user, isLoading, mutate } = useUser();
+  const [uploaded, setUploaded] = React.useState();
+  const {
+    seller,
+    isLoading: sellerIsLoading,
+    mutate: sellerMutate,
+  } = useSeller();
 
-  const onChange = async (formData: any) => {
-    const response = await fetcher("sell/proposal", "POST", undefined, {
-      headers: undefined,
-      body: formData,
-    });
+  React.useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/auth/login");
+    }
+  }, [isLoading]);
 
-    console.log("response", response.data);
-  };
+  if (isLoading || !user) {
+    return (
+      <Page>
+        <Flex alignItems="center" justifyContent="center">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="purple.500"
+            size="xl"
+          />
+        </Flex>
+      </Page>
+    );
+  }
 
   return (
     <Flex
@@ -130,34 +149,10 @@ const Home: NextPage = () => {
               px="10"
               pt={{ md: 1, base: 8 }}
             >
-              {user && user.sellerProfile ? (
-                <>
-                  <Heading size="lg" fontWeight="extrabold" mb="6">
-                    Dashboard
-                  </Heading>
-                  <Box
-                    flex="1"
-                    borderWidth="3px"
-                    borderStyle="dashed"
-                    rounded="xl"
-                  />
-                </>
+              {seller ? (
+                <SellerDashboard seller={seller} />
               ) : (
-                <>
-                  <Heading size="lg" fontWeight="extrabold" mb="6">
-                    Apply to be a Seller
-                  </Heading>
-                  <Text>
-                    Upload your proposal to become a seller in the form of a PDF
-                    document.
-                  </Text>
-                  <FileInput
-                    acceptedFileTypes="application/pdf"
-                    label="Upload Proposal"
-                    uploadFileName="proposal"
-                    onChange={onChange}
-                  />
-                </>
+                <SellerProposalUpload mutate={sellerMutate} />
               )}
             </Flex>
           </Flex>

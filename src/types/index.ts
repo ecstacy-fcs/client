@@ -1,11 +1,11 @@
 export interface Product {
-  title: string;
   id: string;
+  name: string;
+  description: string;
   price: number;
   images: string[];
-  seller: string;
-  description: string;
-  category: string;
+  sellerId: string;
+  categoryId: string;
 }
 
 export interface User {
@@ -24,7 +24,11 @@ export interface User {
 }
 
 export interface Seller {
-  name: string;
+  id: string;
+  userId: string;
+  approved: boolean;
+  approvalDocument?: string;
+  products?: Product[];
 }
 
 export interface SignUpData {
