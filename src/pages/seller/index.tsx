@@ -5,6 +5,7 @@ import {
   Flex,
   Heading,
   Stack,
+  Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -26,9 +27,23 @@ import {
   IoGrid,
   IoSettingsSharp,
 } from "react-icons/io5";
+import { useUser } from "~/hooks/useUser";
+import { FileInput } from "~/components/FileInput";
+import { fetcher } from "~/lib/api";
 
 const Home: NextPage = () => {
   const { isOpen, toggle } = useMobileMenuState();
+  const { user, isLoading } = useUser();
+
+  const onChange = async (formData: any) => {
+    const response = await fetcher("sell/proposal", "POST", undefined, {
+      headers: undefined,
+      body: formData,
+    });
+
+    console.log("response", response.data);
+  };
+
   return (
     <Flex
       height="100vh"
@@ -115,15 +130,35 @@ const Home: NextPage = () => {
               px="10"
               pt={{ md: 1, base: 8 }}
             >
-              <Heading size="lg" fontWeight="extrabold" mb="6">
-                Dashboard
-              </Heading>
-              <Box
-                flex="1"
-                borderWidth="3px"
-                borderStyle="dashed"
-                rounded="xl"
-              />
+              {user && user.sellerProfile ? (
+                <>
+                  <Heading size="lg" fontWeight="extrabold" mb="6">
+                    Dashboard
+                  </Heading>
+                  <Box
+                    flex="1"
+                    borderWidth="3px"
+                    borderStyle="dashed"
+                    rounded="xl"
+                  />
+                </>
+              ) : (
+                <>
+                  <Heading size="lg" fontWeight="extrabold" mb="6">
+                    Apply to be a Seller
+                  </Heading>
+                  <Text>
+                    Upload your proposal to become a seller in the form of a PDF
+                    document.
+                  </Text>
+                  <FileInput
+                    acceptedFileTypes="application/pdf"
+                    label="Upload Proposal"
+                    uploadFileName="proposal"
+                    onChange={onChange}
+                  />
+                </>
+              )}
             </Flex>
           </Flex>
         </Box>
