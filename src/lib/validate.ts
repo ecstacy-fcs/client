@@ -28,7 +28,7 @@ const validate = {
     if (!value) {
       error = "Required";
     } else if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,22}$/.test(
+      !/^(?=[^A-Z\s]*[A-Z])(?=[^a-z\s]*[a-z])(?=[^\d\s]*\d)(?=\w*[\W_])\S{8,22}$/.test(
         value
       )
     ) {
