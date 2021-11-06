@@ -31,7 +31,7 @@ export const FileInput: React.FC<IProps> = (props) => {
 
   return (
     <form ref={formRef}>
-      <VStack alignItems="start" spacing={3}>
+      <VStack alignItems="start" spacing={5}>
         <Stack direction="row">
           <Button type="button" size="sm" onClick={onClickHandler}>
             {props.allowMultipleFiles ? "Choose Files" : "Choose File"}

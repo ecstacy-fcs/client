@@ -19,6 +19,7 @@ import { MobileMenuButton } from "~/components/MobileMenuButton";
 import { NavSectionTitle } from "~/components/NavSectionTitle";
 import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
+import AddProduct from "~/components/seller/AddProduct";
 import SellerDashboard from "~/components/seller/SellerDashboard";
 import SellerProposalUpload from "~/components/seller/SellerProposalUpload";
 import { SidebarLink } from "~/components/SidebarLink";
@@ -26,17 +27,14 @@ import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { useSeller } from "~/hooks/useSeller";
 import { useUser } from "~/hooks/useUser";
+import type { SellerDashboardTab } from "../../types";
 
 const Home: NextPage = () => {
+  const [tab, setTab] = React.useState<SellerDashboardTab>("dashboard");
   const router = useRouter();
   const { isOpen, toggle } = useMobileMenuState();
-  const { user, isLoading, mutate } = useUser();
-  const [uploaded, setUploaded] = React.useState();
-  const {
-    seller,
-    isLoading: sellerIsLoading,
-    mutate: sellerMutate,
-  } = useSeller();
+  const { user, isLoading } = useUser();
+  const { seller, mutate: sellerMutate } = useSeller();
 
   React.useEffect(() => {
     if (!isLoading && !user) {
@@ -101,9 +99,24 @@ const Home: NextPage = () => {
             </SidebarLink>
             <Stack pb="6">
               <NavSectionTitle>Actions</NavSectionTitle>
-              <SidebarLink icon={<IoGrid />}>Dashboard</SidebarLink>
-              <SidebarLink icon={<IoFileTrayFull />}>All Products</SidebarLink>
-              <SidebarLink icon={<IoAddCircle />}>Add a Product</SidebarLink>
+              <SidebarLink
+                icon={<IoGrid />}
+                onClick={() => setTab("dashboard")}
+              >
+                Dashboard
+              </SidebarLink>
+              <SidebarLink
+                icon={<IoFileTrayFull />}
+                onClick={() => setTab("all-products")}
+              >
+                All Products
+              </SidebarLink>
+              <SidebarLink
+                icon={<IoAddCircle />}
+                onClick={() => setTab("add-product")}
+              >
+                Add a Product
+              </SidebarLink>
             </Stack>
             <Stack pb="6">
               <NavSectionTitle>Profile</NavSectionTitle>
@@ -146,10 +159,14 @@ const Home: NextPage = () => {
               px="10"
               pt={{ md: 1, base: 8 }}
             >
-              {seller ? (
-                <SellerDashboard seller={seller} />
+              {tab === "dashboard" ? (
+                seller ? (
+                  <SellerDashboard seller={seller} />
+                ) : (
+                  <SellerProposalUpload mutate={sellerMutate} />
+                )
               ) : (
-                <SellerProposalUpload mutate={sellerMutate} />
+                <AddProduct />
               )}
             </Flex>
           </Flex>

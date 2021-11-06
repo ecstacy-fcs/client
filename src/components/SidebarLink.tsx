@@ -12,6 +12,7 @@ interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
   avatar?: React.ReactElement;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
@@ -36,6 +37,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       className="group"
       fontWeight="medium"
       transition="background .1s ease-out"
+      onClick={props.onClick}
       {...rest}
     >
       <HStack>
