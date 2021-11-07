@@ -1,12 +1,11 @@
-import type { NextPage } from "next";
 import { Box, Heading } from "@chakra-ui/react";
-import Header from "~/components/Header";
-import Link from "next/link";
-import { Product } from "../types";
-import { ProductGrid } from "~/components/ProductGrid";
+import type { NextPage } from "next";
+import Page from "~/components/Page";
 import { ProductCard } from "~/components/ProductCard";
+import { ProductGrid } from "~/components/ProductGrid";
+import { Product } from "../types";
 
-const Home: NextPage = () => {
+const Home: NextPage = (props) => {
   const products: Product[] = [
     {
       id: "1234",
@@ -77,22 +76,24 @@ const Home: NextPage = () => {
   ];
 
   return (
-    <Box mx="auto">
-      <Heading
-        as="h1"
-        color="gray.800"
-        fontWeight="extrabold"
-        letterSpacing="tight"
-        size="xl"
-      >
-        Marketplace
-      </Heading>
-      <ProductGrid marginTop="10">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </ProductGrid>
-    </Box>
+    <Page>
+      <Box mx="auto">
+        <Heading
+          as="h1"
+          color="gray.800"
+          fontWeight="extrabold"
+          letterSpacing="tight"
+          size="xl"
+        >
+          Marketplace
+        </Heading>
+        <ProductGrid marginTop="10">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </ProductGrid>
+      </Box>
+    </Page>
   );
 };
 

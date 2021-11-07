@@ -2,9 +2,7 @@ import {
   AspectRatio,
   Box,
   Button,
-  HStack,
   Image,
-  Link,
   Skeleton,
   Stack,
   StackProps,
@@ -12,10 +10,10 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import * as React from "react";
-import { PriceTag } from "./PriceTag";
-import { Product } from "../types";
 import NextLink from "next/link";
+import * as React from "react";
+import { Product } from "../types";
+import { PriceTag } from "./PriceTag";
 
 interface Props {
   product: Product;
