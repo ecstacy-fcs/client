@@ -6,7 +6,7 @@ export const useApprovalRequests = () => {
   const { data: approvalRequests, error, mutate } = useSWR("sellers?approved=false", fetcher);
   
   return {
-    approvalRequests: approvalRequests?.data,
+    approvalRequests: approvalRequests?.data as Seller[],
     error,
     mutate,
     isLoading: !error && !approvalRequests,

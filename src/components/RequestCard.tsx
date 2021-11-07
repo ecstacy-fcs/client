@@ -19,6 +19,8 @@ import {
   
   interface Props {
     seller: Seller;
+    onApprove: (id: string) => void;
+    onDeny: (id: string) => void;
     rootProps?: StackProps;
   }
   
@@ -54,10 +56,10 @@ import {
             Download KYC
           </Button>
           <HStack spacing="5" width="100%">
-          <Button variant='outline' colorScheme="green" isFullWidth>
+          <Button variant='outline' colorScheme="green" isFullWidth onClick={() => props.onApprove(seller.id)}>
             Approve
           </Button>
-          <Button variant='outline' colorScheme="red" isFullWidth>
+          <Button variant='outline' colorScheme="red" isFullWidth onClick={() => props.onDeny(seller.id)}>
             Deny
           </Button>
           </HStack>
