@@ -4,6 +4,8 @@ export interface Product {
   price: number;
   images: string[];
   seller: string;
+  description: string;
+  category: string;
 }
 
 export interface Seller {
@@ -12,4 +14,13 @@ export interface Seller {
   kyc: string;
   email: string;
   avatar: string;
+}
+
+export interface UserWithoutPassword {
+  id: string;
+  name: string;
+  email: string;
+  address?: string;
+  phoneNumber?: string;
+  verified: boolean;
 }

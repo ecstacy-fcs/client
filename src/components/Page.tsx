@@ -1,10 +1,10 @@
-import React from "react";
 import {
-  Flex,
   Box,
   Container,
+  Flex,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import React from "react";
 
 interface Props {
   children: React.ReactElement;

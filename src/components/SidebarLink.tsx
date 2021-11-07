@@ -11,10 +11,17 @@ import * as React from "react";
 interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
   avatar?: React.ReactElement;
+  disabled?: boolean;
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
-  const { children, icon = <ArrowRight />, avatar, ...rest } = props;
+  const {
+    children,
+    icon = <ArrowRight />,
+    avatar,
+    disabled = false,
+    ...rest
+  } = props;
   return (
     <Box
       as="a"

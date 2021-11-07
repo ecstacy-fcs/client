@@ -1,24 +1,23 @@
 import {
   Box,
   Button,
-  Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
-  LightMode,
-  Stack,
   Link,
+  Stack,
   Text,
-  FormErrorMessage,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import React, { ReactElement } from "react";
+import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
-import { Formik, Form, Field } from "formik";
-import validate from "~/lib/validate";
-import url from "~/lib/url";
+import { useRouter } from "next/router";
+import React, { ReactElement, useState } from "react";
 import Page from "~/components/Page";
+import { useAuth } from "~/hooks/useAuth";
+import validate from "~/lib/validate";
 
 interface Props {}
 
@@ -30,22 +29,15 @@ interface SignUpData {
 }
 
 export default function Signup({}: Props): ReactElement {
-  const onSignUp = async (values: SignUpData) => {
-    const result = await fetch(`http://localhost:5000/auth/register`, {
-      method: "POST",
-      // mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify({
-        name: values.fullName,
-        email: values.email,
-        password: values.password,
-      }),
-    });
-    const res = await result.json();
-    console.log(res);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { signUp } = useAuth();
+  const router = useRouter();
+
+  const onSubmit = async (values: SignUpData) => {
+    setLoading(true);
+    const success = await signUp(values);
+    setLoading(false);
+    if (success) router.push("/");
   };
 
   return (
@@ -76,7 +68,7 @@ export default function Signup({}: Props): ReactElement {
               confirmPassword: "",
             } as SignUpData
           }
-          onSubmit={onSignUp}
+          onSubmit={onSubmit}
         >
           {(props) => (
             <Form>
@@ -204,6 +196,7 @@ export default function Signup({}: Props): ReactElement {
                 colorScheme="purple"
                 fontSize="md"
                 fontWeight="bold"
+                isLoading={loading}
               >
                 Sign up
               </Button>
