@@ -13,10 +13,12 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
 import { fetcher } from "~/lib/api";
+import { useRouter } from "next/router";
+import payment from "pages/payment";
 
 interface ProductProps {
   product: Product;
@@ -24,7 +26,9 @@ interface ProductProps {
 }
 
 const ProductPage: React.FC<ProductProps> = ({ product }) => {
-  const { title, images, price, description, seller, category } = product;
+
+  const { id, title, images, price, description, seller, category } = product;
+  const router = useRouter()
   const arrowStyles = {
     cursor: "pointer",
     position: "absolute",
@@ -43,6 +47,23 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
       bg: "black",
     },
   };
+
+  const [ paymenturl, setpaymenturl ] = useState("")
+
+  useEffect(() =>
+  { 
+    let id = router.query.productId
+    console.log(id)
+     const buyProduct = async function as()
+     { 
+        const res = await fetcher("payment/pay","POST",{
+        pid: id })
+        console.log(res)
+        return res
+     }
+     buyProduct().then((res)=>{setpaymenturl(res.data)})
+  },[]
+  ) 
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -130,7 +151,9 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
         <Text color={useColorModeValue("gray.700", "gray.700")} mb="4">
           {seller}
         </Text>
-        <Button colorScheme="purple" size="md" p="3" maxWidth="100">
+        <Button colorScheme="purple" size="md" p="3" maxWidth="100"
+        onClick={()=>{
+          window.location.assign(paymenturl)}}>
           Buy Now
         </Button>
       </Box>
@@ -140,14 +163,7 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
 
 export default ProductPage;
 
-export async function getServerSideProps(context) {
-
-  let id = context.params.productId
-  console.log(id)
-  const res = await fetcher("payment/pay","GET",{
-    pid: id
-  })
-  console.log(res)
+export async function getServerSideProps() {
   return {
     props: {
       product: {
