@@ -1,8 +1,8 @@
 import {
   HStack,
+  StackProps,
   Text,
   TextProps,
-  StackProps,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import * as React from "react";

@@ -1,9 +1,9 @@
-import type { NextPage } from "next";
 import { Box, Heading } from "@chakra-ui/react";
-import { Product } from "../types";
-import { ProductGrid } from "~/components/ProductGrid";
-import { ProductCard } from "~/components/ProductCard";
+import type { NextPage } from "next";
 import Page from "~/components/Page";
+import { ProductCard } from "~/components/ProductCard";
+import { ProductGrid } from "~/components/ProductGrid";
+import { Product } from "../types";
 
 const Home: NextPage = (props) => {
   const products: Product[] = [

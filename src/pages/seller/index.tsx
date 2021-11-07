@@ -1,31 +1,25 @@
-import type { NextPage } from "next";
 import {
-  Avatar,
   Box,
   Flex,
   Heading,
   Stack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import type { NextPage } from "next";
 import * as React from "react";
-import {
-  BsFillBookmarksFill,
-  BsFillInboxFill,
-  BsPencilSquare,
-  BsSearch,
-} from "react-icons/bs";
-import { MobileMenuButton } from "~/components/MobileMenuButton";
-import { NavSectionTitle } from "~/components/NavSectionTitle";
-import { ScrollArea } from "~/components/ScrollArea";
-import { SidebarLink } from "~/components/SidebarLink";
-import { UserInfo } from "~/components/UserInfo";
-import { useMobileMenuState } from "~/hooks/useMobileMenuState";
+import { BsSearch } from "react-icons/bs";
 import {
   IoAddCircle,
   IoFileTrayFull,
   IoGrid,
   IoSettingsSharp,
 } from "react-icons/io5";
+import { MobileMenuButton } from "~/components/MobileMenuButton";
+import { NavSectionTitle } from "~/components/NavSectionTitle";
+import { ScrollArea } from "~/components/ScrollArea";
+import { SidebarLink } from "~/components/SidebarLink";
+import { UserInfo } from "~/components/UserInfo";
+import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 
 const Home: NextPage = () => {
   const { isOpen, toggle } = useMobileMenuState();
