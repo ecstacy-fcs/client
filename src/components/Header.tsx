@@ -1,5 +1,6 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import {
+  Avatar,
   Box,
   Button,
   Container,
@@ -57,14 +58,19 @@ const Header = (props: Props) => {
               </Link>
             </NextLink>
             {user ? (
-              <Button
-                colorScheme="purple"
-                size="sm"
-                onClick={onLogout}
-                isLoading={isLoading || loggingOut}
-              >
-                Log Out
-              </Button>
+              <>
+                <Button
+                  colorScheme="purple"
+                  size="sm"
+                  onClick={onLogout}
+                  isLoading={isLoading || loggingOut}
+                >
+                  Log Out
+                </Button>
+                <NextLink href="/profile" passHref>
+                  <Avatar size="sm" name={user.name} cursor="pointer" />
+                </NextLink>
+              </>
             ) : (
               <NextLink href="/auth/login" passHref>
                 <Button colorScheme="purple" size="sm" isLoading={isLoading}>
