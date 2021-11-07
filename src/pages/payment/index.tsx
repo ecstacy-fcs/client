@@ -1,123 +1,137 @@
-import React, { useState } from "react";
 import {
   Box,
-  Text,
-  useToast,
   Heading,
-  useColorModeValue,
   Link,
+  Text,
+  useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router"
-import ErrorPage from 'next/error'
-import { fetcher } from '../../lib/api'
+import ErrorPage from "next/error";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+import React from "react";
+import { fetcher } from "../../lib/api";
 
-interface paymentResponse {
-    razorpay_payment_id: String;
-    razorpay_payment_link_id : String;
-    razorpay_payment_link_reference_id : String,
-    razorpay_payment_link_status : String,
-    razorpay_signature : String
+interface PaymentResponse {
+  razorpay_payment_id: string;
+  razorpay_payment_link_id: string;
+  razorpay_payment_link_reference_id: string;
+  razorpay_payment_link_status: string;
+  razorpay_signature: string;
 }
 
-interface correctQuery {
-    queryparams: Boolean,
-    status: Boolean
+interface CorrectQuery {
+  queryParams: boolean;
+  status: boolean;
 }
 
-function showToast(status : Boolean)
-{
-    const toast = useToast()
-    toast({
-        position: "top",
-        title: status ? "Success": "Error",
-        description: status ? "Transaction completed successfully":"Could not process the request or transaction",
-        status: status? "success": "error",
-        duration: 9000,
-        isClosable: true,
-      })
+function showToast(status: boolean) {
+  const toast = useToast();
+  toast({
+    position: "top",
+    title: status ? "Success" : "Error",
+    description: status
+      ? "Transaction completed successfully"
+      : "Could not process the request or transaction",
+    status: status ? "success" : "error",
+    duration: 9000,
+    isClosable: true,
+  });
 }
 
-export default (props : correctQuery) => {
-    const router = useRouter()
-    const { queryparams, status} = props
+export default ({ queryParams, status }: CorrectQuery) => {
+  const router = useRouter();
+  if (!queryParams) return <ErrorPage statusCode={404} />;
 
-    if (queryparams === false)
-    {
-        return <ErrorPage statusCode={404} />
-    }
+  showToast(status);
+  return status ? (
+    <Box textAlign="center" mb={{ base: "10" }} mx="auto">
+      <Heading mt={10} mb={5} color={useColorModeValue("gray.700", "gray.400")}>
+        Thank you for shopping with us!
+      </Heading>
 
-    else
-    {
-        showToast(status)
-        if(status===true)
-        {
-            return (
-                <Box textAlign="center" mb={{ base: "10"}} mx="auto">
-                    <Heading mt={10} mb={5}
-                     color={useColorModeValue("gray.700", "gray.400")}>Thank you for shopping with us!
-                    </Heading>
+      <Text
+        mt="3"
+        color={useColorModeValue("gray.600", "gray.400")}
+        fontWeight="medium"
+        fontSize="17"
+      >
+        Continue Shopping?{" "}
+        <NextLink passHref href="/">
+          <Link color="purple.600">Take me back to home</Link>
+        </NextLink>
+      </Text>
+    </Box>
+  ) : (
+    <Box textAlign="center" mb={{ base: "10" }} mx="auto">
+      <Heading mt={10} mb={5} color={useColorModeValue("gray.700", "gray.400")}>
+        {" "}
+        Looks like something went wrong.
+      </Heading>
 
-                    <Text mt="3" color={useColorModeValue("gray.600", "gray.400")} fontWeight="medium" fontSize="17">
-                        Continue Shopping?{" "}
-                        <NextLink passHref href="/">
-                            <Link color="purple.600">Take me back to home</Link>
-                        </NextLink>
-                    </Text>
-                </Box>
-            )
-        }
+      <Text
+        mt="3"
+        color={useColorModeValue("gray.600", "gray.400")}
+        fontWeight="medium"
+        fontSize="17"
+      >
+        There was an error processing your payment.{" "}
+        <NextLink passHref href="/">
+          <Link color="purple.600">Take me back to home</Link>
+        </NextLink>
+      </Text>
+    </Box>
+  );
+};
 
-        else
-        {
-            return (
-                <Box textAlign="center" mb={{ base: "10"}} mx="auto">
-                    <Heading mt={10} mb={5}
-                     color={useColorModeValue("gray.700", "gray.400")}> Looks like something went wrong.
-                    </Heading>
-
-                    <Text mt="3" color={useColorModeValue("gray.600", "gray.400")} fontWeight="medium" fontSize="17">
-                    There was an error processing your payment.{" "}
-                        <NextLink passHref href="/">
-                            <Link color="purple.600">Take me back to home</Link>
-                        </NextLink>
-                    </Text>
-                </Box>
-            )
-        }
-    }
-  }
-
-  export async function getServerSideProps({query}: any) {
-     query = query as paymentResponse
-     let queryparams = false
-     let status = false
-     if (!query.razorpay_payment_id || !query.razorpay_payment_link_id || !query.razorpay_payment_link_reference_id || !query.razorpay_payment_link_status || !query.razorpay_payment_id)
-     {
-        queryparams= false
-        status= false
-     }
-     else
-     {
-        let data
-        let razorpay_payload = query.razorpay_payment_link_id + '|' + query.razorpay_payment_link_reference_id + '|' + query.razorpay_payment_link_status + '|' + query.razorpay_payment_id;
-     try
-     {
-        data  = await fetcher("payment/validatepayment", "POST", {"razorpay_payload": razorpay_payload, "razorpay_signature": query.razorpay_signature, "order_id":query.razorpay_payment_link_reference_id})
-        queryparams = true
-        status = data.status
-     }
-     catch(exception)
-     {
-        queryparams= true
-        status= false
-      }
-    }
+export async function getServerSideProps({
+  query,
+}: {
+  query: PaymentResponse;
+}) {
+  const {
+    razorpay_payment_id,
+    razorpay_payment_link_id,
+    razorpay_payment_link_reference_id,
+    razorpay_payment_link_status,
+    razorpay_signature,
+  } = query;
+  const payload = [
+    razorpay_payment_id,
+    razorpay_payment_link_id,
+    razorpay_payment_link_reference_id,
+    razorpay_payment_link_status,
+  ];
+  if ([...payload, razorpay_signature].map(Boolean).some((param) => !param)) {
     return {
-        props: 
-        {  
-            queryparams: queryparams,
-            status: status
-        },
+      props: {
+        queryParams: false,
+        status: false,
+      },
+    };
+  }
+  try {
+    const { data, error } = await fetcher<{ status: boolean }>(
+      "payment/validate",
+      "POST",
+      {
+        payload: payload.join("|"),
+        signature: query.razorpay_signature,
+        orderId: query.razorpay_payment_link_reference_id,
+      }
+    );
+    return {
+      props: {
+        queryParams: true,
+        status: Boolean(!error && data?.status),
+      },
+    };
+  } catch (exception) {
+    return {
+      props: {
+        queryParams: true,
+        status: false,
+      },
+    };
   }
 }
