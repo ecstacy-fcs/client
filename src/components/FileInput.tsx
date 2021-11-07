@@ -1,4 +1,13 @@
-import { Button, VStack, Input, Stack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  VStack,
+  Input,
+  Stack,
+  Text,
+  FormErrorMessage,
+  FormControl,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 export interface IProps {
@@ -7,9 +16,12 @@ export interface IProps {
   label: string;
   onChange: (formData: FormData) => void;
   uploadFileName: string;
+  minFiles?: number;
+  validateForm?: any;
 }
 
 export const FileInput: React.FC<IProps> = (props) => {
+  const toast = useToast();
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const formRef = React.useRef<HTMLFormElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
@@ -18,9 +30,9 @@ export const FileInput: React.FC<IProps> = (props) => {
     fileInputRef.current?.click();
   };
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
+  // useEffect(() => {
+  //   console.log(files);
+  // }, [files]);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) {
@@ -33,31 +45,40 @@ export const FileInput: React.FC<IProps> = (props) => {
     <form ref={formRef}>
       <VStack alignItems="start" spacing={5}>
         <Stack direction="row">
-          <Button type="button" size="sm" onClick={onClickHandler}>
-            {props.allowMultipleFiles ? "Choose Files" : "Choose File"}
-          </Button>
-          <Input
-            accept={props.acceptedFileTypes}
-            multiple={props.allowMultipleFiles}
-            name={props.uploadFileName}
-            onChange={onChangeHandler}
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            type="file"
-          />
-          {files.length &&
-            (props.allowMultipleFiles ? (
-              <Text>
-                {files[0].name} and {files.length - 1} others
-              </Text>
-            ) : (
-              <Text>{files[0].name}</Text>
-            ))}
+          <FormControl
+            isInvalid={!!props.minFiles && files.length < props.minFiles}
+          >
+            <Button type="button" size="sm" onClick={onClickHandler}>
+              {props.allowMultipleFiles ? "Choose Files" : "Choose File"}
+            </Button>
+            <Input
+              accept={props.acceptedFileTypes}
+              multiple={props.allowMultipleFiles}
+              name={props.uploadFileName}
+              onChange={onChangeHandler}
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              type="file"
+            />
+            {files.length > 0 &&
+              (props.allowMultipleFiles ? (
+                <Text>
+                  {files[0].name} and {files.length - 1} others
+                </Text>
+              ) : (
+                <Text>{files[0].name}</Text>
+              ))}
+            <FormErrorMessage>
+              Minimum {props.minFiles} required
+            </FormErrorMessage>
+          </FormControl>
         </Stack>
         <Button
           type="button"
           colorScheme="purple"
           onClick={() => {
+            if (props.validateForm) props.validateForm();
+            if (props.minFiles && files.length < props.minFiles) return;
             const formData = new FormData();
             files.forEach((file) => {
               formData.append(props.uploadFileName, file);

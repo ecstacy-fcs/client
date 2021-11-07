@@ -10,27 +10,51 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
+  Select,
   Stack,
   Text,
   Textarea,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
-import React from "react";
+import { Field, Form, Formik, FormikProps } from "formik";
+import React, { useEffect, useState } from "react";
 import { fetcher } from "~/lib/api";
+import validate from "~/lib/validate";
 import { FileInput } from "../FileInput";
 
 interface Props {}
 
-const AddProduct = (props: Props) => {
-  const submit = async (values: any, formData: any) => {
-    const response = await fetcher("products", "POST", undefined, {
-      headers: undefined,
-      body: formData,
-    });
-
-    console.log("response", response.data);
+const AddProduct = ({}: Props) => {
+  const submit = async (
+    formData: any,
+    props: FormikProps<{
+      name: string;
+      description: string;
+      price: string;
+      category: string;
+    }>
+  ) => {
+    // props.validateForm();
+    const response = await fetcher("products", "POST", props.values);
+    const productId = response.data.id;
+    const res = await fetcher(
+      `products/${productId}/images`,
+      "POST",
+      undefined,
+      {
+        headers: undefined,
+        body: formData,
+      }
+    );
   };
+
+  const [categories, setCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetcher("products/categories").then((res) => {
+      if (res.data) setCategories([...res.data]);
+    });
+  }, []);
 
   return (
     <>
@@ -39,13 +63,13 @@ const AddProduct = (props: Props) => {
       </Heading>
       <Box maxW="sm">
         <Formik
-          initialValues={{ name: "", description: "", price: "" }}
+          initialValues={{ name: "", description: "", price: "", category: "" }}
           onSubmit={() => {}}
         >
           {(props) => (
             <Form>
               <Stack spacing={3}>
-                <Field name="name">
+                <Field name="name" validate={validate.required}>
                   {({ field, form }: any) => (
                     <FormControl
                       id="name"
@@ -68,7 +92,7 @@ const AddProduct = (props: Props) => {
                     </FormControl>
                   )}
                 </Field>
-                <Field name="description">
+                <Field name="description" validate={validate.required}>
                   {({ field, form }: any) => (
                     <FormControl
                       id="description"
@@ -96,18 +120,7 @@ const AddProduct = (props: Props) => {
                     </FormControl>
                   )}
                 </Field>
-                <Field
-                  name="price"
-                  validate={(value: string) => {
-                    let error;
-                    if (!value) {
-                      error = "Required";
-                    } else if (isNaN(parseInt(value))) {
-                      error = "Price must be a number";
-                    }
-                    return error;
-                  }}
-                >
+                <Field name="price" validate={validate.number}>
                   {({ field, form }: any) => (
                     <FormControl
                       id="price"
@@ -137,17 +150,44 @@ const AddProduct = (props: Props) => {
                     </FormControl>
                   )}
                 </Field>
+                <Field name="category" validate={validate.required}>
+                  {({ field, form }: any) => (
+                    <FormControl
+                      id="category"
+                      isInvalid={form.errors.category && form.touched.category}
+                      color="gray.600"
+                      isRequired
+                    >
+                      <FormLabel htmlFor="category">Category</FormLabel>
+                      <Select
+                        placeholder="Select category"
+                        bg={mode("white", "gray.700")}
+                        color="gray.600"
+                        {...field}
+                      >
+                        {categories.map((item) => (
+                          <option value={item.id}>{item.name}</option>
+                        ))}
+                      </Select>
+                      <FormErrorMessage>
+                        {form.errors.category}
+                      </FormErrorMessage>
+                    </FormControl>
+                  )}
+                </Field>
                 <FormControl id="price" color="gray.600" isRequired>
                   <FormLabel htmlFor="product-image">Product Images</FormLabel>
                   <Text marginTop="-2" marginBottom="2" fontSize="sm">
                     (at least 2)
                   </Text>
                   <FileInput
+                    validateForm={props.validateForm}
                     label="Add Product"
                     uploadFileName="product-image"
-                    acceptedFileTypes="image/jpg"
+                    acceptedFileTypes="image/*"
                     allowMultipleFiles={true}
-                    onChange={(formData) => submit(props.values, formData)}
+                    minFiles={2}
+                    onChange={(formData) => submit(formData, props)}
                   />
                 </FormControl>
               </Stack>

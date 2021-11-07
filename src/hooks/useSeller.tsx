@@ -20,7 +20,6 @@ export const useSeller = (): {
     revalidateOnFocus: false,
   });
 
-  console.log(seller?.data);
   return {
     seller: seller?.data as Seller,
     isLoading: (!seller && !error) || isValidating,

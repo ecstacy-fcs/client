@@ -87,7 +87,7 @@ const Home: NextPage = () => {
             _hover={{ bg: "whiteAlpha.200" }}
             whiteSpace="nowrap"
           >
-            <UserInfo name="Esther Collins" email="esther-colls@chakra.com" />
+            <UserInfo name={user.name} email={user.email} />
           </Box>
           <ScrollArea pt="5" pb="6">
             <SidebarLink
