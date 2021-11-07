@@ -14,6 +14,7 @@ import {
   Stack,
   Text,
   useColorModeValue as mode,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
@@ -23,7 +24,7 @@ import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
 import validate from "~/lib/validate";
-import { LoginData } from "~/types";
+import { LoginData } from "../../types";
 
 interface Props {}
 

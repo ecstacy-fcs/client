@@ -21,6 +21,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     icon = <ArrowRight />,
     avatar,
     disabled = false,
+    onClick,
     ...rest
   } = props;
   return (

@@ -48,3 +48,12 @@ export type SellerDashboardTab =
   | "add-product"
   | "all-products"
   | "settings";
+
+export interface UserWithoutPassword {
+  id: string;
+  name: string;
+  email: string;
+  address?: string;
+  phoneNumber?: string;
+  verified: boolean;
+}

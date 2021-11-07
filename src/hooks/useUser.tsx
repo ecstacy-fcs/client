@@ -1,13 +1,13 @@
 import useSWR, { KeyedMutator } from "swr";
 import { fetcher } from "~/lib/api";
-import { User } from "../types";
+import { UserWithoutPassword } from "../types";
 
 export const useUser = (): {
-  user: User;
+  user: UserWithoutPassword;
   isLoading: boolean;
   error: string;
   mutate: KeyedMutator<{
-    data?: unknown;
+    data?: UserWithoutPassword;
     error?: string | undefined;
   }>;
 } => {
@@ -16,12 +16,14 @@ export const useUser = (): {
     error,
     mutate,
     isValidating,
-  } = useSWR("auth/user", fetcher, {
+  } = useSWR<{
+    data?: UserWithoutPassword;
+  }>("auth/user", fetcher, {
     revalidateOnFocus: false,
   });
 
   return {
-    user: user?.data as User,
+    user: user?.data as UserWithoutPassword,
     isLoading: (!user && !error) || isValidating,
     error,
     mutate,
