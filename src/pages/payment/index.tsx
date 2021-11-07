@@ -79,7 +79,6 @@ const Component = ()=>
         }       
     },[router.isReady]);
 
-    console.log("hhshshshhshere", queryParams, status)
     return queryParams? 
     (status?
         <Box textAlign="center" mb={{ base: "10" }} mx="auto">
