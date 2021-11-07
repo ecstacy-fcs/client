@@ -23,6 +23,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
+import { useUser } from "~/hooks/useUser";
 import validate from "~/lib/validate";
 
 interface Props {}
@@ -39,6 +40,7 @@ export default function Signup({}: Props): ReactElement {
   const handleClick = () => setShow(!show);
   const [loading, setLoading] = useState<boolean>(false);
   const toast = useToast();
+  const { user } = useUser();
 
   const submit = async (values: LoginData) => {
     setLoading(true);
@@ -48,7 +50,8 @@ export default function Signup({}: Props): ReactElement {
   };
 
   useEffect(() => {
-    const { query } = router;
+    const { query, replace } = router;
+    if (user?.verified) replace("/");
     if (query.verified) {
       toast({
         position: "top",
@@ -59,7 +62,7 @@ export default function Signup({}: Props): ReactElement {
         isClosable: true,
       });
     }
-  }, [router.query]);
+  }, [router.query, user]);
 
   return (
     <Page>

@@ -1,11 +1,18 @@
 import {
-  AspectRatio, Badge, Box,
-  Button, Divider, Flex, HStack,
-  Image, SimpleGrid, Skeleton,
+  AspectRatio,
+  Badge,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  HStack,
+  Image,
+  SimpleGrid,
+  Skeleton,
   StackProps,
-  Text, useColorModeValue
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
@@ -15,14 +22,11 @@ interface ProductProps {
   rootProps?: StackProps;
 }
 
-export const ProductPage: React.FC<ProductProps> = ({
-  product
-}) {
-  const router = useRouter();
+const ProductPage: React.FC<ProductProps> = ({ product }) => {
   const { title, images, price, description, seller, category } = product;
   const arrowStyles = {
     cursor: "pointer",
-    pos: "absolute",
+    position: "absolute",
     top: "50%",
     w: "auto",
     mt: "-22px",
@@ -81,10 +85,10 @@ export const ProductPage: React.FC<ProductProps> = ({
                 </Box>
               ))}
             </Flex>
-            <Text {...arrowStyles} left="0" onClick={prevSlide}>
+            <Text {...(arrowStyles as any)} left="0" onClick={prevSlide}>
               &#10094;
             </Text>
-            <Text {...arrowStyles} right="0" onClick={nextSlide}>
+            <Text {...(arrowStyles as any)} right="0" onClick={nextSlide}>
               &#10095;
             </Text>
           </Flex>
@@ -131,11 +135,11 @@ export const ProductPage: React.FC<ProductProps> = ({
       </Box>
     </SimpleGrid>
   );
-}
+};
 
-export default Product;
+export default ProductPage;
 
-export async function getServerSideProps() {
+export function getServerSideProps() {
   return {
     props: {
       product: {
