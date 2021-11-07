@@ -18,11 +18,11 @@ const validate = {
   password: (value: string) => {
     if (!value) return "Required";
     if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,22}$/.test(
+      !/^(?=[^A-Z\s]*[A-Z])(?=[^a-z\s]*[a-z])(?=[^\d\s]*\d)(?=\w*[\W_])\S{12,22}$/.test(
         value
       )
     )
-      return "Invalid password. Password must have between 8-22 characters, at least one uppercase letter, one lowercase letter, one number and one special character.";
+      return "Invalid password. Password must have between 12-22 characters, at least one uppercase letter, one lowercase letter, one number and one special character.";
   },
   confirmPassword: (value: string, password: string) => {
     if (!value) return "Required";

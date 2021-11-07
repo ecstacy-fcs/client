@@ -153,7 +153,11 @@ export default function Signup({}: Props): ReactElement {
                 </Field>
               </Stack>
               <Flex align="center" justify="space-between" mt="8">
-                <Link fontSize="sm" color="red.600">
+                <Link
+                  fontSize="sm"
+                  color="red.600"
+                  href="/auth/forgot-password"
+                >
                   Forgot password?
                 </Link>
               </Flex>
