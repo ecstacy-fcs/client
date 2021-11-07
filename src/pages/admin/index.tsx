@@ -23,42 +23,15 @@ import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { IoCart, IoCash, IoBag, IoSettingsSharp, IoCheckmarkCircle } from "react-icons/io5";
 import { RequestCard } from "~/components/RequestCard";
 import { ProductGrid } from "~/components/ProductGrid";
-import { Seller } from "../../types";
-import useSWR from "swr";
-import { fetcher } from "~/lib/api";
+import { useApprovalRequests } from "~/hooks/useApprovalRequests";
+import { Seller } from "~/types/";
 
 const Home: NextPage = () => {
   const { isOpen, toggle } = useMobileMenuState();
-  const sellers: Seller[] = [
-      {
-        name: "Seller 1",
-        id: "1",
-        email: "seller1@email.com",
-        kyc: "kyc.com",
-        avatar: "https://source.unsplash.com/random/100x100",
-      },
-      {
-        name: "Seller 1",
-        id: "2",
-        email: "seller1@email.com",
-        kyc: "kyc.com",
-        avatar: "https://source.unsplash.com/random/100x100",
-      },
-      {
-        name: "Seller 1",
-        id: "3",
-        email: "seller1@email.com",
-        kyc: "kyc.com",
-        avatar: "https://source.unsplash.com/random/100x100",
-      },
-      {
-        name: "Seller 1",
-        id: "4",
-        email: "seller1@email.com",
-        kyc: "kyc.com",
-        avatar: "https://source.unsplash.com/random/100x100",
-      }
-  ];
+  const { approvalRequests, error, isLoading } = useApprovalRequests();
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+  console.log(approvalRequests);
   return (
     <Flex
       height="100vh"
@@ -160,8 +133,8 @@ const Home: NextPage = () => {
                 p='10'
               >
                 <ProductGrid >
-                    {sellers.map((seller) => (
-                        <RequestCard key={seller.id} seller={seller} />
+                    {approvalRequests.map((approvalRequest) => (
+                        <RequestCard key={approvalRequest.id} seller={approvalRequest} />
                     ))}
                 </ProductGrid>
               </Box>
