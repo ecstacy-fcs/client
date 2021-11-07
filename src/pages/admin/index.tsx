@@ -24,6 +24,8 @@ import { IoCart, IoCash, IoBag, IoSettingsSharp, IoCheckmarkCircle } from "react
 import { RequestCard } from "~/components/RequestCard";
 import { ProductGrid } from "~/components/ProductGrid";
 import { Seller } from "../../types";
+import useSWR from "swr";
+import { fetcher } from "~/lib/api";
 
 const Home: NextPage = () => {
   const { isOpen, toggle } = useMobileMenuState();
@@ -145,17 +147,21 @@ const Home: NextPage = () => {
               flex="1"
               overflow="auto"
               px="10"
-              pt={{ md: 1, base: 8 }}
+              pt={{ md: 1, base: 1 }}
             >
+              <Heading mb={5} color={mode("gray.700", "gray.400")}>
+                Approval Requests
+              </Heading>
               <Box
                 flex="1"
                 borderWidth="3px"
                 borderStyle="dashed"
                 rounded="xl"
+                p='10'
               >
                 <ProductGrid >
                     {sellers.map((seller) => (
-                        <RequestCard seller={seller} />
+                        <RequestCard key={seller.id} seller={seller} />
                     ))}
                 </ProductGrid>
               </Box>

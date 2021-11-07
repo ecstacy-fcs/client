@@ -53,15 +53,15 @@ import {
             </Text>
           </Stack>
         </Stack>
-        <Stack align="center">
+        <Stack spacing="3" align="center">
           <Button colorScheme="purple" isFullWidth>
             Download KYC
           </Button>
-          <HStack spacing="1" width="100%">
-          <Button colorScheme="green" isFullWidth>
+          <HStack spacing="5" width="100%">
+          <Button variant='outline' colorScheme="green" isFullWidth>
             Approve
           </Button>
-          <Button colorScheme="red" isFullWidth>
+          <Button variant='outline' colorScheme="red" isFullWidth>
             Deny
           </Button>
           </HStack>
