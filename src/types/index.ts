@@ -8,12 +8,26 @@ export interface Product {
   category: string;
 }
 
-export interface Seller {
-  name: string;
+
+export interface User {
   id: string;
-  kyc: string;
+  name: string;
   email: string;
-  avatar: string;
+  address?: string;
+  phoneNumber?: string;
+  verified: boolean;
+  adminProfile?: any;
+  buyerProfile?: any;
+  sellerProfile?: any;
+  tokens?: any[];
+}
+
+export interface Seller {
+  id: string;
+  approved: boolean;
+  approvalDocument?: string;
+  user: User;
+  products?: Product[];
 }
 
 export interface UserWithoutPassword {
