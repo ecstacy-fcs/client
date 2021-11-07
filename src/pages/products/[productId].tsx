@@ -16,6 +16,7 @@ import {
 import React, { useState } from "react";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
+import { fetcher } from "~/lib/api";
 
 interface ProductProps {
   product: Product;
@@ -60,7 +61,7 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
   };
 
   return (
-    <SimpleGrid columns={2} spacing={30} minChildWidth="370px">
+    <SimpleGrid columns={2} spacing={5} minChildWidth="370px">
       <Box boxSize="sm" flexShrink={0}>
         <Flex alignItems="center" justifyContent="center">
           <Flex w="full" overflow="hidden" pos="relative">
@@ -139,7 +140,14 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
 
 export default ProductPage;
 
-export function getServerSideProps() {
+export async function getServerSideProps(context) {
+
+  let id = context.params.productId
+  console.log(id)
+  const res = await fetcher("payment/pay","GET",{
+    pid: id
+  })
+  console.log(res)
   return {
     props: {
       product: {
