@@ -5,15 +5,20 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  IconButton,
   Input,
+  InputGroup,
   Stack,
+  Text,
   useColorModeValue as mode,
   useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { HiClipboard } from "react-icons/hi";
 import Page from "~/components/Page";
+import VirtualKeyboard from "~/components/VirtualKeyboard";
 import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";
 import validate from "~/lib/validate";
@@ -23,6 +28,8 @@ const ForgotPassword: React.FC = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
+  const [otpValue, setOtpValue] = useState<string>("");
+  const keyboardRef = useRef<any>(null);
   const toast = useToast();
 
   useEffect(() => {
@@ -44,12 +51,13 @@ const ForgotPassword: React.FC = () => {
     });
   };
 
-  const submitUpdatePassword = async (values: {
-    otp: string;
-    password: string;
-  }) => {
+  const submitUpdatePassword = async (values: { password: string }) => {
+    if (!otpValue) return;
     setLoading(true);
-    const { error } = await fetcher("auth/update-password", "POST", values);
+    const { error } = await fetcher("auth/update-password", "POST", {
+      otp: otpValue,
+      password: values.password,
+    });
     setLoading(false);
     toast({
       position: "top",
@@ -117,31 +125,43 @@ const ForgotPassword: React.FC = () => {
       {() => (
         <Form>
           <Stack spacing="-px">
-            <Field
-              name="otp"
-              validate={(value: string) => {
-                if (!value) return "OTP token is required";
-              }}
-            >
-              {({ field, form }: any) => (
-                <FormControl
-                  id="otp"
-                  isInvalid={form.errors.otp && form.touched.otp}
-                >
+            <Field name="otp">
+              {({ field: { value, ...field }, form }: any) => (
+                <FormControl id="otp">
                   <FormLabel srOnly htmlFor="otp">
                     OTP Token
                   </FormLabel>
-                  <Input
-                    size="lg"
-                    name="otp"
-                    type="text"
-                    required
-                    placeholder="OTP token"
-                    bg={mode("white", "gray.700")}
-                    fontSize="md"
-                    roundedBottom="0"
-                    {...field}
-                  />
+                  <InputGroup>
+                    <Input
+                      size="lg"
+                      name="otp"
+                      type="text"
+                      required
+                      placeholder="OTP token"
+                      bg={mode("white", "gray.700")}
+                      fontSize="md"
+                      value={otpValue}
+                      readOnly
+                      cursor="default"
+                      roundedBottom="0"
+                      roundedRight="0"
+                      {...field}
+                    />
+                    <IconButton
+                      colorScheme="blue"
+                      aria-label="Paste OTP"
+                      icon={<HiClipboard size="26" />}
+                      size="lg"
+                      roundedLeft="0"
+                      roundedBottom="0"
+                      onClick={async () => {
+                        const value =
+                          await window.navigator.clipboard.readText();
+                        setOtpValue(value);
+                        keyboardRef.current.setInput(value);
+                      }}
+                    />
+                  </InputGroup>
                   <FormErrorMessage>{form.errors.otp}</FormErrorMessage>
                 </FormControl>
               )}
@@ -180,6 +200,7 @@ const ForgotPassword: React.FC = () => {
             fontSize="md"
             fontWeight="bold"
             isLoading={loading}
+            disabled={otpValue.length === 0}
           >
             Update password
           </Button>
@@ -193,7 +214,21 @@ const ForgotPassword: React.FC = () => {
       <Stack direction="column" spacing="6">
         <Heading size="lg">Reset your password</Heading>
         <Container maxWidth="40ch" padding="0">
-          {showUpdateForm ? <UpdatePasswordForm /> : <ForgotPasswordForm />}
+          {showUpdateForm ? (
+            <Stack direction="column" spacing="8">
+              <Text>
+                The OTP token must be either pasted using the paste button or
+                typed down using the virtual keyboard.
+              </Text>
+              <UpdatePasswordForm />
+              <VirtualKeyboard
+                onChange={setOtpValue}
+                keyboardRef={keyboardRef}
+              />
+            </Stack>
+          ) : (
+            <ForgotPasswordForm />
+          )}
         </Container>
       </Stack>
     </Page>
