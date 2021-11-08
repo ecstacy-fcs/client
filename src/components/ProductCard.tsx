@@ -22,14 +22,20 @@ interface Props {
 
 export const ProductCard = (props: Props) => {
   const { product, rootProps } = props;
-  const { title, images, price } = product;
+  const { name, images, price } = product;
   return (
-    <Stack spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
+    <Stack
+      spacing={useBreakpointValue({ base: "4", md: "5" })}
+      {...rootProps}
+      maxW="sm"
+    >
       <Box position="relative">
         <AspectRatio ratio={4 / 3}>
           <Image
-            src={images[0]}
-            alt={title}
+            src={
+              images.length > 0 ? images[0].path : "/product-placeholder.png"
+            }
+            alt={name}
             draggable="false"
             fallback={<Skeleton />}
             borderRadius={useBreakpointValue({ base: "md", md: "xl" })}
@@ -42,7 +48,7 @@ export const ProductCard = (props: Props) => {
             fontWeight="medium"
             color={useColorModeValue("gray.700", "gray.400")}
           >
-            {title}
+            {name}
           </Text>
           <PriceTag price={price} />
         </Stack>

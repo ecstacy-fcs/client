@@ -11,9 +11,12 @@ const { NEXT_PUBLIC_API_BASE_URL } = process.env;
 export const fetcher = async <T = any>(
   endpoint: string,
   method?: RequestMethod,
-  body?: Record<string, any>
+  body?: Record<string, any>,
+  requestOptions?: RequestInit
 ): Promise<{ data?: T | undefined; error?: string }> => {
-  const fetchOptions: RequestInit = {
+  // const toast = useToast();
+
+  const defaultOptions: RequestInit = {
     method,
     headers: {
       "Content-Type": "application/json",
@@ -21,13 +24,14 @@ export const fetcher = async <T = any>(
     credentials: "include",
   };
 
-  if (method !== "GET" && body) fetchOptions.body = JSON.stringify(body);
+  if (method !== "GET" && body) defaultOptions.body = JSON.stringify(body);
 
   try {
-    const res = await fetch(
-      `${NEXT_PUBLIC_API_BASE_URL}/${endpoint}`,
-      fetchOptions
-    );
+    const res = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/${endpoint}`, {
+      ...defaultOptions,
+      ...requestOptions,
+    });
+
     const data = (await res.json()) as ApiResponse<T>;
     if (!data.success) {
       console.error("An error occured", data.message);

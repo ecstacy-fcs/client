@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/button";
 import { Container, Heading, Stack, Text } from "@chakra-ui/layout";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";

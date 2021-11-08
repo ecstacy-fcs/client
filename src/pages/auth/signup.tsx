@@ -18,15 +18,9 @@ import React, { ReactElement, useState } from "react";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
 import validate from "~/lib/validate";
+import { SignUpData } from "~/types";
 
 interface Props {}
-
-interface SignUpData {
-  fullName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
 
 export default function Signup({}: Props): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);

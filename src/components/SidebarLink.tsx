@@ -12,6 +12,7 @@ interface SidebarLinkProps extends BoxProps {
   icon?: React.ReactElement;
   avatar?: React.ReactElement;
   disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export const SidebarLink = (props: SidebarLinkProps) => {
@@ -20,8 +21,33 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     icon = <ArrowRight />,
     avatar,
     disabled = false,
+    onClick,
     ...rest
   } = props;
+
+  if (disabled)
+    return (
+      <Box
+        as="a"
+        marginEnd="2"
+        fontSize="sm"
+        display="block"
+        px="3"
+        py="1"
+        rounded="md"
+        color="gray.500"
+        className="group"
+        fontWeight="medium"
+        cursor="not-allowed"
+        {...rest}
+      >
+        <HStack>
+          <Box opacity={0.5}>{avatar || icon}</Box>
+          <Text>{children}</Text>
+        </HStack>
+      </Box>
+    );
+
   return (
     <Box
       as="a"
@@ -36,6 +62,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       className="group"
       fontWeight="medium"
       transition="background .1s ease-out"
+      onClick={props.onClick}
       {...rest}
     >
       <HStack>

@@ -1,19 +1,27 @@
 import { Heading } from "@chakra-ui/layout";
-import NextLink from "next/link";
+import { Tooltip } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export const Logo = () => {
+  const router = useRouter();
   return (
-    <NextLink href="/" passHref>
+    <Tooltip
+      hasArrow
+      label="We know it's a typo!"
+      bg="gray.100"
+      color="gray.500"
+    >
       <Heading
         as="h1"
         color="purple.500"
         fontWeight="800"
         cursor="pointer"
         size="lg"
+        onClick={() => router.push("/")}
       >
         Ecstacy
       </Heading>
-    </NextLink>
+    </Tooltip>
   );
 };
 

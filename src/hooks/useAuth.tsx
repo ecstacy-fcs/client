@@ -1,31 +1,12 @@
 import { useToast } from "@chakra-ui/react";
 import { fetcher } from "~/lib/api";
+import { LoginData, SignUpData } from "../types";
 import { useUser } from "./useUser";
-
-interface SignUpData {
-  fullName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { toastWrapper } from "~/lib/toast";
 
 export const useAuth = () => {
   const { user, mutate } = useUser();
   const toast = useToast();
-  const toastWrapper = (error: string | undefined, successMessage: string) =>
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Success",
-      description: error || successMessage,
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
 
   async function signUp(values: SignUpData): Promise<boolean> {
     if (user) return false;
@@ -34,7 +15,12 @@ export const useAuth = () => {
       email: values.email,
       password: values.password,
     });
-    toastWrapper(error, "Account created, you may now log in");
+    toastWrapper(
+      toast,
+      error,
+      "Success",
+      "Account created, you may now log in"
+    );
     return !error;
   }
 
@@ -44,7 +30,7 @@ export const useAuth = () => {
       email: values.email,
       password: values.password,
     });
-    toastWrapper(error, "Successfully logged in");
+    toastWrapper(toast, error, "Success", "Successfully logged in");
     mutate();
     return !error;
   }
@@ -52,7 +38,7 @@ export const useAuth = () => {
   async function logout() {
     if (!user) return;
     const { data, error } = await fetcher("auth/logout");
-    toastWrapper(error, "Successfully logged out");
+    toastWrapper(toast, error, "Success", "Successfully logged out");
     mutate();
   }
 

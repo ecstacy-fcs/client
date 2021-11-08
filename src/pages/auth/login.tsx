@@ -24,14 +24,11 @@ import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
 import { useUser } from "~/hooks/useUser";
+import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
+import { LoginData } from "../../types";
 
 interface Props {}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
 
 export default function Signup({}: Props): ReactElement {
   const { login } = useAuth();
@@ -53,14 +50,12 @@ export default function Signup({}: Props): ReactElement {
     const { query, replace } = router;
     if (user?.verified) replace("/");
     if (query.verified) {
-      toast({
-        position: "top",
-        title: "Email verified!",
-        description: "Your email ID has been verified, please login",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toastWrapper(
+        toast,
+        undefined,
+        "Email verified!",
+        "Your email ID has been verified, please login"
+      );
     }
   }, [router.query, user]);
 
@@ -153,7 +148,11 @@ export default function Signup({}: Props): ReactElement {
                 </Field>
               </Stack>
               <Flex align="center" justify="space-between" mt="8">
-                <Link fontSize="sm" color="red.600">
+                <Link
+                  fontSize="sm"
+                  color="red.600"
+                  href="/auth/forgot-password"
+                >
                   Forgot password?
                 </Link>
               </Flex>

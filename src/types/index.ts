@@ -1,13 +1,32 @@
-export interface Product {
-  title: string;
+export interface ProductImage {
   id: string;
-  price: number;
-  images: string[];
-  seller: string;
-  description: string;
-  category: string;
+  path: string;
+  productId: string;
 }
 
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  seller: {
+    id: string;
+    user: {
+      name: string;
+    };
+  };
+  images: ProductImage[];
+  category: ProductCategory;
+}
+
+export interface ProductImage {
+  path: string;
+}
+
+export interface ProductCategory {
+  id: string;
+  name: string;
+}
 
 export interface User {
   id: string;
@@ -18,6 +37,8 @@ export interface User {
   verified: boolean;
   banned: boolean;
   deleted?: boolean;
+  adminId?: string;
+  sellerId?: string;
   adminProfile?: any;
   buyerProfile?: any;
   sellerProfile?: any;
@@ -32,12 +53,24 @@ export interface Seller {
   products?: Product[];
 }
 
-export interface Buyer {
-  id: string;
-  user: User;
+export interface SignUpData {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
-export type AdminDashboardTab = 'products' | 'buyers' | 'sellers' | 'approval-requests';
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export type SellerDashboardTab =
+  | "dashboard"
+  | "add-product"
+  | "edit-product"
+  | "all-products"
+  | "settings";
 
 export interface UserWithoutPassword {
   id: string;
@@ -47,3 +80,10 @@ export interface UserWithoutPassword {
   phoneNumber?: string;
   verified: boolean;
 }
+
+export interface Buyer {
+  id: string;
+  user: User;
+}
+
+export type AdminDashboardTab = 'products' | 'buyers' | 'sellers' | 'approval-requests';
