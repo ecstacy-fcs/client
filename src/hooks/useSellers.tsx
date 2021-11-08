@@ -10,12 +10,12 @@ export const useSellers = () => {
     isValidating,
   } = useSWR<{
     data?: Seller[];
-  }>("auth/user", fetcher, {
+  }>("sellers", fetcher, {
     revalidateOnFocus: false,
   });
 
   return {
-    user: sellers?.data as Seller[],
+    sellers: sellers?.data as Seller[],
     isLoading: (!sellers && !error) || isValidating,
     error,
     mutate,
