@@ -22,13 +22,20 @@ interface Props {
 
 export const ProductCard = (props: Props) => {
   const { product, rootProps } = props;
-  const { title, images, price } = product;
+  const { title, images, price } = product; 
+  let path: string;
+  try{
+    path = images[0].path
+  }
+  catch(exception){
+    path="https://via.placeholder.com/150/4A5568.png?text=No+Image"
+  }
   return (
     <Stack spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
       <Box position="relative">
         <AspectRatio ratio={4 / 3}>
           <Image
-            src={images[0]}
+            src={path}
             alt={title}
             draggable="false"
             fallback={<Skeleton />}
