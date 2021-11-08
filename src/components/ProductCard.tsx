@@ -22,34 +22,33 @@ interface Props {
 
 export const ProductCard = (props: Props) => {
   const { product, rootProps } = props;
-  const { title, images, price } = product; 
-  let path: string;
-  try{
-    path = images[0].path
-  }
-  catch(exception){
-    path="https://via.placeholder.com/150/4A5568.png?text=No+Image"
-  }
+  const { name, images, price } = product;
   return (
-    <Stack spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
-      <Box position="relative">
-        <AspectRatio ratio={4 / 3}>
-          <Image
-            src={path}
-            alt={title}
-            draggable="false"
-            fallback={<Skeleton />}
-            borderRadius={useBreakpointValue({ base: "md", md: "xl" })}
-          />
-        </AspectRatio>
-      </Box>
+    <Stack
+      spacing={useBreakpointValue({ base: "4", md: "5" })}
+      {...rootProps}
+      maxW="sm"
+    >
+      {images.length > 0 && (
+        <Box position="relative">
+          <AspectRatio ratio={4 / 3}>
+            <Image
+              src={images[0].path}
+              alt={name}
+              draggable="false"
+              fallback={<Skeleton />}
+              borderRadius={useBreakpointValue({ base: "md", md: "xl" })}
+            />
+          </AspectRatio>
+        </Box>
+      )}
       <Stack>
         <Stack spacing="1">
           <Text
             fontWeight="medium"
             color={useColorModeValue("gray.700", "gray.400")}
           >
-            {title}
+            {name}
           </Text>
           <PriceTag price={price} />
         </Stack>

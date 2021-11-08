@@ -28,6 +28,18 @@ const validate = {
     if (!value) return "Required";
     if (password !== value) return "Passwords don't match.";
   },
+  required: (value: string) => {
+    if (!value) return "Required";
+  },
+  number: (value: string) => {
+    let error;
+    if (!value) {
+      error = "Required";
+    } else if (isNaN(parseInt(value))) {
+      error = "Price must be a number";
+    }
+    return error;
+  },
 };
 
 export default validate;

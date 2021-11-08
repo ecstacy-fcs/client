@@ -25,13 +25,9 @@ import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
 import { useUser } from "~/hooks/useUser";
 import validate from "~/lib/validate";
+import { LoginData } from "../../types";
 
 interface Props {}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
 
 export default function Signup({}: Props): ReactElement {
   const { login } = useAuth();

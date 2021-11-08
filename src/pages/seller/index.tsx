@@ -1,11 +1,12 @@
 import {
   Box,
   Flex,
-  Heading,
+  Spinner,
   Stack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { BsSearch } from "react-icons/bs";
 import {
@@ -16,13 +17,48 @@ import {
 } from "react-icons/io5";
 import { MobileMenuButton } from "~/components/MobileMenuButton";
 import { NavSectionTitle } from "~/components/NavSectionTitle";
+import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
+import AddProduct from "~/components/seller/AddProduct";
+import SellerDashboard from "~/components/seller/SellerDashboard";
+import SellerProducts from "~/components/seller/SellerProducts";
+import SellerProposalUpload from "~/components/seller/SellerProposalUpload";
 import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
+import { useSeller } from "~/hooks/useSeller";
+import { useUser } from "~/hooks/useUser";
+import type { SellerDashboardTab } from "../../types";
 
 const Home: NextPage = () => {
+  const [tab, setTab] = React.useState<SellerDashboardTab>("dashboard");
+  const router = useRouter();
   const { isOpen, toggle } = useMobileMenuState();
+  const { user, isLoading } = useUser();
+  const { seller, mutate: sellerMutate } = useSeller();
+
+  React.useEffect(() => {
+    if (!isLoading && !user) {
+      router.push("/auth/login");
+    }
+  }, [isLoading]);
+
+  if (isLoading || !user) {
+    return (
+      <Page>
+        <Flex alignItems="center" justifyContent="center">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="purple.500"
+            size="xl"
+          />
+        </Flex>
+      </Page>
+    );
+  }
+
   return (
     <Flex
       height="100vh"
@@ -52,7 +88,7 @@ const Home: NextPage = () => {
             _hover={{ bg: "whiteAlpha.200" }}
             whiteSpace="nowrap"
           >
-            <UserInfo name="Esther Collins" email="esther-colls@chakra.com" />
+            <UserInfo name={user.name} email={user.email} />
           </Box>
           <ScrollArea pt="5" pb="6">
             <SidebarLink
@@ -64,13 +100,24 @@ const Home: NextPage = () => {
             </SidebarLink>
             <Stack pb="6">
               <NavSectionTitle>Actions</NavSectionTitle>
-              <SidebarLink icon={<IoGrid />}>Dashboard</SidebarLink>
-              <SidebarLink icon={<IoFileTrayFull />}>All Products</SidebarLink>
-              <SidebarLink icon={<IoAddCircle />}>Add a Product</SidebarLink>
-            </Stack>
-            <Stack pb="6">
-              <NavSectionTitle>Profile</NavSectionTitle>
-              <SidebarLink icon={<IoSettingsSharp />}>Settings</SidebarLink>
+              <SidebarLink
+                icon={<IoGrid />}
+                onClick={() => setTab("dashboard")}
+              >
+                Dashboard
+              </SidebarLink>
+              <SidebarLink
+                icon={<IoFileTrayFull />}
+                onClick={() => setTab("all-products")}
+              >
+                All Products
+              </SidebarLink>
+              <SidebarLink
+                icon={<IoAddCircle />}
+                onClick={() => setTab("add-product")}
+              >
+                Add a Product
+              </SidebarLink>
             </Stack>
           </ScrollArea>
         </Box>
@@ -109,15 +156,17 @@ const Home: NextPage = () => {
               px="10"
               pt={{ md: 1, base: 8 }}
             >
-              <Heading size="lg" fontWeight="extrabold" mb="6">
-                Dashboard
-              </Heading>
-              <Box
-                flex="1"
-                borderWidth="3px"
-                borderStyle="dashed"
-                rounded="xl"
-              />
+              {tab === "dashboard" ? (
+                seller ? (
+                  <SellerDashboard seller={seller} />
+                ) : (
+                  <SellerProposalUpload mutate={sellerMutate} />
+                )
+              ) : tab === "add-product" ? (
+                <AddProduct />
+              ) : (
+                <SellerProducts />
+              )}
             </Flex>
           </Flex>
         </Box>
