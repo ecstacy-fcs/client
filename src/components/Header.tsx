@@ -12,20 +12,20 @@ import {
   Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
 import { useUser } from "~/hooks/useUser";
 import Logo from "./Logo";
-import { useRouter } from "next/router";
 
 interface Props {}
 
 const Header = (props: Props) => {
   const [loggingOut, setLoggingOut] = useState<boolean>(false);
   const { user, isLoading } = useUser();
-  const [searchvalue, setValue] = React.useState("")
+  const [searchvalue, setValue] = React.useState("");
   const { logout } = useAuth();
-  const router = useRouter()
+  const router = useRouter();
 
   const onLogout = async () => {
     setLoggingOut(true);
@@ -33,15 +33,14 @@ const Header = (props: Props) => {
     setLoggingOut(false);
   };
 
-  const handleChange = (event : React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setValue(event.target.value);
 
-  const handleKeyDown= (e : React.KeyboardEvent<HTMLDivElement>)=>
-  {
-    if(e.key==="Enter" && searchvalue.length>0)
-    {
-      router.push(`/search/${searchvalue.replace(/\s/g, "%20")}`)
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" && searchvalue.length > 0) {
+      router.push(`/search/${searchvalue.replace(/\s/g, "%20")}`);
     }
-  }
+  };
 
   return (
     <Box borderBottom="1px" borderColor="gray.200">
@@ -53,7 +52,13 @@ const Header = (props: Props) => {
               pointerEvents="none"
               children={<SearchIcon color="gray.400" />}
             />
-            <Input variant="filled" type="search" value={searchvalue} onChange={handleChange} onKeyPress={handleKeyDown}/>
+            <Input
+              variant="filled"
+              type="search"
+              value={searchvalue}
+              onChange={handleChange}
+              onKeyPress={handleKeyDown}
+            />
           </InputGroup>
           <HStack
             spacing="3"
