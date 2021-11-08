@@ -65,7 +65,7 @@ const Header = (props: Props) => {
                 Shop
               </Link>
             </NextLink>
-            <NextLink href="/" passHref>
+            <NextLink href="/seller" passHref>
               <Link fontSize="md" color="gray.700" fontWeight="medium">
                 Sell
               </Link>
