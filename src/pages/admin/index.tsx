@@ -21,9 +21,6 @@ import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { IoCart, IoCash, IoBag, IoSettingsSharp, IoCheckmarkCircle } from "react-icons/io5";
-import { RequestCard } from "~/components/RequestCard";
-import { ProductGrid } from "~/components/ProductGrid";
-import { useApprovalRequests } from "~/hooks/useApprovalRequests";
 import { fetcher } from "~/lib/api";
 import AdminApprovalRequestBox from "~/components/AdminApprovalRequestBox";
 import { AdminDashboardTab } from "~/types/";
@@ -97,14 +94,6 @@ const AdminHome: NextPage = () => {
               <SidebarLink icon={<IoBag />} onClick={() => setTab('sellers')}>Sellers</SidebarLink>
               <SidebarLink icon={<IoCash />} onClick={() => setTab('buyers')}>Buyers</SidebarLink>
               <SidebarLink icon={<IoCart />} onClick={() => setTab('products')}>Products</SidebarLink>
-            </Stack>
-            <Stack pb="6">
-              <NavSectionTitle>Profile</NavSectionTitle>
-              <SidebarLink icon={<IoSettingsSharp />}>Settings</SidebarLink>
-              <SidebarLink icon={<BsFillBookmarksFill />}>
-                Bookmarks
-              </SidebarLink>
-              <SidebarLink icon={<BsPencilSquare />}>Drafts</SidebarLink>
             </Stack>
           </ScrollArea>
         </Box>
