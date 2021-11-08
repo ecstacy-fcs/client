@@ -73,7 +73,6 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
       const res = await fetcher("payment/pay", "POST", {
         pid: id,
       });
-      console.log(res);
       return res;
     };
     buyProduct().then((res) => {

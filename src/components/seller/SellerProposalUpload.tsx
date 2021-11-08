@@ -18,7 +18,6 @@ const SellerProposalUpload = (props: Props) => {
       body: formData,
     });
 
-    console.log("response", response.data);
     props.mutate();
   };
 

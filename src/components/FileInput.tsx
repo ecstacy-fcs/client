@@ -30,10 +30,6 @@ export const FileInput: React.FC<IProps> = (props) => {
     fileInputRef.current?.click();
   };
 
-  // useEffect(() => {
-  //   console.log(files);
-  // }, [files]);
-
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) {
       return;
