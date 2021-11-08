@@ -119,10 +119,6 @@ const Home: NextPage = () => {
                 Add a Product
               </SidebarLink>
             </Stack>
-            <Stack pb="6">
-              <NavSectionTitle>Profile</NavSectionTitle>
-              <SidebarLink icon={<IoSettingsSharp />}>Settings</SidebarLink>
-            </Stack>
           </ScrollArea>
         </Box>
       </Box>

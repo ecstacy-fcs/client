@@ -3,9 +3,24 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  images: string[];
-  sellerId: string;
-  categoryId: string;
+  seller: {
+    id: string;
+    userId: string;
+    user: {
+      name: string;
+    };
+  };
+  images: ProductImage[];
+  category: ProductCategory;
+}
+
+export interface ProductImage {
+  path: string;
+}
+
+export interface ProductCategory {
+  id: string;
+  name: string;
 }
 
 export interface User {
@@ -46,6 +61,7 @@ export interface LoginData {
 export type SellerDashboardTab =
   | "dashboard"
   | "add-product"
+  | "edit-product"
   | "all-products"
   | "settings";
 

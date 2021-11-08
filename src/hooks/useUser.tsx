@@ -1,30 +1,26 @@
-import { useEffect } from "react";
-import useSWR, { KeyedMutator } from "swr";
-import { UserWithoutPassword } from "../types";
+import useSWR from "swr";
+import { fetcher } from "~/lib/api";
 
-// @ts-ignore
-const fetcher = (...args: any) => fetch(...args).then((res) => res.json());
-
-export const useUser = (): {
-  user: UserWithoutPassword;
-  isLoading: boolean;
-  error: string;
-  isValidating: boolean;
-  mutate: KeyedMutator<{
-    data?: UserWithoutPassword;
-    error?: string | undefined;
-  }>;
-} => {
-  const { data: user, error, mutate, isValidating } = useSWR("user", fetcher);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+export const useUser = () => {
+  const {
+    data: user,
+    error,
+    mutate,
+    isValidating,
+  } = useSWR<{
+    data?: {
+      id: string;
+      name: string;
+      email: string;
+      verified: boolean;
+    };
+  }>("auth/user", fetcher, {
+    revalidateOnFocus: false,
+  });
 
   return {
-    user,
-    isLoading: !user && !error,
-    isValidating,
+    user: user?.data,
+    isLoading: (!user && !error) || isValidating,
     error,
     mutate,
   };

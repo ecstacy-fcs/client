@@ -24,12 +24,16 @@ export const ProductCard = (props: Props) => {
   const { product, rootProps } = props;
   const { name, images, price } = product;
   return (
-    <Stack spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
-      {images && (
+    <Stack
+      spacing={useBreakpointValue({ base: "4", md: "5" })}
+      {...rootProps}
+      maxW="sm"
+    >
+      {images.length > 0 && (
         <Box position="relative">
           <AspectRatio ratio={4 / 3}>
             <Image
-              src={images[0]}
+              src={images[0].path}
               alt={name}
               draggable="false"
               fallback={<Skeleton />}

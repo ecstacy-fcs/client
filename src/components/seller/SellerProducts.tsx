@@ -1,13 +1,14 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSeller } from "~/hooks/useSeller";
 import { fetcher } from "~/lib/api";
-import { ProductCard } from "../ProductCard";
+import { SellerProductCard } from "./SellerProductCard";
 import { ProductGrid } from "../ProductGrid";
+import { SellerDashboardTab } from "~/types";
 
 interface Props {}
 
-const SellerProducts = (props: Props) => {
+const SellerProducts = ({}: Props) => {
   const [products, setProducts] = useState<any[]>([]);
   const { seller } = useSeller();
 
@@ -24,9 +25,13 @@ const SellerProducts = (props: Props) => {
         All Products
       </Heading>
       <ProductGrid>
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products.length > 0 ? (
+          products.map((product) => (
+            <SellerProductCard key={product.id} product={product} />
+          ))
+        ) : (
+          <Text as="i">No products.</Text>
+        )}
       </ProductGrid>
     </>
   );

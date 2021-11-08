@@ -21,11 +21,14 @@ import { Field, Form, Formik, FormikProps } from "formik";
 import React, { useEffect, useState } from "react";
 import { fetcher } from "~/lib/api";
 import validate from "~/lib/validate";
+import { Product } from "~/types";
 import { FileInput } from "../FileInput";
 
-interface Props {}
+interface Props {
+  product: Product;
+}
 
-const AddProduct = ({}: Props) => {
+const EditProduct = ({ product }: Props) => {
   const toast = useToast();
   const submit = async (
     formData: any,
@@ -37,12 +40,15 @@ const AddProduct = ({}: Props) => {
     }>
   ) => {
     // props.validateForm();
-    const response = await fetcher("products", "POST", props.values);
-    const productId = response.data.id;
-    let res;
+    const response = await fetcher(
+      `products/${product.id}`,
+      "PATCH",
+      props.values
+    );
 
+    let res;
     if (!response.error) {
-      res = await fetcher(`products/${productId}/images`, "POST", undefined, {
+      res = await fetcher(`products/${product.id}/images`, "PATCH", undefined, {
         headers: undefined,
         body: formData,
       });
@@ -52,9 +58,10 @@ const AddProduct = ({}: Props) => {
 
     toast({
       position: "top",
-      title: response.error || res?.error ? "An error occured" : "Success",
-      description: response.error || res?.error || "Product added successfully",
-      status: response.error || res?.error ? "error" : "success",
+      title: res?.error || response.error ? "An error occured" : "Success",
+      description:
+        res?.error || response.error || "Product edited successfully",
+      status: res?.error || response.error ? "error" : "success",
       duration: 3000,
       isClosable: true,
     });
@@ -70,12 +77,14 @@ const AddProduct = ({}: Props) => {
 
   return (
     <>
-      <Heading size="lg" fontWeight="extrabold" mb="6">
-        Add a Product
-      </Heading>
       <Box maxW="sm">
         <Formik
-          initialValues={{ name: "", description: "", price: "", category: "" }}
+          initialValues={{
+            name: product.name,
+            description: product.description,
+            price: product.price.toString(),
+            category: product.category?.id,
+          }}
           onSubmit={() => {}}
         >
           {(props) => (
@@ -172,6 +181,7 @@ const AddProduct = ({}: Props) => {
                     >
                       <FormLabel htmlFor="category">Category</FormLabel>
                       <Select
+                        value={product.category?.id}
                         placeholder="Select category"
                         bg={mode("white", "gray.700")}
                         color="gray.600"
@@ -211,4 +221,4 @@ const AddProduct = ({}: Props) => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;
