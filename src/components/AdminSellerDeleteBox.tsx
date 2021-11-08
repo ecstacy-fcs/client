@@ -13,8 +13,12 @@ const AdminSellerDeleteBox = (props: any) => {
     const {sellers, error, isLoading, mutate} = useSellers();
 
     const onBan = async (userId: string, sellerId: string) => {
-        await fetcher(`users/${userId}`,'DELETE', {});
-        await fetcher(`sellers/${sellerId}`,'DELETE', {});
+        await fetcher(`users/${userId}/ban`,'POST', {});
+        mutate();
+    };
+
+    const onUnban = async (userId: string, sellerId: string) => {
+        await fetcher(`users/${userId}/unban`,'POST', {});
         mutate();
     };
 
@@ -85,7 +89,7 @@ const AdminSellerDeleteBox = (props: any) => {
         >
           <ProductGrid >
                 {sellers.map((seller) => (
-                    <UserCard key={seller.id} user={seller.user} onBan={(userId: string) => onBan(userId,seller.id)}/>
+                    <UserCard key={seller.id} user={seller.user} onUnban={(userId: string) => onUnban(userId, seller.id)} onBan={(userId: string) => onBan(userId,seller.id)}/>
                 ))}
             </ProductGrid>
         </Box>

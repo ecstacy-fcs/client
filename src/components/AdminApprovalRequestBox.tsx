@@ -23,7 +23,7 @@ const AdminApprovalRequestBox = (props: any) => {
     };
     
 
-    if(error || !approvalRequests) {
+    if(error || !approvalRequests && !isLoading) {
         return (
             <Flex
             direction="column"

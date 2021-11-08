@@ -14,13 +14,16 @@ const AdminBuyerDeleteBox = (props: any) => {
     const {buyers, error, isLoading, mutate} = useBuyers();
 
     const onBan = async (userId: string, buyerId: string) => {
-        await fetcher(`users/${userId}`,'DELETE', {});
-        await fetcher(`buyers/${buyerId}`,'DELETE', {});
+        await fetcher(`users/${userId}/ban`,'POST', {});
         mutate();
     };
 
+    const onUnban = async (userId: string, buyerId: string) => {
+        await fetcher(`users/${userId}/unban`,'POST', {});
+        mutate();
+    };
 
-    if(error || !buyers) {
+    if(error || !buyers && !isLoading) {
         return (
             <Flex
             direction="column"
@@ -86,7 +89,7 @@ const AdminBuyerDeleteBox = (props: any) => {
         >
           <ProductGrid >
                 {buyers.map((buyer) => (
-                    <UserCard key={buyer.id} user={buyer.user} onBan={(userId: string) => onBan(userId,buyer.id)}/>
+                    <UserCard key={buyer.id} user={buyer.user} onUnban={(userId: string) => onUnban(userId,buyer.id)} onBan={(userId: string) => onBan(userId,buyer.id)}/>
                 ))}
             </ProductGrid>
         </Box>

@@ -16,6 +16,8 @@ export interface User {
   address?: string;
   phoneNumber?: string;
   verified: boolean;
+  banned: boolean;
+  deleted?: boolean;
   adminProfile?: any;
   buyerProfile?: any;
   sellerProfile?: any;
