@@ -19,10 +19,11 @@ import {
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
+import { useUser } from "~/hooks/useUser";
 import validate from "~/lib/validate";
 import { LoginData } from "../../types";
 
@@ -34,6 +35,8 @@ export default function Signup({}: Props): ReactElement {
   const [show, setShow] = useState<boolean>(false);
   const handleClick = () => setShow(!show);
   const [loading, setLoading] = useState<boolean>(false);
+  const toast = useToast();
+  const { user } = useUser();
 
   const submit = async (values: LoginData) => {
     setLoading(true);
@@ -41,6 +44,21 @@ export default function Signup({}: Props): ReactElement {
     setLoading(false);
     if (success) router.push("/");
   };
+
+  useEffect(() => {
+    const { query, replace } = router;
+    if (user?.verified) replace("/");
+    if (query.verified) {
+      toast({
+        position: "top",
+        title: "Email verified!",
+        description: "Your email ID has been verified, please login",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [router.query, user]);
 
   return (
     <Page>
@@ -131,7 +149,11 @@ export default function Signup({}: Props): ReactElement {
                 </Field>
               </Stack>
               <Flex align="center" justify="space-between" mt="8">
-                <Link fontSize="sm" color="red.600">
+                <Link
+                  fontSize="sm"
+                  color="red.600"
+                  href="/auth/forgot-password"
+                >
                   Forgot password?
                 </Link>
               </Flex>

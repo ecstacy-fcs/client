@@ -7,7 +7,6 @@ interface ApiResponse<T> {
 type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
 const { NEXT_PUBLIC_API_BASE_URL } = process.env;
-console.log(NEXT_PUBLIC_API_BASE_URL);
 
 export const fetcher = async <T = any>(
   endpoint: string,
@@ -34,13 +33,10 @@ export const fetcher = async <T = any>(
     });
 
     const data = (await res.json()) as ApiResponse<T>;
-
     if (!data.success) {
       console.error("An error occured", data.message);
-
       return { error: data.message };
     }
-
     return { data: data.data };
   } catch (err) {
     console.error(err);
