@@ -30,11 +30,28 @@ import { AdminDashboardTab } from "~/types/";
 import AdminSellerDeleteBox from "~/components/AdminSellerDeleteBox";
 import AdminBuyerDeleteBox from "~/components/AdminBuyerDeleteBox";
 import AdminProductBox from "~/components/AdminProductBox";
+import { useRouter } from "next/router";
+import { useUser } from "~/hooks/useUser";
 
 const AdminHome: NextPage = () => {
   const [tab, setTab] = React.useState<AdminDashboardTab>('approval-requests');
   const { isOpen, toggle } = useMobileMenuState();
-  
+  const router = useRouter();
+  const {user, isLoading} = useUser();
+
+  React.useEffect(() => {
+    if(!isLoading && !user) {
+      router.push('/auth/login');
+    }
+  }, [isLoading]);
+
+  React.useEffect(()=>{
+    fetcher(`users/${user?.id}`,'GET',{}).then(res=>{
+      if(res.data && !res.data.adminProfile){
+        router.push('/');
+      }
+    });
+  },[user,isLoading]);
 
   return (
     <Flex
