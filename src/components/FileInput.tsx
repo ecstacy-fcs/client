@@ -65,7 +65,7 @@ export const FileInput: React.FC<IProps> = (props) => {
                 <Text>{files[0].name}</Text>
               ))}
             <FormErrorMessage>
-              Minimum {props.minFiles} required
+              Minimum {props.minFiles}, maximum 3 required
             </FormErrorMessage>
           </FormControl>
         </Stack>
@@ -74,7 +74,12 @@ export const FileInput: React.FC<IProps> = (props) => {
           colorScheme="purple"
           onClick={() => {
             if (props.validateForm) props.validateForm();
-            if (props.minFiles && files.length < props.minFiles) return;
+            if (
+              props.minFiles &&
+              files.length < props.minFiles &&
+              files.length > 3
+            )
+              return;
             const formData = new FormData();
             files.forEach((file) => {
               formData.append(props.uploadFileName, file);

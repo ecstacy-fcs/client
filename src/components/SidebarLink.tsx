@@ -24,6 +24,30 @@ export const SidebarLink = (props: SidebarLinkProps) => {
     onClick,
     ...rest
   } = props;
+
+  if (disabled)
+    return (
+      <Box
+        as="a"
+        marginEnd="2"
+        fontSize="sm"
+        display="block"
+        px="3"
+        py="1"
+        rounded="md"
+        color="gray.500"
+        className="group"
+        fontWeight="medium"
+        cursor="not-allowed"
+        {...rest}
+      >
+        <HStack>
+          <Box opacity={0.5}>{avatar || icon}</Box>
+          <Text>{children}</Text>
+        </HStack>
+      </Box>
+    );
+
   return (
     <Box
       as="a"

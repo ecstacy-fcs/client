@@ -6,15 +6,11 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { BsSearch } from "react-icons/bs";
-import {
-  IoAddCircle,
-  IoFileTrayFull,
-  IoGrid,
-  IoSettingsSharp,
-} from "react-icons/io5";
+import { IoAddCircle, IoFileTrayFull, IoGrid } from "react-icons/io5";
 import { MobileMenuButton } from "~/components/MobileMenuButton";
 import { NavSectionTitle } from "~/components/NavSectionTitle";
 import Page from "~/components/Page";
@@ -29,7 +25,6 @@ import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { useSeller } from "~/hooks/useSeller";
 import { useUser } from "~/hooks/useUser";
 import type { SellerDashboardTab } from "../../types";
-import Link from "next/link";
 
 const Home: NextPage = () => {
   const [tab, setTab] = React.useState<SellerDashboardTab>("dashboard");
@@ -106,18 +101,21 @@ const Home: NextPage = () => {
               <SidebarLink
                 icon={<IoGrid />}
                 onClick={() => setTab("dashboard")}
+                disabled={!seller}
               >
                 Dashboard
               </SidebarLink>
               <SidebarLink
                 icon={<IoFileTrayFull />}
                 onClick={() => setTab("all-products")}
+                disabled={!seller?.approved}
               >
                 All Products
               </SidebarLink>
               <SidebarLink
                 icon={<IoAddCircle />}
                 onClick={() => setTab("add-product")}
+                disabled={!seller?.approved}
               >
                 Add a Product
               </SidebarLink>
