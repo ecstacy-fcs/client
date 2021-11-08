@@ -29,6 +29,7 @@ import AdminApprovalRequestBox from "~/components/AdminApprovalRequestBox";
 import { AdminDashboardTab } from "~/types/";
 import AdminSellerDeleteBox from "~/components/AdminSellerDeleteBox";
 import AdminBuyerDeleteBox from "~/components/AdminBuyerDeleteBox";
+import AdminProductBox from "~/components/AdminProductBox";
 
 const AdminHome: NextPage = () => {
   const [tab, setTab] = React.useState<AdminDashboardTab>('approval-requests');
@@ -121,6 +122,7 @@ const AdminHome: NextPage = () => {
             {tab === 'approval-requests' && <AdminApprovalRequestBox />}
             {tab === 'sellers' && <AdminSellerDeleteBox />}
             {tab === 'buyers' && <AdminBuyerDeleteBox />}
+            {tab === 'products' && <AdminProductBox />}
           </Flex>
         </Box>
       </Box>

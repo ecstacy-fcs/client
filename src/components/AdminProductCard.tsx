@@ -17,19 +17,27 @@ import {
   
   interface Props {
     product: Product;
+    onBan: () => void;
+    onUnban: () => void;
     rootProps?: StackProps;
   }
   
-  export const ProductCard = (props: Props) => {
+  export const AdminProductCard = (props: Props) => {
     const { product, rootProps } = props;
-    const { title, images, price } = product;
+    const { name, images, price } = product;
     return (
-      <Stack spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
+      <Stack
+        spacing={useBreakpointValue({ base: "4", md: "5" })}
+        {...rootProps}
+        maxW="sm"
+      >
         <Box position="relative">
           <AspectRatio ratio={4 / 3}>
             <Image
-              src={images[0]}
-              alt={title}
+              src={
+                images.length > 0 ? images[0].path : "/product-placeholder.png"
+              }
+              alt={name}
               draggable="false"
               fallback={<Skeleton />}
               borderRadius={useBreakpointValue({ base: "md", md: "xl" })}
@@ -42,17 +50,18 @@ import {
               fontWeight="medium"
               color={useColorModeValue("gray.700", "gray.400")}
             >
-              {title}
+              {name}
             </Text>
             <PriceTag price={price} />
           </Stack>
         </Stack>
         <Stack align="center">
-          <NextLink href={`/products/${product.id}`}>
-            <Button colorScheme="red" isFullWidth>
-              Remove Product
-            </Button>
-          </NextLink>
+          {!product.banned && <Button variant='outline' colorScheme='red' isFullWidth onClick={props.onBan}>
+              Ban
+            </Button>}
+          {product.banned && <Button variant='outline' colorScheme='green' isFullWidth onClick={props.onUnban}>
+              Unban
+              </Button>}
         </Stack>
       </Stack>
     );

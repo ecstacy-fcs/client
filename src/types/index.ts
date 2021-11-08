@@ -15,6 +15,7 @@ export interface Product {
       name: string;
     };
   };
+  banned: boolean;
   images: ProductImage[];
   category: ProductCategory;
 }
