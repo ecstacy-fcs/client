@@ -5,18 +5,22 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  IconButton,
   Input,
+  InputGroup,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/spinner";
 import { useToast } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { HiClipboard } from "react-icons/hi";
 import Page from "~/components/Page";
-import { useAuth } from "~/hooks/useAuth";
+import VirtualKeyboard from "~/components/VirtualKeyboard";
 import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";
+
 interface UserData {
   id: string;
   name: string;
@@ -26,7 +30,6 @@ interface UserData {
 
 const ProfilePage: React.FC = () => {
   const { user, isLoading, mutate } = useUser();
-  const { logout } = useAuth();
   const router = useRouter();
   const toast = useToast();
   const [userData, setUserData] = useState<UserData>();
@@ -34,6 +37,8 @@ const ProfilePage: React.FC = () => {
   const [updatingUserData, setUpdatingUserData] = useState<boolean>(false);
   const [requestDeleteUser, setRequestDeleteUser] = useState<boolean>(false);
   const [showDeleteForm, setShowDeleteForm] = useState<boolean>(false);
+  const [otpValue, setOtpValue] = useState<string>("");
+  const keyboardRef = useRef<any>(null);
 
   useEffect(() => {
     if (!user && !isLoading) {
@@ -101,10 +106,12 @@ const ProfilePage: React.FC = () => {
     });
   };
 
-  const deleteAccount = async (values: { otp: string }) => {
-    if (!user) return;
+  const deleteAccount = async () => {
+    if (!user || !otpValue) return;
     setRequestDeleteUser(true);
-    const { error } = await fetcher(`users/${user.id}`, "DELETE", values);
+    const { error } = await fetcher(`users/${user.id}`, "DELETE", {
+      otp: otpValue,
+    });
     setRequestDeleteUser(false);
     toast({
       position: "top",
@@ -240,31 +247,41 @@ const ProfilePage: React.FC = () => {
       {() => (
         <Form>
           <Stack spacing="-px">
-            <Field
-              name="otp"
-              validate={(value: string) => {
-                if (!value) return "OTP token is required";
-              }}
-            >
-              {({ field, form }: any) => (
-                <FormControl
-                  id="otp"
-                  isInvalid={form.errors.otp && form.touched.otp}
-                >
+            <Field name="otp">
+              {({ field: { value, ...field } }: any) => (
+                <FormControl id="otp">
                   <FormLabel srOnly htmlFor="otp">
                     OTP Token
                   </FormLabel>
-                  <Input
-                    size="lg"
-                    name="otp"
-                    type="text"
-                    required
-                    placeholder="OTP token"
-                    bg={mode("white", "gray.700")}
-                    fontSize="md"
-                    {...field}
-                  />
-                  <FormErrorMessage>{form.errors.otp}</FormErrorMessage>
+                  <InputGroup>
+                    <Input
+                      size="lg"
+                      name="otp"
+                      type="text"
+                      required
+                      placeholder="OTP token"
+                      bg={mode("white", "gray.700")}
+                      fontSize="md"
+                      value={otpValue}
+                      readOnly
+                      roundedRight="0"
+                      cursor="default"
+                      {...field}
+                    />
+                    <IconButton
+                      colorScheme="blue"
+                      aria-label="Paste OTP"
+                      icon={<HiClipboard size="26" />}
+                      size="lg"
+                      roundedLeft="0"
+                      onClick={async () => {
+                        const value =
+                          await window.navigator.clipboard.readText();
+                        setOtpValue(value);
+                        keyboardRef.current.setInput(value);
+                      }}
+                    />
+                  </InputGroup>
                 </FormControl>
               )}
             </Field>
@@ -278,6 +295,7 @@ const ProfilePage: React.FC = () => {
             fontSize="md"
             fontWeight="bold"
             isLoading={requestDeleteUser}
+            disabled={otpValue.length === 0}
           >
             Delete my account
           </Button>
@@ -319,7 +337,17 @@ const ProfilePage: React.FC = () => {
             </Text>
             {showDeleteForm ? (
               <Container mt="8" maxWidth="40ch" padding="0">
-                <DeleteForm />
+                <Stack direction="column" spacing="8">
+                  <Text>
+                    The OTP token must be either pasted using the paste button
+                    or typed down using the virtual keyboard.
+                  </Text>
+                  <DeleteForm />
+                  <VirtualKeyboard
+                    onChange={setOtpValue}
+                    keyboardRef={keyboardRef}
+                  />
+                </Stack>
               </Container>
             ) : (
               <Button
