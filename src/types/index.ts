@@ -15,6 +15,7 @@ export interface Product {
       name: string;
     };
   };
+  banned: boolean;
   images: ProductImage[];
   category: ProductCategory;
 }
@@ -35,6 +36,8 @@ export interface User {
   address?: string;
   phoneNumber?: string;
   verified: boolean;
+  banned: boolean;
+  deleted?: boolean;
   adminId?: string;
   sellerId?: string;
   adminProfile?: any;
@@ -45,9 +48,9 @@ export interface User {
 
 export interface Seller {
   id: string;
-  userId: string;
   approved: boolean;
   approvalDocument?: string;
+  user: User;
   products?: Product[];
 }
 
@@ -78,3 +81,10 @@ export interface UserWithoutPassword {
   phoneNumber?: string;
   verified: boolean;
 }
+
+export interface Buyer {
+  id: string;
+  user: User;
+}
+
+export type AdminDashboardTab = 'products' | 'buyers' | 'sellers' | 'approval-requests';
