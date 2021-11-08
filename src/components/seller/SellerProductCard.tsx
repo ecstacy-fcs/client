@@ -23,6 +23,7 @@ import {
 import NextLink from "next/link";
 import * as React from "react";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import { Product, SellerDashboardTab } from "../../types";
 import { PriceTag } from "../PriceTag";
 import EditProduct from "./EditProduct";
@@ -50,14 +51,12 @@ export const SellerProductCard = (props: Props) => {
 
   const deleteProduct = async () => {
     const { data, error } = await fetcher(`products/${product.id}`, "DELETE");
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Success",
-      description: error || "Product deleted successfully",
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      error,
+      "Product Deleted!",
+      "Product deleted successfully"
+    );
     onDeleteClose();
   };
 

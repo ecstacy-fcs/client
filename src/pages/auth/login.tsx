@@ -24,6 +24,7 @@ import { IoEyeOffSharp, IoEyeSharp } from "react-icons/io5";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
 import { useUser } from "~/hooks/useUser";
+import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 import { LoginData } from "../../types";
 
@@ -49,14 +50,12 @@ export default function Signup({}: Props): ReactElement {
     const { query, replace } = router;
     if (user?.verified) replace("/");
     if (query.verified) {
-      toast({
-        position: "top",
-        title: "Email verified!",
-        description: "Your email ID has been verified, please login",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toastWrapper(
+        toast,
+        undefined,
+        "Email verified!",
+        "Your email ID has been verified, please login"
+      );
     }
   }, [router.query, user]);
 

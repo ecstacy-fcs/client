@@ -20,6 +20,7 @@ import Page from "~/components/Page";
 import VirtualKeyboard from "~/components/VirtualKeyboard";
 import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 
 interface UserData {
   id: string;
@@ -42,14 +43,11 @@ const ProfilePage: React.FC = () => {
 
   useEffect(() => {
     if (!user && !isLoading) {
-      toast({
-        position: "top",
-        title: "Login required",
-        description: "You must login to view the profile",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toastWrapper(
+        toast,
+        "You must login to view the profile",
+        "Login required"
+      );
       router.push("/");
       return;
     }
@@ -62,14 +60,7 @@ const ProfilePage: React.FC = () => {
     const { data, error } = await fetcher<UserData>(`users/${user.id}`);
     setLoadingUserData(false);
     if (error) {
-      toast({
-        position: "top",
-        title: "An error occured",
-        description: error,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toastWrapper(toast, error, "An error occured");
       return;
     }
     setUserData(data);
@@ -79,14 +70,7 @@ const ProfilePage: React.FC = () => {
     if (!user) return;
     setUpdatingUserData(true);
     const { error } = await fetcher(`users/${user.id}`, "PATCH", values);
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Success",
-      description: error || "Profile updated!",
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(toast, error, "Success", "Profile updated!");
     setUpdatingUserData(false);
     if (!error) mutate();
   };
@@ -96,14 +80,12 @@ const ProfilePage: React.FC = () => {
     const { error } = await fetcher("users/request-delete", "POST");
     setRequestDeleteUser(false);
     if (!error || error.includes("already sent")) setShowDeleteForm(true);
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Email sent!",
-      description: error || "OTP email has been sent to your account!",
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      error,
+      "Email sent!",
+      "OTP email has been sent to your account!"
+    );
   };
 
   const deleteAccount = async () => {
@@ -113,14 +95,12 @@ const ProfilePage: React.FC = () => {
       otp: otpValue,
     });
     setRequestDeleteUser(false);
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Account deleted",
-      description: error || "Your account has been deleted!",
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      error,
+      "Account deleted",
+      "Your account has been deleted!"
+    );
     if (!error) {
       window.location.href = "/";
     }

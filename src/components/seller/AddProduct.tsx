@@ -20,6 +20,7 @@ import {
 import { Field, Form, Formik, FormikProps } from "formik";
 import React, { useEffect, useState } from "react";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 import { FileInput } from "../FileInput";
 
@@ -50,14 +51,12 @@ const AddProduct = ({}: Props) => {
       props.resetForm();
     }
 
-    toast({
-      position: "top",
-      title: response.error || res?.error ? "An error occured" : "Success",
-      description: response.error || res?.error || "Product added successfully",
-      status: response.error || res?.error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      response.error || res?.error,
+      "Product Added!",
+      "Product added successfully"
+    );
   };
 
   const [categories, setCategories] = useState<any[]>([]);

@@ -6,12 +6,14 @@ import {
   Divider,
   Flex,
   HStack,
+  IconButton,
   Image,
   SimpleGrid,
   Skeleton,
   StackProps,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
@@ -20,6 +22,8 @@ import { fetcher } from "~/lib/api";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
 import { useRouter } from "next/router";
+import { HiShare } from "react-icons/hi";
+import { toastWrapper } from "~/lib/toast";
 
 interface ProductProps {
   product: Product;
@@ -37,7 +41,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const ProductPage: React.FC<ProductProps> = ({ product }) => {
-  const router = useRouter()
+  const toast = useToast();
+  const router = useRouter();
   const { name, images, price, description, seller, category } = product;
   const arrowStyles = {
     cursor: "pointer",
@@ -59,22 +64,22 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [ paymenturl, setpaymenturl ] = useState("")
+  const [paymenturl, setpaymenturl] = useState("");
 
-  useEffect(() =>
-  { 
-    let id = router.query.productId
-    console.log(id)
-     const buyProduct = async function as()
-     { 
-        const res = await fetcher("payment/pay","POST",{
-        pid: id })
-        console.log(res)
-        return res
-     }
-     buyProduct().then((res)=>{setpaymenturl(res.data)})
-  },[]
-  )
+  useEffect(() => {
+    let id = router.query.productId;
+    console.log(id);
+    const buyProduct = async function as() {
+      const res = await fetcher("payment/pay", "POST", {
+        pid: id,
+      });
+      console.log(res);
+      return res;
+    };
+    buyProduct().then((res) => {
+      setpaymenturl(res.data);
+    });
+  }, []);
 
   const slidesCount = images.length;
 
@@ -96,48 +101,85 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
         <Box boxSize="sm" flexShrink={0}>
           <Flex alignItems="center" justifyContent="center">
             <Flex w="full" overflow="hidden" pos="relative">
-              <Flex w="full" {...carouselStyle}>
-                {images.map((image, sid) => (
-                  <Box
-                    key={`slide-${sid}`}
-                    boxSize="full"
-                    shadow="md"
-                    flex="none"
-                  >
-                    <AspectRatio ratio={4 / 3}>
-                      <Image
-                        src={image.path}
+              {images.length > 0 ? (
+                <>
+                  <Flex w="full" {...carouselStyle}>
+                    {images.map((image, sid) => (
+                      <Box
+                        key={`slide-${sid}`}
                         boxSize="full"
-                        fallback={<Skeleton />}
-                        draggable="false"
-                        alt={name}
-                        borderRadius="10"
-                      />
-                    </AspectRatio>
-                  </Box>
-                ))}
-              </Flex>
-              <Text {...(arrowStyles as any)} left="0" onClick={prevSlide}>
-                &#10094;
-              </Text>
-              <Text {...(arrowStyles as any)} right="0" onClick={nextSlide}>
-                &#10095;
-              </Text>
+                        shadow="md"
+                        flex="none"
+                      >
+                        <AspectRatio ratio={4 / 3}>
+                          <Image
+                            src={image.path}
+                            boxSize="full"
+                            fallback={<Skeleton />}
+                            draggable="false"
+                            alt={name}
+                            borderRadius="10"
+                          />
+                        </AspectRatio>
+                      </Box>
+                    ))}
+                  </Flex>
+                  <Text {...(arrowStyles as any)} left="0" onClick={prevSlide}>
+                    &#10094;
+                  </Text>
+                  <Text {...(arrowStyles as any)} right="0" onClick={nextSlide}>
+                    &#10095;
+                  </Text>
+                </>
+              ) : (
+                <Box boxSize="full" shadow="md" flex="none">
+                  <AspectRatio ratio={4 / 3}>
+                    <Image
+                      src="/product-placeholder.png"
+                      boxSize="full"
+                      fallback={<Skeleton />}
+                      draggable="false"
+                      alt={name}
+                      borderRadius="10"
+                    />
+                  </AspectRatio>
+                </Box>
+              )}
             </Flex>
           </Flex>
         </Box>
         <Box display="flex" flexDirection="column">
-          <HStack>
-            <Text
-              fontWeight="bold"
-              fontSize="25"
-              color={useColorModeValue("gray.700", "gray.400")}
-            >
-              {name}
-            </Text>
-            <Badge ml="1" colorScheme="purple" flexShrink={0}>
-              {category.name}
-            </Badge>
+          <HStack spacing={10}>
+            <HStack>
+              <Text
+                fontWeight="bold"
+                fontSize="25"
+                color={useColorModeValue("gray.700", "gray.400")}
+              >
+                {name}
+              </Text>
+              <Badge ml="1" colorScheme="purple" flexShrink={0}>
+                {category.name}
+              </Badge>
+            </HStack>
+            <IconButton
+              variant="ghost"
+              colorScheme="purple"
+              aria-label="Paste OTP"
+              icon={<HiShare size="24" />}
+              size="lg"
+              onClick={async () => {
+                await window.navigator.clipboard.writeText(
+                  window.location.href
+                );
+                toastWrapper(
+                  toast,
+                  undefined,
+                  "Link copied!",
+                  "Happy sharing :)"
+                );
+              }}
+            />
           </HStack>
           <PriceTag price={price} />
           <Divider orientation="horizontal" p="2" />
@@ -161,10 +203,15 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
           <Text color={useColorModeValue("gray.700", "gray.700")} mb="4">
             {seller.user.name}
           </Text>
-          <Button colorScheme="purple" size="md" p="3" maxWidth="100"
-          onClick={()=>{
-            window.location.assign(paymenturl)}}
-            isLoading = {paymenturl===""}
+          <Button
+            colorScheme="purple"
+            size="md"
+            p="3"
+            maxWidth="100"
+            onClick={() => {
+              window.location.assign(paymenturl);
+            }}
+            isLoading={paymenturl === ""}
           >
             Buy Now
           </Button>

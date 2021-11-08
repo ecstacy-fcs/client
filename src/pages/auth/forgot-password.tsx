@@ -21,6 +21,7 @@ import Page from "~/components/Page";
 import VirtualKeyboard from "~/components/VirtualKeyboard";
 import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 
 const ForgotPassword: React.FC = () => {
@@ -41,14 +42,12 @@ const ForgotPassword: React.FC = () => {
     const { error } = await fetcher("auth/forgot-password", "POST", values);
     setLoading(false);
     if (!error || error.includes("already sent")) setShowUpdateForm(true);
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Email sent!",
-      description: error || "OTP email has been sent to your account",
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      error,
+      "Email sent!",
+      "OTP email has been sent to your account"
+    );
   };
 
   const submitUpdatePassword = async (values: { password: string }) => {
@@ -59,14 +58,12 @@ const ForgotPassword: React.FC = () => {
       password: values.password,
     });
     setLoading(false);
-    toast({
-      position: "top",
-      title: error ? "An error occured" : "Password updated!",
-      description: error || "Login to your account using your new password",
-      status: error ? "error" : "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      error,
+      "Password updated!",
+      "Login to your account using your new password"
+    );
     if (!error) router.push("/auth/login");
   };
 

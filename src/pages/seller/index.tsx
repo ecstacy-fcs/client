@@ -29,6 +29,7 @@ import { useMobileMenuState } from "~/hooks/useMobileMenuState";
 import { useSeller } from "~/hooks/useSeller";
 import { useUser } from "~/hooks/useUser";
 import type { SellerDashboardTab } from "../../types";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [tab, setTab] = React.useState<SellerDashboardTab>("dashboard");
@@ -78,18 +79,20 @@ const Home: NextPage = () => {
         position="fixed"
       >
         <Box fontSize="sm" lineHeight="tall">
-          <Box
-            as="a"
-            href="#"
-            p="3"
-            display="block"
-            transition="background 0.1s"
-            rounded="xl"
-            _hover={{ bg: "whiteAlpha.200" }}
-            whiteSpace="nowrap"
-          >
-            <UserInfo name={user.name} email={user.email} />
-          </Box>
+          <Link href="/profile">
+            <Box
+              as="a"
+              href="#"
+              p="3"
+              display="block"
+              transition="background 0.1s"
+              rounded="xl"
+              _hover={{ bg: "whiteAlpha.200" }}
+              whiteSpace="nowrap"
+            >
+              <UserInfo name={user.name} email={user.email} />
+            </Box>
+          </Link>
           <ScrollArea pt="5" pb="6">
             <SidebarLink
               display={{ base: "block", lg: "none" }}
