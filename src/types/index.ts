@@ -11,7 +11,6 @@ export interface Product {
   price: number;
   seller: {
     id: string;
-    userId: string;
     user: {
       name: string;
     };

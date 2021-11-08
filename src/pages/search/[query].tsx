@@ -10,10 +10,8 @@ export default function Comp()
 {
     const router = useRouter()
     const query = router.query
-    console.log(query.query)
 
     const { products, error, isLoading } = useSearchResults(`${query.query}`)
-    console.log(error)
 
     return isLoading?(
         <Page>
@@ -28,31 +26,33 @@ export default function Comp()
         </Box>
       </Page>)
     :error || !products.length?(
+        <Page>
         <Box textAlign="center" mb={{ base: "10" }} mx="auto">
-            <Heading mt={10} mb={5} color={useColorModeValue("white", "white")}>
+            <Heading mt={10} mb={5} color={useColorModeValue("grey.700", "grey.400")}>
             {" "}
             Could not find what you were looking for.
             </Heading>
             <NextLink passHref href="/">
-                <Link fontSize="20" color="purple.200">Go back to home?</Link>
+                <Link fontSize="20" color="purple.400">Go back to home?</Link>
             </NextLink>
         </Box>
+        </Page>
     ):(
         <Page>
             <Box mx="auto">
-            <Heading
-          as="h1"
-          color="white"
-          fontWeight="extrabold"
-          letterSpacing="tight"
-          size="lg">  {`Search Results for "${query.query}"`}
-            </Heading>
-            <ProductGrid marginTop="10">
-            {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))}
-        </ProductGrid>
-        </Box>
+                <Heading
+                as="h1"
+                color="gray.800"
+                fontWeight="extrabold"
+                letterSpacing="tight"
+                size="lg">  {`Search Results for '${query.query}'`}
+                </Heading>
+                <ProductGrid marginTop="10">
+                    {products.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                    ))}
+                </ProductGrid>
+            </Box>
         </Page>
     )
 }
