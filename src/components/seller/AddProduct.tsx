@@ -14,6 +14,7 @@ import {
   Stack,
   Text,
   Textarea,
+  useToast,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { Field, Form, Formik, FormikProps } from "formik";
@@ -25,6 +26,7 @@ import { FileInput } from "../FileInput";
 interface Props {}
 
 const AddProduct = ({}: Props) => {
+  const toast = useToast();
   const submit = async (
     formData: any,
     props: FormikProps<{
@@ -46,6 +48,15 @@ const AddProduct = ({}: Props) => {
         body: formData,
       }
     );
+    toast({
+      position: "top",
+      title: res.error ? "An error occured" : "Success",
+      description: res.error || "Product added successfully",
+      status: res.error ? "error" : "success",
+      duration: 3000,
+      isClosable: true,
+    });
+    props.resetForm();
   };
 
   const [categories, setCategories] = useState<any[]>([]);

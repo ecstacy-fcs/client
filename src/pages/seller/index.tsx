@@ -21,6 +21,7 @@ import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
 import AddProduct from "~/components/seller/AddProduct";
 import SellerDashboard from "~/components/seller/SellerDashboard";
+import SellerProducts from "~/components/seller/SellerProducts";
 import SellerProposalUpload from "~/components/seller/SellerProposalUpload";
 import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
@@ -165,8 +166,10 @@ const Home: NextPage = () => {
                 ) : (
                   <SellerProposalUpload mutate={sellerMutate} />
                 )
-              ) : (
+              ) : tab === "add-product" ? (
                 <AddProduct />
+              ) : (
+                <SellerProducts />
               )}
             </Flex>
           </Flex>
