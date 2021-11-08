@@ -31,12 +31,14 @@ const validate = {
   required: (value: string) => {
     if (!value) return "Required";
   },
-  number: (value: string) => {
+  price: (value: string) => {
     let error;
     if (!value) {
       error = "Required";
     } else if (isNaN(parseInt(value))) {
       error = "Price must be a number";
+    } else if (parseInt(value) > 15000) {
+      error = "Price must be under 15000";
     }
     return error;
   },

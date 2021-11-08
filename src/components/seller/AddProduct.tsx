@@ -128,7 +128,7 @@ const AddProduct = ({}: Props) => {
                     </FormControl>
                   )}
                 </Field>
-                <Field name="price" validate={validate.number}>
+                <Field name="price" validate={validate.price}>
                   {({ field, form }: any) => (
                     <FormControl
                       id="price"

@@ -1,14 +1,13 @@
 import {
   Button,
-  VStack,
+  FormControl,
+  FormErrorMessage,
   Input,
   Stack,
   Text,
-  FormErrorMessage,
-  FormControl,
-  useToast,
+  VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export interface IProps {
   acceptedFileTypes?: string;
@@ -21,7 +20,6 @@ export interface IProps {
 }
 
 export const FileInput: React.FC<IProps> = (props) => {
-  const toast = useToast();
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const formRef = React.useRef<HTMLFormElement | null>(null);
   const [files, setFiles] = useState<File[]>([]);
@@ -29,10 +27,6 @@ export const FileInput: React.FC<IProps> = (props) => {
   const onClickHandler = () => {
     fileInputRef.current?.click();
   };
-
-  // useEffect(() => {
-  //   console.log(files);
-  // }, [files]);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) {
