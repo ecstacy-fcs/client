@@ -15,6 +15,14 @@ const AdminApprovalRequestBox = (props: any) => {
         console.log("Approve", id);
     };
     
+
+    const onDeny = async (id: string) => {
+      await fetcher(`sellers/${id}/deny`, 'PATCH',undefined)
+      mutate();
+      console.log("Deny", id);
+    };
+    
+
     if(error) {
         return (
             <Flex
@@ -88,12 +96,6 @@ const AdminApprovalRequestBox = (props: any) => {
       </Flex>
     )
 
-    const onDeny = async (id: string) => {
-        await fetcher(`sellers/${id}/deny`, 'PATCH',undefined)
-        mutate();
-        console.log("Deny", id);
-    };
-      
 }
 
 export default AdminApprovalRequestBox;
