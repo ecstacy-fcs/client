@@ -1,3 +1,9 @@
+export interface ProductImage {
+  id: string;
+  path: string;
+  productId: string;
+}
+
 export interface Product {
   id: string;
   name: string;
