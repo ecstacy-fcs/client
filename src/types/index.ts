@@ -1,8 +1,14 @@
+export interface ProductImage {
+  id: string,
+  path: string,
+  productId: string
+}
+
 export interface Product {
   title: string;
   id: string;
   price: number;
-  images: string[];
+  images: ProductImage[];
   seller: string;
   description: string;
   category: string;
