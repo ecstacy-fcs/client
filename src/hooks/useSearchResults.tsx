@@ -14,8 +14,6 @@ export const useSearchResults = (query : string) => {
     revalidateOnFocus: false,
   });
 
-  console.log(error)
-
   return {
     products: products?.data as Product[],
     isLoading: (!products && !error) || isValidating,
