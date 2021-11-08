@@ -1,6 +1,7 @@
 import { Flex, Heading, Box, useColorModeValue as mode } from "@chakra-ui/react";
 import * as React from "react";
 import { useApprovalRequests } from "~/hooks/useApprovalRequests";
+import { useBuyers } from "~/hooks/useBuyers";
 import { useSellers } from "~/hooks/useSellers";
 import { fetcher } from "~/lib/api";
 import { ProductGrid } from "./ProductGrid";
@@ -9,17 +10,17 @@ import { UserCard } from "./UserCard";
 
 
 
-const AdminSellerDeleteBox = (props: any) => {
-    const {sellers, error, isLoading, mutate} = useSellers();
+const AdminBuyerDeleteBox = (props: any) => {
+    const {buyers, error, isLoading, mutate} = useBuyers();
 
-    const onBan = async (userId: string, sellerId: string) => {
+    const onBan = async (userId: string, buyerId: string) => {
         await fetcher(`users/${userId}`,'DELETE', {});
-        await fetcher(`sellers/${sellerId}`,'DELETE', {});
+        await fetcher(`buyers/${buyerId}`,'DELETE', {});
         mutate();
     };
 
 
-    if(error || !sellers) {
+    if(error || !buyers) {
         return (
             <Flex
             direction="column"
@@ -29,7 +30,7 @@ const AdminSellerDeleteBox = (props: any) => {
             pt={{ md: 1, base: 1 }}
           >
             <Heading mb={5} color={mode("gray.700", "gray.400")}>
-              All Sellers
+              All Buyers
             </Heading>
             <Box
               flex="1"
@@ -52,7 +53,7 @@ const AdminSellerDeleteBox = (props: any) => {
             pt={{ md: 1, base: 1 }}
           >
             <Heading mb={5} color={mode("gray.700", "gray.400")}>
-              All Sellers
+              All Buyers
             </Heading>
             <Box
               flex="1"
@@ -74,7 +75,7 @@ const AdminSellerDeleteBox = (props: any) => {
         pt={{ md: 1, base: 1 }}
       >
         <Heading mb={5} color={mode("gray.700", "gray.400")}>
-          All Sellers
+          All Buyers
         </Heading>
         <Box
           flex="1"
@@ -84,8 +85,8 @@ const AdminSellerDeleteBox = (props: any) => {
           p='10'
         >
           <ProductGrid >
-                {sellers.map((seller) => (
-                    <UserCard key={seller.id} user={seller.user} onBan={(userId: string) => onBan(userId,seller.id)}/>
+                {buyers.map((buyer) => (
+                    <UserCard key={buyer.id} user={buyer.user} onBan={(userId: string) => onBan(userId,buyer.id)}/>
                 ))}
             </ProductGrid>
         </Box>
@@ -94,4 +95,4 @@ const AdminSellerDeleteBox = (props: any) => {
 
 }
 
-export default AdminSellerDeleteBox;
+export default AdminBuyerDeleteBox;
