@@ -27,7 +27,7 @@ import {
     const { user, rootProps } = props;
     const { name, email } = user;
     return (
-      <Stack borderWidth='1px' borderColor='gray.400' padding='3' borderRadius='10px' maxWidth='fit-content' spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
+      <Stack borderWidth='1px' borderColor='gray.400' padding='3' borderRadius='10px' spacing={useBreakpointValue({ base: "4", md: "5" })} {...rootProps}>
         <Box position="relative" maxWidth='20' alignSelf='center'>
             <Avatar
               bg='teal.500'

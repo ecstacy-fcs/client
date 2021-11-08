@@ -30,6 +30,13 @@ export interface Seller {
   products?: Product[];
 }
 
+export interface Buyer {
+  id: string;
+  user: User;
+}
+
+export type AdminDashboardTab = 'products' | 'buyers' | 'sellers' | 'approval-requests';
+
 export interface UserWithoutPassword {
   id: string;
   name: string;
