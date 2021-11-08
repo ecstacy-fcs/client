@@ -14,11 +14,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Page from "~/components/Page";
 import { fetcher } from "~/lib/api";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
+import { useRouter } from "next/router";
 
 interface ProductProps {
   product: Product;
@@ -36,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 };
 
 const ProductPage: React.FC<ProductProps> = ({ product }) => {
+  const router = useRouter()
   const { name, images, price, description, seller, category } = product;
   const arrowStyles = {
     cursor: "pointer",
@@ -57,6 +59,22 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [ paymenturl, setpaymenturl ] = useState("")
+
+  useEffect(() =>
+  { 
+    let id = router.query.productId
+    console.log(id)
+     const buyProduct = async function as()
+     { 
+        const res = await fetcher("payment/pay","POST",{
+        pid: id })
+        console.log(res)
+        return res
+     }
+     buyProduct().then((res)=>{setpaymenturl(res.data)})
+  },[]
+  )
 
   const slidesCount = images.length;
 
@@ -143,7 +161,11 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
           <Text color={useColorModeValue("gray.700", "gray.700")} mb="4">
             {seller.user.name}
           </Text>
-          <Button colorScheme="purple" size="md" p="3" maxWidth="100">
+          <Button colorScheme="purple" size="md" p="3" maxWidth="100"
+          onClick={()=>{
+            window.location.assign(paymenturl)}}
+            isLoading = {paymenturl===""}
+          >
             Buy Now
           </Button>
         </Box>
