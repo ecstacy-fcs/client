@@ -2,10 +2,12 @@ import {
     AspectRatio,
     Box,
     Button,
+    HStack,
     Image,
     Skeleton,
     Stack,
     StackProps,
+    TagLabel,
     Text,
     useBreakpointValue,
     useColorModeValue,
@@ -52,8 +54,22 @@ import {
             >
               {name}
             </Text>
-            <PriceTag price={price} />
+            <Text
+              fontWeight="medium"
+              color={useColorModeValue("gray.700", "gray.400")}
+            >
+              <b>Sold by</b>: {product.seller.user.name}
+            </Text>
+            <HStack>
+                <b>Price:</b>
+                <PriceTag price={price} />
+            </HStack>
           </Stack>
+          <label
+              color={useColorModeValue("gray.700", "gray.400")}
+            >
+              Category: {product.category.name}
+            </label>
         </Stack>
         <Stack align="center">
           {!product.banned && <Button variant='outline' colorScheme='red' isFullWidth onClick={props.onBan}>
