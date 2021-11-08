@@ -9,7 +9,6 @@ import {
   Link,
   Stack,
   Text,
-  useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
@@ -46,7 +45,7 @@ export default function Signup({}: Props): ReactElement {
           >
             Create an account!
           </Heading>
-          <Text mt="3" color={mode("gray.600", "gray.400")} fontWeight="medium">
+          <Text mt="3" color="gray.600" fontWeight="medium">
             Already have one?{" "}
             <NextLink href="/auth/login" passHref>
               <Link color="purple.600">Login!</Link>
@@ -83,7 +82,7 @@ export default function Signup({}: Props): ReactElement {
                         autoComplete="name"
                         required
                         placeholder="Full Name"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         roundedBottom="0"
                         {...field}
@@ -110,7 +109,7 @@ export default function Signup({}: Props): ReactElement {
                         autoComplete="email"
                         required
                         placeholder="Email Address"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         rounded="0"
                         {...field}
@@ -135,7 +134,7 @@ export default function Signup({}: Props): ReactElement {
                         autoComplete="password"
                         required
                         placeholder="Password"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         rounded="0"
                         {...field}
@@ -170,7 +169,7 @@ export default function Signup({}: Props): ReactElement {
                         autoComplete="confirmPassword"
                         required
                         placeholder="Confirm Password"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         roundedTop="0"
                         {...field}

@@ -1,10 +1,4 @@
-import {
-  HStack,
-  StackProps,
-  Text,
-  TextProps,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
+import { HStack, StackProps, Text, TextProps } from "@chakra-ui/react";
 import * as React from "react";
 
 interface PriceTagProps {
@@ -39,12 +33,11 @@ interface PriceProps {
 
 const Price = (props: PriceProps) => {
   const { children, textProps } = props;
-  const color = mode("gray.700", "gray.400");
   return (
     <Text
       as="span"
       fontWeight="medium"
-      color={color}
+      color="gray.700"
       textDecoration={"none"}
       {...textProps}
     >

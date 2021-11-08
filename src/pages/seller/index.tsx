@@ -1,10 +1,4 @@
-import {
-  Box,
-  Flex,
-  Spinner,
-  Stack,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
+import { Box, Flex, Spinner, Stack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
@@ -62,7 +56,7 @@ const Home: NextPage = () => {
   return (
     <Flex
       height="100vh"
-      bg={mode("purple.800", "gray.800")}
+      bg="purple.800"
       overflow="hidden"
       sx={{ "--sidebar-width": "16rem" }}
     >
@@ -132,7 +126,7 @@ const Home: NextPage = () => {
       >
         <Box
           maxW="2560px"
-          bg={mode("white", "gray.700")}
+          bg="white"
           height="100%"
           pb="6"
           rounded={{ md: "lg" }}

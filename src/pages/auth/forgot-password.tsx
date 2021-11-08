@@ -7,7 +7,6 @@ import {
   Heading,
   Input,
   Stack,
-  useColorModeValue as mode,
   useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
@@ -83,7 +82,7 @@ const ForgotPassword: React.FC = () => {
                     autoComplete="email"
                     required
                     placeholder="Email address"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     {...field}
                   />
@@ -137,7 +136,7 @@ const ForgotPassword: React.FC = () => {
                     type="text"
                     required
                     placeholder="OTP token"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     roundedBottom="0"
                     {...field}
@@ -161,7 +160,7 @@ const ForgotPassword: React.FC = () => {
                     type="password"
                     required
                     placeholder="New password"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     roundedTop="0"
                     {...field}

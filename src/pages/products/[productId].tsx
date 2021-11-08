@@ -11,7 +11,6 @@ import {
   Skeleton,
   StackProps,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import React, { useState } from "react";
@@ -110,11 +109,7 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
         </Box>
         <Box display="flex" flexDirection="column">
           <HStack>
-            <Text
-              fontWeight="bold"
-              fontSize="25"
-              color={useColorModeValue("gray.700", "gray.400")}
-            >
+            <Text fontWeight="bold" fontSize="25" color="gray.700">
               {name}
             </Text>
             <Badge ml="1" colorScheme="purple" flexShrink={0}>
@@ -123,24 +118,14 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
           </HStack>
           <PriceTag price={price} />
           <Divider orientation="horizontal" p="2" />
-          <Text
-            fontWeight="semibold"
-            pt="4"
-            color={useColorModeValue("gray.700", "gray.400")}
-          >
+          <Text fontWeight="semibold" pt="4" color="gray.700">
             Product Description:
           </Text>
-          <Text color={useColorModeValue("gray.700", "gray.700")}>
-            {description}
-          </Text>
-          <Text
-            fontWeight="semibold"
-            pt="3"
-            color={useColorModeValue("gray.700", "gray.400")}
-          >
+          <Text color="gray.700">{description}</Text>
+          <Text fontWeight="semibold" pt="3" color="gray.700">
             Sold by:
           </Text>
-          <Text color={useColorModeValue("gray.700", "gray.700")} mb="4">
+          <Text color="gray.700" mb="4">
             {seller.user.name}
           </Text>
           <Button colorScheme="purple" size="md" p="3" maxWidth="100">

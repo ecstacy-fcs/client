@@ -1,11 +1,4 @@
-import {
-  Box,
-  Heading,
-  Link,
-  Text,
-  useColorModeValue,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Heading, Link, Text, useToast } from "@chakra-ui/react";
 import ErrorPage from "next/error";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -46,16 +39,11 @@ export default ({ queryParams, status }: CorrectQuery) => {
   showToast(status);
   return status ? (
     <Box textAlign="center" mb={{ base: "10" }} mx="auto">
-      <Heading mt={10} mb={5} color={useColorModeValue("gray.700", "gray.400")}>
+      <Heading mt={10} mb={5} color="gray.700">
         Thank you for shopping with us!
       </Heading>
 
-      <Text
-        mt="3"
-        color={useColorModeValue("gray.600", "gray.400")}
-        fontWeight="medium"
-        fontSize="17"
-      >
+      <Text mt="3" color="gray.600" fontWeight="medium" fontSize="17">
         Continue Shopping?{" "}
         <NextLink passHref href="/">
           <Link color="purple.600">Take me back to home</Link>
@@ -64,17 +52,12 @@ export default ({ queryParams, status }: CorrectQuery) => {
     </Box>
   ) : (
     <Box textAlign="center" mb={{ base: "10" }} mx="auto">
-      <Heading mt={10} mb={5} color={useColorModeValue("gray.700", "gray.400")}>
+      <Heading mt={10} mb={5} color="gray.700">
         {" "}
         Looks like something went wrong.
       </Heading>
 
-      <Text
-        mt="3"
-        color={useColorModeValue("gray.600", "gray.400")}
-        fontWeight="medium"
-        fontSize="17"
-      >
+      <Text mt="3" color="gray.600" fontWeight="medium" fontSize="17">
         There was an error processing your payment.{" "}
         <NextLink passHref href="/">
           <Link color="purple.600">Take me back to home</Link>

@@ -2,7 +2,6 @@ import {
   AspectRatio,
   Box,
   Button,
-  Flex,
   Image,
   Modal,
   ModalBody,
@@ -16,14 +15,13 @@ import {
   StackProps,
   Text,
   useBreakpointValue,
-  useColorModeValue,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
 import { fetcher } from "~/lib/api";
-import { Product, SellerDashboardTab } from "../../types";
+import { Product } from "../../types";
 import { PriceTag } from "../PriceTag";
 import EditProduct from "./EditProduct";
 
@@ -83,10 +81,7 @@ export const SellerProductCard = (props: Props) => {
         )}
         <Stack>
           <Stack spacing="1">
-            <Text
-              fontWeight="medium"
-              color={useColorModeValue("gray.700", "gray.400")}
-            >
+            <Text fontWeight="medium" color="gray.700">
               {name}
             </Text>
             <PriceTag price={price} />

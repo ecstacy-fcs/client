@@ -1,4 +1,4 @@
-import { Box, BoxProps, useColorModeValue as mode } from "@chakra-ui/react";
+import { Box, BoxProps } from "@chakra-ui/react";
 import * as React from "react";
 
 export const ScrollArea = (props: BoxProps) => (
@@ -16,7 +16,7 @@ export const ScrollArea = (props: BoxProps) => (
         width: "4px",
       },
       "&::-webkit-scrollbar-thumb": {
-        bg: mode("purple.600", "gray.700"),
+        bg: "purple.600",
         borderRadius: "20px",
       },
     }}

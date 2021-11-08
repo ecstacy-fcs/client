@@ -1,9 +1,4 @@
-import {
-  Box,
-  Container,
-  Flex,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
+import { Box, Container, Flex } from "@chakra-ui/react";
 import React from "react";
 
 interface Props {
@@ -18,7 +13,7 @@ const Page = (props: Props) => {
       overflow="hidden"
       width="100%"
       height="100%"
-      bg={mode("gray.50", "inherit")}
+      bg={"gray.50"}
     >
       <Box
         overflowY="auto"

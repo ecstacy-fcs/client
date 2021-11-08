@@ -13,7 +13,6 @@ import {
   Link,
   Stack,
   Text,
-  useColorModeValue as mode,
   useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
@@ -72,7 +71,7 @@ export default function Signup({}: Props): ReactElement {
           >
             Login to your account
           </Heading>
-          <Text mt="3" color={mode("gray.600", "gray.400")} fontWeight="medium">
+          <Text mt="3" color="gray.600" fontWeight="medium">
             Need an account?{" "}
             <NextLink passHref href="/auth/signup">
               <Link color="purple.600">Sign up!</Link>
@@ -99,7 +98,7 @@ export default function Signup({}: Props): ReactElement {
                         autoComplete="email"
                         required
                         placeholder="Email address"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         roundedBottom="0"
                         {...field}
@@ -124,7 +123,7 @@ export default function Signup({}: Props): ReactElement {
                           autoComplete="current-password"
                           required
                           size="lg"
-                          bg={mode("white", "gray.700")}
+                          bg="white"
                           fontSize="md"
                           roundedTop="0"
                           placeholder="Password"

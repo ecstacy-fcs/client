@@ -1,11 +1,4 @@
-import {
-  Box,
-  BoxProps,
-  createIcon,
-  HStack,
-  Text,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
+import { Box, BoxProps, createIcon, HStack, Text } from "@chakra-ui/react";
 import * as React from "react";
 
 interface SidebarLinkProps extends BoxProps {
@@ -34,7 +27,7 @@ export const SidebarLink = (props: SidebarLinkProps) => {
       py="1"
       rounded="md"
       cursor="pointer"
-      _hover={{ color: "white", bg: mode("purple.700", "gray.600") }}
+      _hover={{ color: "white", bg: "purple.700" }}
       className="group"
       fontWeight="medium"
       transition="background .1s ease-out"

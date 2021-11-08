@@ -1,21 +1,16 @@
 import {
   Box,
-  Button,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
   Input,
   InputGroup,
   InputLeftElement,
-  Link,
   Select,
   Stack,
   Text,
   Textarea,
   useToast,
-  useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { Field, Form, Formik, FormikProps } from "formik";
 import React, { useEffect, useState } from "react";
@@ -105,7 +100,7 @@ const EditProduct = ({ product }: Props) => {
                         autoComplete="name"
                         required
                         placeholder="Product name"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         {...field}
                       />
@@ -131,7 +126,7 @@ const EditProduct = ({ product }: Props) => {
                         type="description"
                         required
                         placeholder="Product description"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         fontSize="md"
                         {...field}
                       />
@@ -162,7 +157,7 @@ const EditProduct = ({ product }: Props) => {
                           type="price"
                           required
                           placeholder="Price"
-                          bg={mode("white", "gray.700")}
+                          bg="white"
                           fontSize="md"
                           {...field}
                         />{" "}
@@ -183,7 +178,7 @@ const EditProduct = ({ product }: Props) => {
                       <Select
                         value={product.category?.id}
                         placeholder="Select category"
-                        bg={mode("white", "gray.700")}
+                        bg="white"
                         color="gray.600"
                         {...field}
                       >

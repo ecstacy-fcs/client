@@ -6,7 +6,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  useColorModeValue as mode,
 } from "@chakra-ui/react";
 import { Spinner } from "@chakra-ui/spinner";
 import { useToast } from "@chakra-ui/react";
@@ -150,7 +149,7 @@ const ProfilePage: React.FC = () => {
                     type="text"
                     required
                     placeholder="Name"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     roundedBottom="0"
                     {...field}
@@ -182,7 +181,7 @@ const ProfilePage: React.FC = () => {
                     name="phoneNumber"
                     type="text"
                     placeholder="Phone number"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     required
                     roundedBottom="0"
@@ -207,7 +206,7 @@ const ProfilePage: React.FC = () => {
                     name="address"
                     type="text"
                     placeholder="Address"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     roundedTop="0"
                     required
@@ -260,7 +259,7 @@ const ProfilePage: React.FC = () => {
                     type="text"
                     required
                     placeholder="OTP token"
-                    bg={mode("white", "gray.700")}
+                    bg="white"
                     fontSize="md"
                     {...field}
                   />
