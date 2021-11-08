@@ -10,7 +10,11 @@ const Home: NextPage = (props) => {
     {
       id: "1234",
       images: [
-        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+        {
+          id: "1",
+          path: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+          productId: "1234",
+       }
       ],
       price: 23500,
       seller: "Ananya",
@@ -19,9 +23,13 @@ const Home: NextPage = (props) => {
       description: "Does what normal watches do, at 10 times the price",
     },
     {
-      id: "1234",
+      id: "123",
       images: [
-        "https://images.pexels.com/photos/2878019/pexels-photo-2878019.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        {
+          id: "10",
+          path: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+          productId: "123",
+       }
       ],
       price: 23500,
       seller: "Ananya",
@@ -30,9 +38,13 @@ const Home: NextPage = (props) => {
       description: "Does what normal watches do, at 10 times the price",
     },
     {
-      id: "1234",
+      id: "12345",
       images: [
-        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+        {
+          id: "100",
+          path: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+          productId: "12345",
+       }
       ],
       price: 23500,
       seller: "Ananya",
@@ -41,9 +53,13 @@ const Home: NextPage = (props) => {
       description: "Does what normal watches do, at 10 times the price",
     },
     {
-      id: "1234",
+      id: "12",
       images: [
-        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+        {
+          id: "1",
+          path: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+          productId: "12",
+       }
       ],
       price: 23500,
       seller: "Ananya",
@@ -52,9 +68,13 @@ const Home: NextPage = (props) => {
       description: "Does what normal watches do, at 10 times the price",
     },
     {
-      id: "1234",
+      id: "1",
       images: [
-        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+        {
+          id: "1",
+          path: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+          productId: "1",
+       }
       ],
       price: 23500,
       seller: "Ananya",
@@ -63,9 +83,13 @@ const Home: NextPage = (props) => {
       description: "Does what normal watches do, at 10 times the price",
     },
     {
-      id: "1234",
+      id: "1234567",
       images: [
-        "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+        {
+          id: "1",
+          path: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=680&q=80",
+          productId: "1234567",
+       }
       ],
       price: 23500,
       seller: "Ananya",
