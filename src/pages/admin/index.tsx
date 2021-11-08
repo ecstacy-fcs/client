@@ -26,10 +26,14 @@ import { ProductGrid } from "~/components/ProductGrid";
 import { useApprovalRequests } from "~/hooks/useApprovalRequests";
 import { fetcher } from "~/lib/api";
 import AdminApprovalRequestBox from "~/components/AdminApprovalRequestBox";
+import { AdminDashboardTab } from "~/types/";
+import AdminSellerDeleteBox from "~/components/AdminSellerDeleteBox";
+import AdminBuyerDeleteBox from "~/components/AdminBuyerDeleteBox";
 
 const AdminHome: NextPage = () => {
+  const [tab, setTab] = React.useState<AdminDashboardTab>('approval-requests');
   const { isOpen, toggle } = useMobileMenuState();
-
+  
 
   return (
     <Flex
@@ -71,10 +75,10 @@ const AdminHome: NextPage = () => {
               Search
             </SidebarLink>
             <Stack pb="6">
-              <SidebarLink icon={<IoCheckmarkCircle />}>Approval Requests</SidebarLink>
-              <SidebarLink icon={<IoBag />}>Sellers</SidebarLink>
-              <SidebarLink icon={<IoCash />}>Buyers</SidebarLink>
-              <SidebarLink icon={<IoCart />}>Products</SidebarLink>
+              <SidebarLink icon={<IoCheckmarkCircle />} onClick={() => setTab('approval-requests')}>Approval Requests</SidebarLink>
+              <SidebarLink icon={<IoBag />} onClick={() => setTab('sellers')}>Sellers</SidebarLink>
+              <SidebarLink icon={<IoCash />} onClick={() => setTab('buyers')}>Buyers</SidebarLink>
+              <SidebarLink icon={<IoCart />} onClick={() => setTab('products')}>Products</SidebarLink>
             </Stack>
             <Stack pb="6">
               <NavSectionTitle>Profile</NavSectionTitle>
@@ -114,7 +118,9 @@ const AdminHome: NextPage = () => {
                 <MobileMenuButton onClick={toggle} isOpen={isOpen} />
               </Flex>
             </Flex>
-            <AdminApprovalRequestBox />
+            {tab === 'approval-requests' && <AdminApprovalRequestBox />}
+            {tab === 'sellers' && <AdminSellerDeleteBox />}
+            {tab === 'buyers' && <AdminBuyerDeleteBox />}
           </Flex>
         </Box>
       </Box>
