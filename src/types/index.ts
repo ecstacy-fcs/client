@@ -66,13 +66,6 @@ export interface LoginData {
   password: string;
 }
 
-export type SellerDashboardTab =
-  | "dashboard"
-  | "add-product"
-  | "edit-product"
-  | "all-products"
-  | "settings";
-
 export interface UserWithoutPassword {
   id: string;
   name: string;
@@ -86,5 +79,3 @@ export interface Buyer {
   id: string;
   user: User;
 }
-
-export type AdminDashboardTab = 'products' | 'buyers' | 'sellers' | 'approval-requests';

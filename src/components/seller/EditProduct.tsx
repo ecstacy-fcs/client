@@ -1,30 +1,26 @@
 import {
   Box,
-  Button,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
   Input,
   InputGroup,
   InputLeftElement,
-  Link,
   Select,
   Stack,
   Text,
   Textarea,
-  useToast,
   useColorModeValue as mode,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik, FormikProps } from "formik";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 import { Product } from "~/types";
 import { FileInput } from "../FileInput";
-import { useRouter } from "next/router";
 
 interface Props {
   product: Product;

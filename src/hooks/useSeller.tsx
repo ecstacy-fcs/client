@@ -19,7 +19,6 @@ export const useSeller = (): {
   } = useSWR("sell", fetcher, {
     revalidateOnFocus: false,
   });
-
   return {
     seller: seller?.data as Seller,
     isLoading: (!seller && !error) || isValidating,
