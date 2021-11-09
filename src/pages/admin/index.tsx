@@ -1,57 +1,71 @@
-import type { NextPage } from "next";
 import {
-  Avatar,
   Box,
   Flex,
-  Heading,
+  Spinner,
   Stack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import * as React from "react";
+import { BsFillBookmarksFill, BsPencilSquare, BsSearch } from "react-icons/bs";
 import {
-  BsFillBookmarksFill,
-  BsFillInboxFill,
-  BsPencilSquare,
-  BsSearch,
-} from "react-icons/bs";
+  IoBag,
+  IoCart,
+  IoCash,
+  IoCheckmarkCircle,
+  IoSettingsSharp,
+} from "react-icons/io5";
+import AdminApprovalRequestBox from "~/components/admin/AdminApprovalRequestBox";
+import AdminBuyerDeleteBox from "~/components/admin/AdminBuyerDeleteBox";
+import AdminProductBox from "~/components/admin/AdminProductBox";
+import AdminSellerDeleteBox from "~/components/admin/AdminSellerDeleteBox";
 import { MobileMenuButton } from "~/components/MobileMenuButton";
 import { NavSectionTitle } from "~/components/NavSectionTitle";
+import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
 import { SidebarLink } from "~/components/SidebarLink";
 import { UserInfo } from "~/components/UserInfo";
 import { useMobileMenuState } from "~/hooks/useMobileMenuState";
-import { IoCart, IoCash, IoBag, IoSettingsSharp, IoCheckmarkCircle } from "react-icons/io5";
-import { RequestCard } from "~/components/RequestCard";
-import { ProductGrid } from "~/components/ProductGrid";
-import { useApprovalRequests } from "~/hooks/useApprovalRequests";
-import { fetcher } from "~/lib/api";
-import AdminApprovalRequestBox from "~/components/AdminApprovalRequestBox";
-import { AdminDashboardTab } from "~/types/";
-import AdminSellerDeleteBox from "~/components/AdminSellerDeleteBox";
-import AdminBuyerDeleteBox from "~/components/AdminBuyerDeleteBox";
-import AdminProductBox from "~/components/AdminProductBox";
-import { useRouter } from "next/router";
 import { useUser } from "~/hooks/useUser";
+import { fetcher } from "~/lib/api";
+import { AdminDashboardTab } from "~/types";
 
 const AdminHome: NextPage = () => {
-  const [tab, setTab] = React.useState<AdminDashboardTab>('approval-requests');
+  const [tab, setTab] = React.useState<AdminDashboardTab>("approval-requests");
   const { isOpen, toggle } = useMobileMenuState();
   const router = useRouter();
-  const {user, isLoading} = useUser();
+  const { user, isLoading } = useUser();
 
   React.useEffect(() => {
-    if(!isLoading && !user) {
-      router.push('/auth/login');
+    if (!isLoading && !user) {
+      router.push("/auth/login");
     }
   }, [isLoading]);
 
-  React.useEffect(()=>{
-    fetcher(`users/${user?.id}`,'GET',{}).then(res=>{
-      if(res.data && !res.data.adminProfile){
-        router.push('/');
+  React.useEffect(() => {
+    fetcher(`users/${user?.id}`, "GET", {}).then((res) => {
+      if (res.data && !res.data.adminProfile) {
+        router.push("/");
       }
     });
-  },[user,isLoading]);
+  }, [user, isLoading]);
+
+  if (isLoading || !user) {
+    return (
+      <Page>
+        <Flex alignItems="center" justifyContent="center">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="purple.500"
+            size="xl"
+          />
+        </Flex>
+      </Page>
+    );
+  }
 
   return (
     <Flex
@@ -82,7 +96,7 @@ const AdminHome: NextPage = () => {
             _hover={{ bg: "whiteAlpha.200" }}
             whiteSpace="nowrap"
           >
-            <UserInfo name="Esther Collins" email="esther-colls@chakra.com" />
+            <UserInfo name={user.name} email={user.email} />
           </Box>
           <ScrollArea pt="5" pb="6">
             <SidebarLink
@@ -93,18 +107,21 @@ const AdminHome: NextPage = () => {
               Search
             </SidebarLink>
             <Stack pb="6">
-              <SidebarLink icon={<IoCheckmarkCircle />} onClick={() => setTab('approval-requests')}>Approval Requests</SidebarLink>
-              <SidebarLink icon={<IoBag />} onClick={() => setTab('sellers')}>Sellers</SidebarLink>
-              <SidebarLink icon={<IoCash />} onClick={() => setTab('buyers')}>Buyers</SidebarLink>
-              <SidebarLink icon={<IoCart />} onClick={() => setTab('products')}>Products</SidebarLink>
-            </Stack>
-            <Stack pb="6">
-              <NavSectionTitle>Profile</NavSectionTitle>
-              <SidebarLink icon={<IoSettingsSharp />}>Settings</SidebarLink>
-              <SidebarLink icon={<BsFillBookmarksFill />}>
-                Bookmarks
+              <SidebarLink
+                icon={<IoCheckmarkCircle />}
+                onClick={() => setTab("approval-requests")}
+              >
+                Approval Requests
               </SidebarLink>
-              <SidebarLink icon={<BsPencilSquare />}>Drafts</SidebarLink>
+              <SidebarLink icon={<IoBag />} onClick={() => setTab("sellers")}>
+                Sellers
+              </SidebarLink>
+              <SidebarLink icon={<IoCash />} onClick={() => setTab("buyers")}>
+                Buyers
+              </SidebarLink>
+              <SidebarLink icon={<IoCart />} onClick={() => setTab("products")}>
+                Products
+              </SidebarLink>
             </Stack>
           </ScrollArea>
         </Box>
@@ -136,10 +153,10 @@ const AdminHome: NextPage = () => {
                 <MobileMenuButton onClick={toggle} isOpen={isOpen} />
               </Flex>
             </Flex>
-            {tab === 'approval-requests' && <AdminApprovalRequestBox />}
-            {tab === 'sellers' && <AdminSellerDeleteBox />}
-            {tab === 'buyers' && <AdminBuyerDeleteBox />}
-            {tab === 'products' && <AdminProductBox />}
+            {tab === "approval-requests" && <AdminApprovalRequestBox />}
+            {tab === "sellers" && <AdminSellerDeleteBox />}
+            {tab === "buyers" && <AdminBuyerDeleteBox />}
+            {tab === "products" && <AdminProductBox />}
           </Flex>
         </Box>
       </Box>

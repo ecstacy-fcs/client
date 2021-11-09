@@ -3,12 +3,12 @@ import { fetcher } from "~/lib/api";
 import { Seller } from "../types";
 
 export const useApprovalRequests = () => {
-  const { data: approvalRequests, error, mutate } = useSWR("sellers?approved=false", fetcher);
-  
+  const { data, error, mutate } = useSWR("sellers?approved=false", fetcher);
+
   return {
-    approvalRequests: approvalRequests?.data as Seller[],
+    unapprovedSellers: data?.data as Seller[],
     error,
     mutate,
-    isLoading: !error && !approvalRequests,
+    isLoading: !error && !data,
   };
 };

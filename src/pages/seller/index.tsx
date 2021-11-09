@@ -97,7 +97,6 @@ const Home: NextPage = () => {
               Search
             </SidebarLink>
             <Stack pb="6">
-              <NavSectionTitle>Actions</NavSectionTitle>
               <SidebarLink
                 icon={<IoGrid />}
                 onClick={() => setTab("dashboard")}
