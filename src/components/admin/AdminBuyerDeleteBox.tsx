@@ -6,13 +6,21 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { useBuyers } from "~/hooks/useBuyers";
+import useSWR from "swr";
 import { fetcher } from "~/lib/api";
+import { Buyer } from "~/types";
 import { ProductGrid } from "../ProductGrid";
 import { UserCard } from "./UserCard";
 
 const AdminBuyerDeleteBox = (props: any) => {
-  const { buyers, error, isLoading, mutate } = useBuyers();
+  const { data, error, mutate, isValidating } = useSWR<{
+    data?: Buyer[];
+  }>("buyers", fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  const buyers: Buyer[] | undefined = data?.data;
+  const isLoading = (!data && !error) || isValidating;
 
   const onBan = async (userId: string) => {
     await fetcher(`users/${userId}/ban`, "POST", {});
@@ -64,7 +72,7 @@ const AdminBuyerDeleteBox = (props: any) => {
         />
       ) : (
         <ProductGrid>
-          {buyers.map((buyer) => (
+          {buyers?.map((buyer) => (
             <UserCard
               name={buyer.user.name}
               email={buyer.user.email}

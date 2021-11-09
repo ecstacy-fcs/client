@@ -12,7 +12,6 @@ import * as React from "react";
 import { BsSearch } from "react-icons/bs";
 import { IoAddCircle, IoFileTrayFull, IoGrid } from "react-icons/io5";
 import { MobileMenuButton } from "~/components/MobileMenuButton";
-import { NavSectionTitle } from "~/components/NavSectionTitle";
 import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
 import AddProduct from "~/components/seller/AddProduct";
