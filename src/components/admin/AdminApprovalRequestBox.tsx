@@ -26,6 +26,10 @@ const AdminApprovalRequestBox = (props: any) => {
     console.log("Deny", id);
   };
 
+  React.useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
+  });
+
   if (error || (!sellers && !isLoading)) {
     return (
       <Flex
@@ -74,6 +78,7 @@ const AdminApprovalRequestBox = (props: any) => {
                   seller={seller}
                   onApprove={onApprove}
                   onDeny={onDeny}
+                  downloadUrl={`${process.env.NEXT_PUBLIC_API_BASE_URL}/sellers/${seller.id}/proposal`}
                 />
               );
           })}

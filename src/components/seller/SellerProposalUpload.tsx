@@ -1,7 +1,8 @@
-import { Heading, Text } from "@chakra-ui/react";
+import { Heading, Text, useToast } from "@chakra-ui/react";
 import React from "react";
 import { KeyedMutator } from "swr";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import { FileInput } from "../FileInput";
 
 interface Props {
@@ -12,13 +13,26 @@ interface Props {
 }
 
 const SellerProposalUpload = (props: Props) => {
-  const onChange = async (formData: any) => {
-    const response = await fetcher("sell/proposal", "POST", undefined, {
-      headers: undefined,
-      body: formData,
-    });
+  const toast = useToast();
 
-    props.mutate();
+  const onChange = async (formData: any) => {
+    let response;
+    try {
+      response = await fetcher("sell/proposal", "POST", undefined, {
+        headers: undefined,
+        body: formData,
+      });
+      props.mutate();
+    } catch (err) {
+      console.error(err);
+    }
+
+    toastWrapper(
+      toast,
+      response?.error,
+      "Proposal uploaded!",
+      "Your proposal will be reviewed by an admin"
+    );
   };
 
   return (

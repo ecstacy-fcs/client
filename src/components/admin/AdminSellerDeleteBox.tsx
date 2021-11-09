@@ -65,19 +65,22 @@ const AdminSellerDeleteBox = (props: any) => {
         />
       ) : (
         <ProductGrid>
-          {sellers.map((seller) => (
-            <UserCard
-              name={seller.user.name}
-              email={seller.user.email}
-              buttonText={seller.user.banned ? "Unban" : "Ban"}
-              buttonColor={seller.user.banned ? "green" : "red"}
-              onButtonClick={() => {
-                seller.user.banned
-                  ? onUnban(seller.user.id)
-                  : onBan(seller.user.id);
-              }}
-            />
-          ))}
+          {sellers.map((seller) => {
+            if (seller.approved)
+              return (
+                <UserCard
+                  name={seller.user.name}
+                  email={seller.user.email}
+                  buttonText={seller.user.banned ? "Unban" : "Ban"}
+                  buttonColor={seller.user.banned ? "green" : "red"}
+                  onButtonClick={() => {
+                    seller.user.banned
+                      ? onUnban(seller.user.id)
+                      : onBan(seller.user.id);
+                  }}
+                />
+              );
+          })}
         </ProductGrid>
       )}
     </Flex>
