@@ -24,6 +24,7 @@ import { Product } from "../../types";
 import { useRouter } from "next/router";
 import { HiShare } from "react-icons/hi";
 import { toastWrapper } from "~/lib/toast";
+import { useUser } from "~/hooks/useUser";
 
 interface ProductProps {
   product: Product;
@@ -43,6 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 const ProductPage: React.FC<ProductProps> = ({ product }) => {
   const toast = useToast();
   const router = useRouter();
+  const { user, isLoading } = useUser();
   const { name, images, price, description, seller, category } = product;
   const arrowStyles = {
     cursor: "pointer",
@@ -64,7 +66,7 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [paymenturl, setpaymenturl] = useState("");
+  const [paymentUrl, setPaymentUrl] = useState("");
 
   useEffect(() => {
     let id = router.query.productId;
@@ -76,7 +78,7 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
       return res;
     };
     buyProduct().then((res) => {
-      setpaymenturl(res.data);
+      setPaymentUrl(res.data);
     });
   }, []);
 
@@ -208,9 +210,18 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
             p="3"
             maxWidth="100"
             onClick={() => {
-              window.location.assign(paymenturl);
+              if (!user && !isLoading) {
+                toastWrapper(
+                  toast,
+                  "You must login before placing an order.",
+                  "Login required!"
+                );
+                router.push("/auth/login");
+              } else {
+                router.push(paymentUrl);
+              }
             }}
-            isLoading={paymenturl === ""}
+            isLoading={paymentUrl === ""}
           >
             Buy Now
           </Button>
