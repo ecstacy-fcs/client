@@ -31,6 +31,7 @@ export const RequestCard = (props: Props) => {
       bg="white"
       shadow={{ md: "base" }}
       spacing={4}
+      maxW="sm"
     >
       <Box
         position="absolute"
@@ -40,7 +41,7 @@ export const RequestCard = (props: Props) => {
         roundedTop="inherit"
       />
       <Avatar size="xl" name={name} />
-      <Stack direction="column" spacing="1" flex="1">
+      <Stack direction="column" spacing="1" flex="1" alignItems="center">
         <Stack direction="row">
           <Text fontWeight="bold">{name}</Text>
         </Stack>
@@ -53,7 +54,11 @@ export const RequestCard = (props: Props) => {
           {email}
         </Text>
       </Stack>
-      <LinkOverlay href={props.downloadUrl} download style={{ width: "100%" }}>
+      <LinkOverlay
+        href={props.downloadUrl}
+        download={`${seller.user.name}-proposal.pdf`}
+        style={{ width: "100%" }}
+      >
         <Button colorScheme="purple" isFullWidth leftIcon={<HiDownload />}>
           Download Proposal
         </Button>

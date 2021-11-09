@@ -23,6 +23,7 @@ export const UserCard = ({
     bg="white"
     shadow={{ md: "base" }}
     spacing={5}
+    maxW="sm"
   >
     <Box
       position="absolute"
@@ -32,7 +33,7 @@ export const UserCard = ({
       roundedTop="inherit"
     />
     <Avatar size="xl" name={name} />
-    <Stack direction="column" spacing="1" flex="1">
+    <Stack direction="column" spacing="1" flex="1" alignItems="center">
       <Stack direction="row">
         <Text fontWeight="bold">{name}</Text>
       </Stack>

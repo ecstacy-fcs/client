@@ -88,13 +88,6 @@ const Home: NextPage = () => {
             </Box>
           </Link>
           <ScrollArea pt="5" pb="6">
-            <SidebarLink
-              display={{ base: "block", lg: "none" }}
-              mb="2"
-              icon={<BsSearch />}
-            >
-              Search
-            </SidebarLink>
             <Stack pb="6">
               <SidebarLink
                 icon={<IoGrid />}
