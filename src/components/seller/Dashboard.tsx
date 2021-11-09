@@ -92,7 +92,7 @@ const Home: NextPage<{ children: React.ReactChild }> = ({ children }) => {
                   icon={<IoFileTrayFull />}
                   disabled={!seller?.approved}
                 >
-                  All Products
+                  My Products
                 </SidebarLink>
               </NextLink>
               <NextLink href="/seller/products/new" passHref>
