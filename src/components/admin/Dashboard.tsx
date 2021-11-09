@@ -9,7 +9,13 @@ import type { NextPage } from "next";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect } from "react";
-import { IoBag, IoCart, IoCash, IoCheckmarkCircle } from "react-icons/io5";
+import {
+  IoBag,
+  IoCart,
+  IoCash,
+  IoCheckmarkCircle,
+  IoList,
+} from "react-icons/io5";
 import { MobileMenuButton } from "~/components/MobileMenuButton";
 import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
@@ -31,11 +37,12 @@ const Admin: NextPage<{ children: ReactElement }> = ({ children }) => {
   }, [isLoading]);
 
   useEffect(() => {
-    fetcher(`users/${user?.id}`, "GET").then((res) => {
-      if (res.data && !res.data.adminProfile) {
-        router.push("/");
-      }
-    });
+    if (user && !isLoading)
+      fetcher(`users/${user.id}`, "GET").then((res) => {
+        if (res.data && !res.data.adminProfile) {
+          router.push("/");
+        }
+      });
   }, [user, isLoading]);
 
   if (isLoading || !user) {
@@ -100,6 +107,9 @@ const Admin: NextPage<{ children: ReactElement }> = ({ children }) => {
               </NextLink>
               <NextLink href="/admin/products" passHref>
                 <SidebarLink icon={<IoCart />}>Products</SidebarLink>
+              </NextLink>
+              <NextLink href="/admin/events" passHref>
+                <SidebarLink icon={<IoList />}>Events</SidebarLink>
               </NextLink>
             </Stack>
           </ScrollArea>
