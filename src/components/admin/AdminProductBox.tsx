@@ -34,7 +34,7 @@ const AdminProductBox = (props: any) => {
         px="10"
         pt={{ md: 1, base: 1 }}
       >
-        <Heading mb={5} color={mode("gray.700", "gray.400")}>
+        <Heading size="lg" fontWeight="extrabold" mb="6">
           All Products
         </Heading>
         <Text fontSize="2xl" as="b" color="red">
@@ -52,7 +52,7 @@ const AdminProductBox = (props: any) => {
       px="10"
       pt={{ md: 1, base: 1 }}
     >
-      <Heading mb={5} color={mode("gray.700", "gray.400")}>
+      <Heading size="lg" fontWeight="extrabold" mb="6">
         All Products
       </Heading>
       {isLoading ? (
