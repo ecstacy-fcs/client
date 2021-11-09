@@ -66,9 +66,10 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [paymenturl, setpaymenturl] = useState("");
 
-  useEffect(() => {
+  const handleOnClick = () =>
+  {
     let id = router.query.productId;
-    console.log(id);
+    setpaymenturl("loading")
     const buyProduct = async function as() {
       const res = await fetcher("payment/pay", "POST", {
         pid: id,
@@ -76,9 +77,25 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
       return res;
     };
     buyProduct().then((res) => {
+      console.log(res.data)
+      window.location.assign(res.data)
       setpaymenturl(res.data);
     });
-  }, []);
+  }
+
+  // useEffect(() => {
+  //   let id = router.query.productId;
+  //   console.log(id);
+  //   const buyProduct = async function as() {
+  //     const res = await fetcher("payment/pay", "POST", {
+  //       pid: id,
+  //     });
+  //     return res;
+  //   };
+  //   buyProduct().then((res) => {
+  //     setpaymenturl(res.data);
+  //   });
+  // }, []);
 
   const slidesCount = images.length;
 
@@ -207,10 +224,8 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
             size="md"
             p="3"
             maxWidth="100"
-            onClick={() => {
-              window.location.assign(paymenturl);
-            }}
-            isLoading={paymenturl === ""}
+            onClick={handleOnClick}
+            isLoading={paymenturl === "loading"}
           >
             Buy Now
           </Button>
