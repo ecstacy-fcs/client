@@ -16,15 +16,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { HiShare } from "react-icons/hi";
 import Page from "~/components/Page";
+import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
-import { useRouter } from "next/router";
-import { HiShare } from "react-icons/hi";
-import { toastWrapper } from "~/lib/toast";
-import { useUser } from "~/hooks/useUser";
 
 interface ProductProps {
   product: Product;
@@ -68,10 +68,9 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [paymentUrl, setPaymentUrl] = useState("");
 
-  const handleOnClick = () =>
-  {
+  const handleOnClick = () => {
     let id = router.query.productId;
-    setPaymentUrl("loading")
+    setPaymentUrl("loading");
     const buyProduct = async function as() {
       const res = await fetcher("payment/pay", "POST", {
         pid: id,
@@ -79,11 +78,11 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
       return res;
     };
     buyProduct().then((res) => {
-      console.log(res.data)
-      window.location.assign(res.data)
+      console.log(res.data);
+      window.location.assign(res.data);
       setPaymentUrl(res.data);
     });
-  }
+  };
 
   const slidesCount = images.length;
 

@@ -1,8 +1,8 @@
 import { useToast } from "@chakra-ui/react";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import { LoginData, SignUpData } from "../types";
 import { useUser } from "./useUser";
-import { toastWrapper } from "~/lib/toast";
 
 export const useAuth = () => {
   const { user, mutate } = useUser();

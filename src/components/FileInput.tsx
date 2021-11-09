@@ -1,14 +1,14 @@
 import {
   Button,
-  VStack,
+  FormControl,
+  FormErrorMessage,
   Input,
   Stack,
   Text,
-  FormErrorMessage,
-  FormControl,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toastWrapper } from "~/lib/toast";
 
 export interface IProps {

@@ -1,7 +1,7 @@
 module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
-    sourceType: 'module',
+    sourceType: "module",
     ecmaFeatures: {
       jsx: true,
     },
@@ -13,8 +13,8 @@ module.exports = {
   },
   settings: {
     react: {
-      version: 'detect',
+      version: "detect",
     },
   },
-  extends: ['next', 'next/core-web-vitals'],
+  extends: ["next", "next/core-web-vitals"],
 };

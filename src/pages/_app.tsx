@@ -1,11 +1,11 @@
 import { ChakraProvider, Flex } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import VerifyEmail from "~/components/VerifyEmail";
 import { useUser } from "~/hooks/useUser";
-import Head from "next/head";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
