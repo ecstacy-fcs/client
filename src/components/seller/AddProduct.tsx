@@ -23,10 +23,12 @@ import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 import { FileInput } from "../FileInput";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const AddProduct = ({}: Props) => {
+  const router = useRouter();
   const toast = useToast();
   const submit = async (
     formData: any,
@@ -37,7 +39,6 @@ const AddProduct = ({}: Props) => {
       category: string;
     }>
   ) => {
-    // props.validateForm();
     const response = await fetcher("products", "POST", props.values);
     const productId = response.data.id;
     let res;
@@ -49,6 +50,7 @@ const AddProduct = ({}: Props) => {
       });
 
       props.resetForm();
+      router.reload();
     }
 
     toastWrapper(

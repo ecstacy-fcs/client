@@ -24,12 +24,14 @@ import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 import { Product } from "~/types";
 import { FileInput } from "../FileInput";
+import { useRouter } from "next/router";
 
 interface Props {
   product: Product;
 }
 
 const EditProduct = ({ product }: Props) => {
+  const router = useRouter();
   const toast = useToast();
   const submit = async (
     formData: any,
@@ -40,7 +42,6 @@ const EditProduct = ({ product }: Props) => {
       category: string;
     }>
   ) => {
-    // props.validateForm();
     const response = await fetcher(
       `products/${product.id}`,
       "PATCH",
@@ -55,6 +56,7 @@ const EditProduct = ({ product }: Props) => {
       });
 
       props.resetForm();
+      router.reload();
     }
 
     toastWrapper(
