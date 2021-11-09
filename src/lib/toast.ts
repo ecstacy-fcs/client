@@ -2,13 +2,15 @@ export const toastWrapper = (
   toast: any,
   error: string | undefined,
   title: string,
-  successMessage?: string
+  message?: string,
+  info?: boolean | undefined
 ) =>
   toast({
-    position: "top",
+    position: info? "bottom-left": "top",
     title: error ? "An error ocurred" : title,
-    description: error || successMessage,
-    status: error ? "error" : "success",
-    duration: 3000,
+    description: error || message,
+    status: error ? "error" : info? "info" : "success",
+    variant: info? "left-accent" : "solid",
+    duration: info? null : 3000,
     isClosable: true,
   });
