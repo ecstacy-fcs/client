@@ -2,17 +2,20 @@ import {
   Avatar,
   Box,
   Button,
+  LinkOverlay,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { HiDownload } from "react-icons/hi";
 import { Seller } from "../../types";
 
 interface Props {
   seller: Seller;
   onApprove: (id: string) => void;
   onDeny: (id: string) => void;
+  downloadUrl: string;
 }
 
 export const RequestCard = (props: Props) => {
@@ -50,9 +53,11 @@ export const RequestCard = (props: Props) => {
           {email}
         </Text>
       </Stack>
-      <Button colorScheme="purple" isFullWidth>
-        Download Proposal
-      </Button>
+      <LinkOverlay href={props.downloadUrl} download style={{ width: "100%" }}>
+        <Button colorScheme="purple" isFullWidth leftIcon={<HiDownload />}>
+          Download Proposal
+        </Button>
+      </LinkOverlay>
       <Stack direction="row" spacing="3" width="100%">
         <Button
           variant="outline"

@@ -9,6 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import { toastWrapper } from "~/lib/toast";
 
 export interface IProps {
   acceptedFileTypes?: string;
@@ -80,6 +81,16 @@ export const FileInput: React.FC<IProps> = (props) => {
               files.length > 3
             )
               return;
+
+            let TOO_LARGE = false;
+            files.forEach((file) => {
+              if (file.size > 1000000) {
+                toastWrapper(toast, "File size too large!", "");
+                TOO_LARGE = true;
+              }
+            });
+            if (TOO_LARGE) return;
+
             const formData = new FormData();
             files.forEach((file) => {
               formData.append(props.uploadFileName, file);
