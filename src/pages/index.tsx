@@ -1,11 +1,10 @@
 import { Box, Heading } from "@chakra-ui/react";
-import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import Page from "~/components/Page";
 import { ProductCard } from "~/components/ProductCard";
 import { ProductGrid } from "~/components/ProductGrid";
-import { Product } from "../types";
-import { GetServerSideProps } from "next";
 import { fetcher } from "~/lib/api";
+import { Product } from "../types";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { data, error } = await fetcher("products"); // your fetch function here

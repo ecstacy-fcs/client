@@ -10,7 +10,6 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
 import * as React from "react";
 import { Product } from "~/types";
 import { PriceTag } from "../PriceTag";

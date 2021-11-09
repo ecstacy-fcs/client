@@ -2,7 +2,6 @@ import {
   AspectRatio,
   Box,
   Button,
-  Flex,
   Image,
   Modal,
   ModalBody,
@@ -24,7 +23,7 @@ import NextLink from "next/link";
 import * as React from "react";
 import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
-import { Product, SellerDashboardTab } from "../../types";
+import { Product } from "../../types";
 import { PriceTag } from "../PriceTag";
 import EditProduct from "./EditProduct";
 

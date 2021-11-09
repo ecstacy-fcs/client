@@ -1,170 +1,67 @@
-import {
-  Box,
-  Flex,
-  Spinner,
-  Stack,
-  useColorModeValue as mode,
-} from "@chakra-ui/react";
-import type { NextPage } from "next";
-import Link from "next/link";
+import { Heading, Spinner, Stack, Tag, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import * as React from "react";
-import { BsSearch } from "react-icons/bs";
-import { IoAddCircle, IoFileTrayFull, IoGrid } from "react-icons/io5";
-import { MobileMenuButton } from "~/components/MobileMenuButton";
-import Page from "~/components/Page";
-import { ScrollArea } from "~/components/ScrollArea";
-import AddProduct from "~/components/seller/AddProduct";
-import SellerDashboard from "~/components/seller/SellerDashboard";
-import SellerProducts from "~/components/seller/SellerProducts";
-import SellerProposalUpload from "~/components/seller/SellerProposalUpload";
-import { SidebarLink } from "~/components/SidebarLink";
-import { UserInfo } from "~/components/UserInfo";
-import { useMobileMenuState } from "~/hooks/useMobileMenuState";
+import React, { useEffect } from "react";
+import Dashboard from "~/components/seller/Dashboard";
 import { useSeller } from "~/hooks/useSeller";
-import { useUser } from "~/hooks/useUser";
-import type { SellerDashboardTab } from "../../types";
 
-const Home: NextPage = () => {
-  const [tab, setTab] = React.useState<SellerDashboardTab>("dashboard");
+const SellerIndex: React.FC = () => {
+  const { seller, isLoading } = useSeller();
   const router = useRouter();
-  const { isOpen, toggle } = useMobileMenuState();
-  const { user, isLoading } = useUser();
-  const { seller, mutate: sellerMutate } = useSeller();
 
-  React.useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/auth/login");
-    }
-  }, [isLoading]);
-
-  if (isLoading || !user) {
-    return (
-      <Page>
-        <Flex alignItems="center" justifyContent="center">
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="purple.500"
-            size="xl"
-          />
-        </Flex>
-      </Page>
-    );
-  }
+  useEffect(() => {
+    if (!seller && !isLoading) router.replace("/seller/upload-proposal");
+  }, [seller]);
 
   return (
-    <Flex
-      height="100vh"
-      bg={mode("purple.800", "gray.800")}
-      overflow="hidden"
-      sx={{ "--sidebar-width": "16rem" }}
-    >
-      <Box
-        as="nav"
-        display="block"
-        flex="1"
-        width="var(--sidebar-width)"
-        left="0"
-        py="5"
-        px="3"
-        color="gray.200"
-        position="fixed"
-      >
-        <Box fontSize="sm" lineHeight="tall">
-          <Link href="/profile">
-            <Box
-              as="a"
-              href="#"
-              p="3"
-              display="block"
-              transition="background 0.1s"
-              rounded="xl"
-              _hover={{ bg: "whiteAlpha.200" }}
-              whiteSpace="nowrap"
-            >
-              <UserInfo name={user.name} email={user.email} />
-            </Box>
-          </Link>
-          <ScrollArea pt="5" pb="6">
-            <Stack pb="6">
-              <SidebarLink
-                icon={<IoGrid />}
-                onClick={() => setTab("dashboard")}
-                disabled={!seller}
-              >
-                Dashboard
-              </SidebarLink>
-              <SidebarLink
-                icon={<IoFileTrayFull />}
-                onClick={() => setTab("all-products")}
-                disabled={!seller?.approved}
-              >
-                All Products
-              </SidebarLink>
-              <SidebarLink
-                icon={<IoAddCircle />}
-                onClick={() => setTab("add-product")}
-                disabled={!seller?.approved}
-              >
-                Add a Product
-              </SidebarLink>
-            </Stack>
-          </ScrollArea>
-        </Box>
-      </Box>
-      <Box
-        flex="1"
-        p={{ base: "0", md: "6" }}
-        marginStart={{ md: "var(--sidebar-width)" }}
-        position="relative"
-        left={isOpen ? "var(--sidebar-width)" : "0"}
-        transition="left 0.2s"
-      >
-        <Box
-          maxW="2560px"
-          bg={mode("white", "gray.700")}
-          height="100%"
-          pb="6"
-          rounded={{ md: "lg" }}
-        >
-          <Flex direction="column" height="full">
-            <Flex
-              w="full"
-              py="4"
-              justify="space-between"
-              align="center"
-              px="10"
-            >
-              <Flex align="center" minH="8">
-                <MobileMenuButton onClick={toggle} isOpen={isOpen} />
-              </Flex>
-            </Flex>
-            <Flex
-              direction="column"
-              flex="1"
-              overflow="auto"
-              px="10"
-              pt={{ md: 1, base: 8 }}
-            >
-              {tab === "dashboard" ? (
-                seller ? (
-                  <SellerDashboard seller={seller} />
-                ) : (
-                  <SellerProposalUpload mutate={sellerMutate} />
-                )
-              ) : tab === "add-product" ? (
-                <AddProduct />
-              ) : (
-                <SellerProducts />
-              )}
-            </Flex>
-          </Flex>
-        </Box>
-      </Box>
-    </Flex>
+    <Dashboard>
+      <>
+        <Heading size="lg" fontWeight="extrabold" mb="6">
+          Dashboard
+        </Heading>
+        <Stack direction="column">
+          {!seller ? (
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="purple.500"
+              size="xl"
+            />
+          ) : seller.approved ? (
+            <>
+              <Stack direction="row" alignItems="center">
+                <Text>
+                  Your <strong>Seller Approval Status</strong> is:
+                </Text>
+                <Tag size="lg" colorScheme="green" alignSelf="start">
+                  APPROVED
+                </Tag>
+              </Stack>
+              <Text>
+                You can add products in the "Add a Product" tab on the left
+                panel.
+              </Text>
+            </>
+          ) : (
+            <>
+              <Stack direction="row" alignItems="center">
+                <Text>
+                  Your <strong>Seller Approval Status</strong> is:
+                </Text>
+                <Tag size="lg" colorScheme="orange" alignSelf="start">
+                  PENDING
+                </Tag>
+              </Stack>
+              <Text>
+                You will be able to add products once you are approved by an
+                admin.
+              </Text>
+            </>
+          )}
+        </Stack>
+      </>
+    </Dashboard>
   );
 };
 
-export default Home;
+export default SellerIndex;
