@@ -2,11 +2,14 @@ interface ApiResponse<T> {
   success: boolean;
   message?: string;
   data?: T;
+  csrfToken?: string;
 }
 
 type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
 const { NEXT_PUBLIC_API_BASE_URL } = process.env;
+
+var csrftoken = "";
 
 export const fetcher = async <T = any>(
   endpoint: string,
@@ -20,6 +23,7 @@ export const fetcher = async <T = any>(
     method,
     headers: {
       "Content-Type": "application/json",
+      "csrf-token": csrftoken,
     },
     credentials: "include",
   };
@@ -33,6 +37,9 @@ export const fetcher = async <T = any>(
     });
 
     const data = (await res.json()) as ApiResponse<T>;
+    
+    if(data.csrfToken) csrftoken = data.csrfToken
+
     if (!data.success) {
       console.error("An error occured", data.message);
       return { error: data.message };
