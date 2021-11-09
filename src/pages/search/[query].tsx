@@ -51,7 +51,7 @@ export default function Comp() {
           Could not find what you were looking for.
         </Heading>
         <NextLink passHref href="/">
-          <Link fontSize="20" color="purple.400">
+          <Link fontSize="20" color="purple.600">
             Go back to home?
           </Link>
         </NextLink>

@@ -13,10 +13,11 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
 import { useUser } from "~/hooks/useUser";
 import Logo from "./Logo";
+import { fetcher } from "~/lib/api"
 
 interface Props {}
 
@@ -26,6 +27,10 @@ const Header = (props: Props) => {
   const [searchvalue, setValue] = React.useState("");
   const { logout } = useAuth();
   const router = useRouter();
+
+  useEffect(()=>{
+      fetcher("", "GET")
+  },[])
 
   const onLogout = async () => {
     setLoggingOut(true);
