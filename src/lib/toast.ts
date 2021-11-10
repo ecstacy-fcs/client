@@ -6,11 +6,11 @@ export const toastWrapper = (
   info?: boolean | undefined
 ) =>
   toast({
-    position: info? "bottom-left": "top",
+    position: info ? "bottom-left" : "top",
     title: error ? "An error ocurred" : title,
     description: error || message,
-    status: error ? "error" : info? "info" : "success",
-    variant: info? "left-accent" : "solid",
-    duration: info? null : 3000,
+    status: error ? "error" : info ? "info" : "success",
+    variant: info ? "left-accent" : "solid",
+    duration: info ? null : 3000,
     isClosable: true,
   });

@@ -1,4 +1,5 @@
 import {
+  Code,
   Flex,
   Heading,
   Spinner,
@@ -19,7 +20,7 @@ import { User } from "~/types";
 interface Event {
   id: string;
   time: Date;
-  ip: string;
+  ipAddress: string;
   actorId: string;
   actor: User;
   type: "CREATE" | "READ" | "UPDATE" | "DELETE";
@@ -66,6 +67,7 @@ const Events: React.FC = () => {
             <Thead position="sticky" top="0" bg="white">
               <Tr>
                 <Th>Date</Th>
+                <Th>IP Address</Th>
                 <Th>Actor</Th>
                 <Th>Action</Th>
                 <Th>Description</Th>
@@ -76,6 +78,9 @@ const Events: React.FC = () => {
                 <Tr>
                   <Td lineHeight="tall">
                     {new Date(event.time).toLocaleString()}
+                  </Td>
+                  <Td lineHeight="tall">
+                    <Code>{event.ipAddress}</Code>
                   </Td>
                   <Td lineHeight="tall">{event.actor.name}</Td>
                   <Td lineHeight="tall">
