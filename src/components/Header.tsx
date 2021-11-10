@@ -10,6 +10,10 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   useToast,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -103,9 +107,19 @@ const Header = (props: Props) => {
                 >
                   Log Out
                 </Button>
-                <NextLink href="/profile" passHref>
-                  <Avatar size="sm" name={user.name} cursor="pointer" />
-                </NextLink>
+                <Menu>
+                  <MenuButton>
+                    <Avatar size="sm" name={user.name} cursor="pointer" />
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>
+                      <NextLink href="/profile">Profile</NextLink>
+                    </MenuItem>
+                    <MenuItem>
+                      <NextLink href="/orders">My Orders</NextLink>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
               </>
             ) : (
               <NextLink href="/auth/login" passHref>
