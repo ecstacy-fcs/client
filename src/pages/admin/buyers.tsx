@@ -70,6 +70,7 @@ const Buyers: React.FC = () => {
           <ProductGrid>
             {buyers?.map((buyer) => (
               <UserCard
+                key={buyer.id}
                 name={buyer.user.name}
                 email={buyer.user.email}
                 buttonText={buyer.user.banned ? "Unban" : "Ban"}

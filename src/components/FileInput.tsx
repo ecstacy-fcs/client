@@ -38,6 +38,32 @@ export const FileInput: React.FC<IProps> = (props) => {
     setFiles([...Array.from(event.target.files)]);
   };
 
+  const onFileUpload = () => {
+    if (props.validateForm) props.validateForm();
+
+    if (props.minFiles && (files.length < props.minFiles || files.length > 3)) {
+      toastWrapper(toast, "Please upload 2-3 images only.", "");
+      return;
+    }
+
+    let TOO_LARGE = false;
+    files.forEach((file) => {
+      if (file.size > 1000000) {
+        toastWrapper(toast, "File size too large!", "");
+        TOO_LARGE = true;
+      }
+    });
+    if (TOO_LARGE) return;
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append(props.uploadFileName, file);
+    });
+    props.onChange(formData);
+    formRef.current?.reset();
+    setFiles([]);
+  };
+
   return (
     <form ref={formRef}>
       <VStack alignItems="start" spacing={5}>
@@ -70,36 +96,7 @@ export const FileInput: React.FC<IProps> = (props) => {
             </FormErrorMessage>
           </FormControl>
         </Stack>
-        <Button
-          type="button"
-          colorScheme="purple"
-          onClick={() => {
-            if (props.validateForm) props.validateForm();
-            if (
-              props.minFiles &&
-              files.length < props.minFiles &&
-              files.length > 3
-            )
-              return;
-
-            let TOO_LARGE = false;
-            files.forEach((file) => {
-              if (file.size > 1000000) {
-                toastWrapper(toast, "File size too large!", "");
-                TOO_LARGE = true;
-              }
-            });
-            if (TOO_LARGE) return;
-
-            const formData = new FormData();
-            files.forEach((file) => {
-              formData.append(props.uploadFileName, file);
-            });
-            props.onChange(formData);
-            formRef.current?.reset();
-            setFiles([]);
-          }}
-        >
+        <Button type="button" colorScheme="purple" onClick={onFileUpload}>
           {props.label}
         </Button>
       </VStack>

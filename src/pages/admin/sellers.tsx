@@ -53,6 +53,7 @@ const Sellers: React.FC = () => {
             <ProductGrid>
               {getApprovedSellers(sellers?.data).map((seller) => (
                 <UserCard
+                  key={seller.id}
                   name={seller.user.name}
                   email={seller.user.email}
                   buttonText={seller.user.banned ? "Unban" : "Ban"}

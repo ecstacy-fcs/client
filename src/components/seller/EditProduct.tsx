@@ -53,7 +53,7 @@ const EditProduct = ({ product }: Props) => {
         true
       );
       props.resetForm();
-      router.reload();
+      // router.reload();
     }
 
     toastWrapper(
@@ -82,7 +82,9 @@ const EditProduct = ({ product }: Props) => {
             price: product.price.toString(),
             category: product.category?.id,
           }}
-          onSubmit={() => {}}
+          onSubmit={(e: any) => {
+            e.preventDefault();
+          }}
         >
           {(props) => (
             <Form>
@@ -201,7 +203,7 @@ const EditProduct = ({ product }: Props) => {
                   </Text>
                   <FileInput
                     validateForm={props.validateForm}
-                    label="Add Product"
+                    label="Save Product"
                     uploadFileName="product-image"
                     acceptedFileTypes="image/*"
                     allowMultipleFiles={true}
