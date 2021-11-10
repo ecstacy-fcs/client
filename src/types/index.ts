@@ -79,3 +79,18 @@ export interface Buyer {
   id: string;
   user: User;
 }
+
+export interface Order {
+  id: string;
+  status: boolean;
+  time: Date;
+  quantity: number;
+  buyer:  {
+    id: string;
+  };
+  product: {
+    id: string;
+    name: string;
+    price: number;
+  }
+}
