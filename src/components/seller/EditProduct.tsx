@@ -46,8 +46,7 @@ const EditProduct = ({ product }: Props) => {
 
     let res;
     if (!response.error) {
-      res = await fetcher(`products/${product.id}/images`, "PATCH", undefined, {
-        headers: undefined,
+      res = await fetcher(`products/${product.id}/images`, "PATCH", undefined, true, {
         body: formData,
       });
 
