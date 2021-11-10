@@ -27,6 +27,7 @@ interface Props {
 }
 
 const EditProduct = ({ product }: Props) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const toast = useToast();
   const submit = async (
@@ -38,6 +39,7 @@ const EditProduct = ({ product }: Props) => {
       category: string;
     }>
   ) => {
+    setLoading(true);
     const response = await fetcher(
       `products/${product.id}`,
       "PATCH",
@@ -53,8 +55,9 @@ const EditProduct = ({ product }: Props) => {
         true
       );
       props.resetForm();
-      // router.reload();
+      router.reload();
     }
+    setLoading(false);
 
     toastWrapper(
       toast,
@@ -209,6 +212,7 @@ const EditProduct = ({ product }: Props) => {
                     allowMultipleFiles={true}
                     minFiles={2}
                     onChange={(formData) => submit(formData, props)}
+                    isLoading={loading}
                   />
                 </FormControl>
               </Stack>

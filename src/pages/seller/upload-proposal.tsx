@@ -1,6 +1,6 @@
 import { Heading, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FileInput } from "~/components/FileInput";
 import Dashboard from "~/components/seller/Dashboard";
 import { useSeller } from "~/hooks/useSeller";
@@ -8,6 +8,7 @@ import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
 
 const UploadProposal: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { seller, mutate } = useSeller();
   const router = useRouter();
   const toast = useToast();
@@ -17,7 +18,9 @@ const UploadProposal: React.FC = () => {
   }, [seller]);
 
   const onChange = async (formData: any) => {
+    setLoading(true);
     const { error } = await fetcher("sell/proposal", "POST", formData, true);
+    setLoading(false);
     mutate();
     toastWrapper(
       toast,
@@ -41,6 +44,7 @@ const UploadProposal: React.FC = () => {
           label="Upload Proposal"
           uploadFileName="proposal"
           onChange={onChange}
+          isLoading={loading}
         />
       </>
     </Dashboard>

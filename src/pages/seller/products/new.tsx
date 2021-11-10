@@ -24,6 +24,7 @@ import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 
 const NewProduct: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const toast = useToast();
   const submit = async (
@@ -40,12 +41,14 @@ const NewProduct: React.FC = () => {
     let res;
 
     if (!response.error) {
+      setLoading(true);
       res = await fetcher(
         `products/${productId}/images`,
         "POST",
         formData,
         true
       );
+      setLoading(false);
       props.resetForm();
       router.reload();
     }
@@ -208,6 +211,7 @@ const NewProduct: React.FC = () => {
                       allowMultipleFiles={true}
                       minFiles={2}
                       onChange={(formData) => submit(formData, props)}
+                      isLoading={loading}
                     />
                   </FormControl>
                 </Stack>
