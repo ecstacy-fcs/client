@@ -42,7 +42,7 @@ const Header = (props: Props) => {
         toast,
         undefined,
         "Cookie Policy",
-        "By continuing to browse on this website, you agree to our use of cookies to improve your browsing experience.",
+        "By continuing to browse on this website, you agree to our use of cookies and our privacy policy to improve your browsing experience.",
         true
       );
       localStorage.setItem("ecstacy-cookie-policy", "agreed");
