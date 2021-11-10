@@ -5,9 +5,11 @@ import {
   Button,
   Divider,
   Flex,
+  Heading,
   HStack,
   IconButton,
   Image,
+  Link,
   SimpleGrid,
   Skeleton,
   StackProps,
@@ -25,10 +27,12 @@ import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
+import NextLink from "next/link";
 
 interface ProductProps {
   product: Product;
   rootProps?: StackProps;
+  error: string;
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -36,15 +40,38 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   return {
     props: {
-      product: data as Product,
+      product: (data as Product) || null,
+      error: error || null,
     },
   };
 };
 
-const ProductPage: React.FC<ProductProps> = ({ product }) => {
+const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
   const toast = useToast();
   const router = useRouter();
   const { user, isLoading } = useUser();
+
+  if (error) {
+    return (
+      <Page>
+        <Box textAlign="center" mb={{ base: "10" }} mx="auto">
+          <Heading
+            mt={10}
+            mb={5}
+            color={useColorModeValue("grey.700", "grey.400")}
+          >
+            {error}
+          </Heading>
+          <NextLink passHref href="/">
+            <Link fontSize="20" color="purple.600">
+              Go back to home?
+            </Link>
+          </NextLink>
+        </Box>
+      </Page>
+    );
+  }
+
   const { name, images, price, description, seller, category } = product;
   const arrowStyles = {
     cursor: "pointer",
