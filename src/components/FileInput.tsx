@@ -19,6 +19,7 @@ export interface IProps {
   uploadFileName: string;
   minFiles?: number;
   validateForm?: any;
+  isLoading?: boolean;
 }
 
 export const FileInput: React.FC<IProps> = (props) => {
@@ -96,7 +97,12 @@ export const FileInput: React.FC<IProps> = (props) => {
             </FormErrorMessage>
           </FormControl>
         </Stack>
-        <Button type="button" colorScheme="purple" onClick={onFileUpload}>
+        <Button
+          type="button"
+          colorScheme="purple"
+          onClick={onFileUpload}
+          isLoading={props.isLoading}
+        >
           {props.label}
         </Button>
       </VStack>
