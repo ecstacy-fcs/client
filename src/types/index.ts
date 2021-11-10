@@ -100,12 +100,12 @@ export interface Order {
   status: boolean;
   time: Date;
   quantity: number;
-  buyer:  {
+  buyer: {
     id: string;
   };
   product: {
     id: string;
     name: string;
     price: number;
-  }
+  };
 }
