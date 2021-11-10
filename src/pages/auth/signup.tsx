@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -10,6 +11,7 @@ import {
   Stack,
   Text,
   useColorModeValue as mode,
+  useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import NextLink from "next/link";
@@ -17,6 +19,7 @@ import { useRouter } from "next/router";
 import React, { ReactElement, useState } from "react";
 import Page from "~/components/Page";
 import { useAuth } from "~/hooks/useAuth";
+import { toastWrapper } from "~/lib/toast";
 import validate from "~/lib/validate";
 import { SignUpData } from "~/types";
 
@@ -24,10 +27,16 @@ interface Props {}
 
 export default function Signup({}: Props): ReactElement {
   const [loading, setLoading] = useState<boolean>(false);
+  const [privacyChecked, setPrivacyChecked] = useState<boolean>(false);
   const { signUp } = useAuth();
+  const toast = useToast();
   const router = useRouter();
 
   const onSubmit = async (values: SignUpData) => {
+    if (!privacyChecked) {
+      toastWrapper(toast, "You must agree to our privacy policy.", "", "error");
+      return;
+    }
     setLoading(true);
     const success = await signUp(values);
     setLoading(false);
@@ -182,6 +191,17 @@ export default function Signup({}: Props): ReactElement {
                   )}
                 </Field>
               </Stack>
+              <Checkbox
+                name="privacy"
+                isChecked={privacyChecked}
+                onChange={(e) => setPrivacyChecked(e.target.checked)}
+                marginTop={4}
+              >
+                I agree to Ecstacy's{" "}
+                <Link href="/privacy-policy" color="purple.500">
+                  privacy policy.
+                </Link>
+              </Checkbox>
               <Button
                 size="lg"
                 type="submit"
