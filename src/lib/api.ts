@@ -15,16 +15,34 @@ export const fetcher = async <T = any>(
   endpoint: string,
   method?: RequestMethod,
   body?: Record<string, any>,
-  requestOptions?: RequestInit
+  isNotJSON?: boolean | undefined,
+  requestOptions?: RequestInit,
 ): Promise<{ data?: T | undefined; error?: string }> => {
-  const defaultOptions: RequestInit = {
-    method,
-    headers: {
+  
+  // const toast = useToast();
+
+  let headers = {}
+
+  if(!isNotJSON)
+  {
+    headers={
       "Content-Type": "application/json",
       "csrf-token": csrfToken,
-    },
+    }
+  }
+  else{
+    headers={
+      "csrf-token": csrfToken,
+    }
+  }
+
+  const defaultOptions: RequestInit = {
+    method,
+    headers: headers,
     credentials: "include",
   };
+
+  console.log(defaultOptions)
 
   if (method !== "GET" && body) defaultOptions.body = JSON.stringify(body);
 

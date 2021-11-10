@@ -40,8 +40,7 @@ const NewProduct: React.FC = () => {
     let res;
 
     if (!response.error) {
-      res = await fetcher(`products/${productId}/images`, "POST", undefined, {
-        headers: undefined,
+      res = await fetcher(`products/${productId}/images`, "POST", undefined, true, {
         body: formData,
       });
 
