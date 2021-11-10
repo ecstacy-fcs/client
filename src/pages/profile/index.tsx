@@ -84,7 +84,7 @@ const ProfilePage: React.FC = () => {
       toast,
       error,
       "Email sent!",
-      "OTP email has been sent to your account!"
+      "An OTP has been sent to your email. Please do not share it with anyone."
     );
   };
 
