@@ -13,7 +13,7 @@ import React from "react";
 export default function PrivacyPolicy() {
   return (
     <Page>
-      <Box boxSize="container.md" marginX="auto">
+      <Box marginX="auto" paddingBottom={3}>
         <Heading mb="2" size="lg">
           {" "}
           Ecstacy Privacy Policy{" "}
