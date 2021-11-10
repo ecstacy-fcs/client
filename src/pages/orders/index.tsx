@@ -95,7 +95,7 @@ import { Order } from "~/types";
                       </Td>
                       <Td lineHeight='tall'>{order.product.seller.user.name}</Td>
                       <Td lineHeight="tall"><PriceTag price={order.product.price}/></Td>
-                      <Td lineHeight="tall"><Tag colorScheme={order.status?"green":"red"} size="sm">{order.status? "Order completed": "Order Failed"}</Tag></Td>
+                      <Td lineHeight="tall"><Tag colorScheme={order.status?"green":"red"} size="sm">{order.status? "Succesful": "Failed"}</Tag></Td>
                     </Tr>
                   ))}
                 </Tbody>
