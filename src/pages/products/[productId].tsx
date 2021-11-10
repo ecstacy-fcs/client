@@ -106,8 +106,14 @@ const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
     };
     buyProduct().then((res) => {
       console.log(res.data);
-      window.location.assign(res.data);
-      setPaymentUrl(res.data);
+      if(!res.error)
+      {
+        window.location.assign(res.data);
+        setPaymentUrl(res.data);
+      }else{
+        toastWrapper(toast, res.error, "Error", res.error);
+        setPaymentUrl("");
+      }
     });
   };
 
