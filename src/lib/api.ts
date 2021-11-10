@@ -15,36 +15,26 @@ export const fetcher = async <T = any>(
   endpoint: string,
   method?: RequestMethod,
   body?: Record<string, any>,
-  isNotJSON?: boolean | undefined,
-  requestOptions?: RequestInit,
+  isFormData?: boolean,
+  requestOptions?: RequestInit
 ): Promise<{ data?: T | undefined; error?: string }> => {
-  
-  // const toast = useToast();
-
-  let headers = {}
-
-  if(!isNotJSON)
-  {
-    headers={
-      "Content-Type": "application/json",
-      "csrf-token": csrfToken,
-    }
-  }
-  else{
-    headers={
-      "csrf-token": csrfToken,
-    }
-  }
-
   const defaultOptions: RequestInit = {
     method,
-    headers: headers,
+    headers: { "csrf-token": csrfToken },
     credentials: "include",
   };
 
-  console.log(defaultOptions)
-
-  if (method !== "GET" && body) defaultOptions.body = JSON.stringify(body);
+  if (method !== "GET" && body) {
+    if (isFormData) {
+      defaultOptions.body = body as any;
+    } else {
+      defaultOptions.body = JSON.stringify(body);
+      defaultOptions.headers = {
+        ...defaultOptions.headers,
+        "Content-Type": "application/json",
+      };
+    }
+  }
 
   try {
     const res = await fetch(`${NEXT_PUBLIC_API_BASE_URL}/${endpoint}`, {

@@ -40,10 +40,12 @@ const NewProduct: React.FC = () => {
     let res;
 
     if (!response.error) {
-      res = await fetcher(`products/${productId}/images`, "POST", undefined, true, {
-        body: formData,
-      });
-
+      res = await fetcher(
+        `products/${productId}/images`,
+        "POST",
+        formData,
+        true
+      );
       props.resetForm();
       router.reload();
     }

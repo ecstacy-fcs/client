@@ -46,10 +46,12 @@ const EditProduct = ({ product }: Props) => {
 
     let res;
     if (!response.error) {
-      res = await fetcher(`products/${product.id}/images`, "PATCH", undefined, true, {
-        body: formData,
-      });
-
+      res = await fetcher(
+        `products/${product.id}/images`,
+        "PATCH",
+        formData,
+        true
+      );
       props.resetForm();
       router.reload();
     }

@@ -17,9 +17,7 @@ const UploadProposal: React.FC = () => {
   }, [seller]);
 
   const onChange = async (formData: any) => {
-    const { error } = await fetcher("sell/proposal", "POST", undefined, true, {
-      body: formData,
-    });
+    const { error } = await fetcher("sell/proposal", "POST", formData, true);
     mutate();
     toastWrapper(
       toast,
