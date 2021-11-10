@@ -4,26 +4,20 @@ import {
   Spinner,
   Stack,
   Table,
-  Tag,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Dashboard from "~/components/seller/Dashboard";
 import { useSeller } from "~/hooks/useSeller";
-
-interface Props {}
 import { fetcher } from "~/lib/api";
 import { SellerOrder } from "~/types";
 
 const SellerOrders: React.FC = () => {
-  const { seller, isLoading } = useSeller();
-  const router = useRouter();
+  const { seller } = useSeller();
   const [orders, setOrders] = useState<SellerOrder[]>();
 
   const getOrders = async () => {
@@ -31,7 +25,6 @@ const SellerOrders: React.FC = () => {
     const { data } = await fetcher<SellerOrder[]>(
       `sellers/${seller.id}/orders`
     );
-    console.log(data);
     setOrders(data);
   };
 

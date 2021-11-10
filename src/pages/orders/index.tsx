@@ -8,7 +8,6 @@ import {
   Tag,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
@@ -17,13 +16,11 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Page from "~/components/Page";
 import { PriceTag } from "~/components/PriceTag";
-import Dashboard from "~/components/seller/Dashboard";
-import { useSeller } from "~/hooks/useSeller";
 import { useUser } from "~/hooks/useUser";
-
-interface Props {}
 import { fetcher } from "~/lib/api";
 import { Order } from "~/types";
+
+interface Props {}
 
 const BuyerOrders: React.FC = () => {
   const { user, isLoading } = useUser();
@@ -38,7 +35,6 @@ const BuyerOrders: React.FC = () => {
       const atime = new Date(a.time);
       return btime.getTime() - atime.getTime();
     });
-    console.log(data);
     setOrders(data);
   };
 

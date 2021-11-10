@@ -18,6 +18,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { HiShare } from "react-icons/hi";
@@ -27,7 +28,6 @@ import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
 import { PriceTag } from "../../components/PriceTag";
 import { Product } from "../../types";
-import NextLink from "next/link";
 
 interface ProductProps {
   product: Product;
@@ -105,12 +105,10 @@ const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
       return res;
     };
     buyProduct().then((res) => {
-      console.log(res.data);
-      if(!res.error)
-      {
+      if (!res.error) {
         window.location.assign(res.data);
         setPaymentUrl(res.data);
-      }else{
+      } else {
         toastWrapper(toast, res.error, "Error", res.error);
         setPaymentUrl("");
       }
@@ -218,7 +216,7 @@ const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
             />
           </HStack>
           <PriceTag price={price} />
-          <Divider orientation="horizontal" p="2" borderColor="gray"/>
+          <Divider orientation="horizontal" p="2" borderColor="gray" />
           <Text
             fontWeight="semibold"
             pt="4"
