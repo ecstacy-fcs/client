@@ -42,8 +42,6 @@ export const fetcher = async <T = any>(
     credentials: "include",
   };
 
-  console.log(defaultOptions)
-
   if (method !== "GET" && body) defaultOptions.body = JSON.stringify(body);
 
   try {
