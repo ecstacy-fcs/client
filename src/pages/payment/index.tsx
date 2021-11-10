@@ -72,7 +72,9 @@ export default function Component() {
           fontSize="17"
         >
           <NextLink passHref href="/">
-            <Link fontSize="20" color="purple.600">Go back to home?</Link>
+            <Link fontSize="20" color="purple.600">
+              Go back to home?
+            </Link>
           </NextLink>
         </Text>
       </Box>
@@ -96,7 +98,9 @@ export default function Component() {
         >
           Your payment was processed successfully.{" "}
           <NextLink passHref href="/">
-            <Link fontSize="20" color="purple.600">Go back to home?</Link>
+            <Link fontSize="20" color="purple.600">
+              Go back to home?
+            </Link>
           </NextLink>
         </Text>
       </Box>

@@ -10,7 +10,7 @@ import {
   InputGroup,
   InputLeftElement,
   Link,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -18,7 +18,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "~/hooks/useAuth";
 import { useUser } from "~/hooks/useUser";
 import Logo from "./Logo";
-import { fetcher } from "~/lib/api"
+import { fetcher } from "~/lib/api";
 import { toastWrapper } from "~/lib/toast";
 
 interface Props {}
@@ -31,19 +31,19 @@ const Header = (props: Props) => {
   const router = useRouter();
   const toast = useToast();
 
-  useEffect(()=>{
-      fetcher("", "GET")
-      if(!localStorage.getItem("ecstacy-cookie-policy")){
-        toastWrapper(
-          toast,
-          undefined,
-          "Cookie Policy",
-          "By continuing to browse on this website, you agree to our use of cookies to improve your browsing experience.",
-          true
-          );
-          localStorage.setItem("ecstacy-cookie-policy", "agreed")
-        }
-    },[])
+  useEffect(() => {
+    fetcher("", "GET");
+    if (!localStorage.getItem("ecstacy-cookie-policy")) {
+      toastWrapper(
+        toast,
+        undefined,
+        "Cookie Policy",
+        "By continuing to browse on this website, you agree to our use of cookies to improve your browsing experience.",
+        true
+      );
+      localStorage.setItem("ecstacy-cookie-policy", "agreed");
+    }
+  }, []);
 
   const onLogout = async () => {
     setLoggingOut(true);

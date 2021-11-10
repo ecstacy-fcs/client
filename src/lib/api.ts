@@ -9,7 +9,7 @@ type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
 const { NEXT_PUBLIC_API_BASE_URL } = process.env;
 
-var csrftoken = "";
+let csrfToken = "";
 
 export const fetcher = async <T = any>(
   endpoint: string,
@@ -18,6 +18,7 @@ export const fetcher = async <T = any>(
   isNotJSON?: boolean | undefined,
   requestOptions?: RequestInit,
 ): Promise<{ data?: T | undefined; error?: string }> => {
+  
   // const toast = useToast();
 
   let headers = {}
@@ -26,12 +27,12 @@ export const fetcher = async <T = any>(
   {
     headers={
       "Content-Type": "application/json",
-      "csrf-token": csrftoken,
+      "csrf-token": csrfToken,
     }
   }
   else{
     headers={
-      "csrf-token": csrftoken,
+      "csrf-token": csrfToken,
     }
   }
 
@@ -52,8 +53,8 @@ export const fetcher = async <T = any>(
     });
 
     const data = (await res.json()) as ApiResponse<T>;
-    
-    if(data.csrfToken) csrftoken = data.csrfToken
+
+    if (data.csrfToken) csrfToken = data.csrfToken;
 
     if (!data.success) {
       console.error("An error occured", data.message);
