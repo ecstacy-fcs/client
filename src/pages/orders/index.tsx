@@ -72,6 +72,7 @@ import { Order } from "~/types";
                     <Th>Order ID</Th>
                     <Th>Time</Th>
                     <Th>Product</Th>
+                    <Th>Sold By</Th>
                     <Th>Price</Th>
                     <Th>Status</Th>
                   </Tr>
@@ -86,12 +87,13 @@ import { Order } from "~/types";
                       <Td lineHeight="tall">
                         <Link
                           href={`/products/${order.product.id}`}
-                          color="Highlight"
+                          color="gray.900"
                           size="5"
                         >
                           {order.product.name}
                         </Link>
                       </Td>
+                      <Td lineHeight='tall'>{order.product.seller.user.name}</Td>
                       <Td lineHeight="tall"><PriceTag price={order.product.price}/></Td>
                       <Td lineHeight="tall"><Tag colorScheme={order.status?"green":"red"} size="sm">{order.status? "Order completed": "Order Failed"}</Tag></Td>
                     </Tr>
