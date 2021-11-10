@@ -111,7 +111,7 @@ export interface Order {
       id: string;
       user: {
         name: string;
-      }
-    }
-  }
+      };
+    };
+  };
 }

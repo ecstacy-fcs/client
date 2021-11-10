@@ -18,42 +18,20 @@ const Sellers: React.FC = () => {
 
   const onBan = async (userId: string) => {
     const res = await fetcher(`users/${userId}/ban`, "POST", {});
-    if(res.error){
-      toastWrapper(
-        toast,
-        res.error,
-        "Error",
-        res.error
-      );
-    }
-    else{
-      toastWrapper(
-        toast,
-        undefined,
-        "Info",
-        "Banned"
-      );
+    if (res.error) {
+      toastWrapper(toast, res.error, "Error", res.error);
+    } else {
+      toastWrapper(toast, undefined, "Info", "Banned");
       mutate();
     }
   };
 
   const onUnban = async (userId: string) => {
     const res = await fetcher(`users/${userId}/unban`, "POST", {});
-    if(res.error){
-      toastWrapper(
-        toast,
-        res.error,
-        "Error",
-        res.error
-      );
-    }
-    else{
-      toastWrapper(
-        toast,
-        undefined,
-        "Info",
-        "Unbanned"
-      );
+    if (res.error) {
+      toastWrapper(toast, res.error, "Error", res.error);
+    } else {
+      toastWrapper(toast, undefined, "Info", "Unbanned");
       mutate();
     }
   };

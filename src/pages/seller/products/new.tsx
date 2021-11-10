@@ -38,7 +38,7 @@ const NewProduct: React.FC = () => {
   ) => {
     const response = await fetcher("products", "POST", props.values);
     let productId;
-    if(!response.error)productId = response.data.id;
+    if (!response.error) productId = response.data.id;
     let res;
 
     if (!response.error) {

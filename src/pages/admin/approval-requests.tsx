@@ -18,42 +18,20 @@ const ApprovalRequest: React.FC = () => {
 
   const onApprove = async (id: string) => {
     const res = await fetcher(`sellers/${id}/approve`, "PATCH", undefined);
-    if(res.error){
-      toastWrapper(
-        toast,
-        res.error,
-        "Error",
-        res.error
-      );
-    }
-    else{
-      toastWrapper(
-        toast,
-        undefined,
-        "Info",
-        "Approved"
-      );
+    if (res.error) {
+      toastWrapper(toast, res.error, "Error", res.error);
+    } else {
+      toastWrapper(toast, undefined, "Info", "Approved");
       mutate();
     }
   };
 
   const onDeny = async (id: string) => {
     const res = await fetcher(`sellers/${id}/deny`, "PATCH", undefined);
-    if(res.error){
-      toastWrapper(
-        toast,
-        res.error,
-        "Error",
-        res.error
-      );
-    }
-    else{
-      toastWrapper(
-        toast,
-        undefined,
-        "Info",
-        "Denied"
-      );
+    if (res.error) {
+      toastWrapper(toast, res.error, "Error", res.error);
+    } else {
+      toastWrapper(toast, undefined, "Info", "Denied");
       mutate();
     }
   };

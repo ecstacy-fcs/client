@@ -12,42 +12,20 @@ const Products: React.FC = () => {
   const toast = useToast();
   const onBan = async (productId: string) => {
     const res = await fetcher(`products/${productId}/ban`, "POST", {});
-    if(res.error){
-      toastWrapper(
-        toast,
-        res.error,
-        "Error",
-        res.error
-      );
-    }
-    else{
-      toastWrapper(
-        toast,
-        undefined,
-        "Info",
-        "Banned"
-      );
+    if (res.error) {
+      toastWrapper(toast, res.error, "Error", res.error);
+    } else {
+      toastWrapper(toast, undefined, "Info", "Banned");
       mutate();
     }
   };
 
   const onUnban = async (productId: string) => {
     const res = await fetcher(`products/${productId}/unban`, "POST", {});
-    if(res.error){
-      toastWrapper(
-        toast,
-        res.error,
-        "Error",
-        res.error
-      );
-    }
-    else{
-      toastWrapper(
-        toast,
-        undefined,
-        "Info",
-        "Unbanned"
-      );
+    if (res.error) {
+      toastWrapper(toast, res.error, "Error", res.error);
+    } else {
+      toastWrapper(toast, undefined, "Info", "Unbanned");
       mutate();
     }
   };
