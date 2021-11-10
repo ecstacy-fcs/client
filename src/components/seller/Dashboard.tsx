@@ -9,7 +9,7 @@ import type { NextPage } from "next";
 import { default as Link, default as NextLink } from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { IoAddCircle, IoFileTrayFull, IoGrid } from "react-icons/io5";
+import { IoAddCircle, IoCart, IoFileTrayFull, IoGrid } from "react-icons/io5";
 import { MobileMenuButton } from "~/components/MobileMenuButton";
 import Page from "~/components/Page";
 import { ScrollArea } from "~/components/ScrollArea";
@@ -101,6 +101,11 @@ const Home: NextPage<{ children: React.ReactChild }> = ({ children }) => {
                   disabled={!seller?.approved}
                 >
                   Add a Product
+                </SidebarLink>
+              </NextLink>
+              <NextLink href="/seller/orders" passHref>
+                <SidebarLink icon={<IoCart />} disabled={!seller?.approved}>
+                  My Orders
                 </SidebarLink>
               </NextLink>
             </Stack>

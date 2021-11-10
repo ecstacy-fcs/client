@@ -29,6 +29,20 @@ export interface ProductCategory {
   name: string;
 }
 
+export interface SellerOrder {
+  id: string;
+  time: Date;
+  product: {
+    id: string;
+    name: string;
+  };
+  buyer: {
+    user: {
+      name: string;
+    };
+  };
+}
+
 export interface User {
   id: string;
   name: string;
