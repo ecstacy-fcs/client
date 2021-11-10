@@ -43,7 +43,7 @@ import { Order } from "~/types";
         if(!user && !isLoading) {
             router.push("/");
         }
-    } , [user]);
+    } , [isLoading, user]);
   
     useEffect(() => {
       if (user) getOrders();
