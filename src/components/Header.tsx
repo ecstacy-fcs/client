@@ -112,10 +112,10 @@ const Header = (props: Props) => {
                     <Avatar size="sm" name={user.name} cursor="pointer" />
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>
+                    <MenuItem fontSize="sm">
                       <NextLink href="/profile">Profile</NextLink>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem fontSize="sm">
                       <NextLink href="/orders">My Orders</NextLink>
                     </MenuItem>
                   </MenuList>
