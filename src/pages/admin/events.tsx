@@ -48,6 +48,7 @@ const Events: React.FC = () => {
         overflow="auto"
         px="10"
         pt={{ md: 1, base: 1 }}
+        maxWidth="100vw"
       >
         <Heading size="lg" fontWeight="extrabold" mb="6">
           Events
