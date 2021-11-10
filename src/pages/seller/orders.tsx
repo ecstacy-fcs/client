@@ -61,6 +61,7 @@ const SellerOrders: React.FC = () => {
                   <Th>Order ID</Th>
                   <Th>Time</Th>
                   <Th>Product</Th>
+                  <Th>Price</Th>
                   <Th>Buyer</Th>
                 </Tr>
               </Thead>
@@ -79,6 +80,7 @@ const SellerOrders: React.FC = () => {
                         {order.product.name}
                       </Link>
                     </Td>
+                    <Td lineHeight="tall">{order.product.price}</Td>
                     <Td lineHeight="tall">{order.buyer.user.name}</Td>
                   </Tr>
                 ))}

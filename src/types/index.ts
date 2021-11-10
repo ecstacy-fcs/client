@@ -35,6 +35,7 @@ export interface SellerOrder {
   product: {
     id: string;
     name: string;
+    price: number;
   };
   buyer: {
     user: {

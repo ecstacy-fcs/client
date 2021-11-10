@@ -13,6 +13,8 @@ export const useUser = () => {
       name: string;
       email: string;
       verified: boolean;
+      address: string;
+      phoneNumber: string;
     };
   }>("auth/user", fetcher, {
     revalidateOnFocus: false,

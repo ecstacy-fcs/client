@@ -219,6 +219,13 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
                   "Login required!"
                 );
                 router.push("/auth/login");
+              } else if (!user?.address || !user?.phoneNumber) {
+                toastWrapper(
+                  toast,
+                  "Please complete your profile before placing an order",
+                  "Profile Incomplete!"
+                );
+                router.push("/profile");
               } else {
                 handleOnClick();
               }
