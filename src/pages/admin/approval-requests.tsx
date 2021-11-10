@@ -1,10 +1,11 @@
-import { Flex, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Heading, Spinner, Text, useToast } from "@chakra-ui/react";
 import * as React from "react";
 import useSWR from "swr";
 import Dashboard from "~/components/admin/Dashboard";
 import { RequestCard } from "~/components/admin/RequestCard";
 import { ProductGrid } from "~/components/ProductGrid";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import { Seller } from "~/types";
 
 const ApprovalRequest: React.FC = () => {
@@ -13,15 +14,48 @@ const ApprovalRequest: React.FC = () => {
     error,
     mutate,
   } = useSWR<{ data?: Seller[] }>("sellers", fetcher);
+  const toast = useToast();
 
   const onApprove = async (id: string) => {
-    await fetcher(`sellers/${id}/approve`, "PATCH", undefined);
-    mutate();
+    const res = await fetcher(`sellers/${id}/approve`, "PATCH", undefined);
+    if(res.error){
+      toastWrapper(
+        toast,
+        res.error,
+        "Error",
+        res.error
+      );
+    }
+    else{
+      toastWrapper(
+        toast,
+        undefined,
+        "Info",
+        "Approved"
+      );
+      mutate();
+    }
   };
 
   const onDeny = async (id: string) => {
-    await fetcher(`sellers/${id}/deny`, "PATCH", undefined);
-    mutate();
+    const res = await fetcher(`sellers/${id}/deny`, "PATCH", undefined);
+    if(res.error){
+      toastWrapper(
+        toast,
+        res.error,
+        "Error",
+        res.error
+      );
+    }
+    else{
+      toastWrapper(
+        toast,
+        undefined,
+        "Info",
+        "Denied"
+      );
+      mutate();
+    }
   };
 
   const getUnapprovedSellers = (sellers: Seller[]) =>

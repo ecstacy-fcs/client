@@ -1,10 +1,11 @@
-import { Flex, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Heading, Spinner, Text, useToast } from "@chakra-ui/react";
 import * as React from "react";
 import useSWR from "swr";
 import Dashboard from "~/components/admin/Dashboard";
 import { UserCard } from "~/components/admin/UserCard";
 import { ProductGrid } from "~/components/ProductGrid";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 import { Seller } from "~/types";
 
 const Sellers: React.FC = () => {
@@ -13,15 +14,48 @@ const Sellers: React.FC = () => {
     error,
     mutate,
   } = useSWR<{ data?: Seller[] }>("sellers", fetcher);
+  const toast = useToast();
 
   const onBan = async (userId: string) => {
-    await fetcher(`users/${userId}/ban`, "POST", {});
-    mutate();
+    const res = await fetcher(`users/${userId}/ban`, "POST", {});
+    if(res.error){
+      toastWrapper(
+        toast,
+        res.error,
+        "Error",
+        res.error
+      );
+    }
+    else{
+      toastWrapper(
+        toast,
+        undefined,
+        "Info",
+        "Banned"
+      );
+      mutate();
+    }
   };
 
   const onUnban = async (userId: string) => {
-    await fetcher(`users/${userId}/unban`, "POST", {});
-    mutate();
+    const res = await fetcher(`users/${userId}/unban`, "POST", {});
+    if(res.error){
+      toastWrapper(
+        toast,
+        res.error,
+        "Error",
+        res.error
+      );
+    }
+    else{
+      toastWrapper(
+        toast,
+        undefined,
+        "Info",
+        "Unbanned"
+      );
+      mutate();
+    }
   };
 
   const getApprovedSellers = (sellers: Seller[]) =>
