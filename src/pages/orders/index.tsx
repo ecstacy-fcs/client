@@ -25,6 +25,7 @@ interface Props {}
 import { fetcher } from "~/lib/api";
 import { Order } from "~/types";
 
+
 const BuyerOrders: React.FC = () => {
   const { user, isLoading } = useUser();
   const router = useRouter();
@@ -41,7 +42,7 @@ const BuyerOrders: React.FC = () => {
     if (!user && !isLoading) {
       router.push("/");
     }
-  }, [user]);
+  }, [user, isLoading]);
 
   useEffect(() => {
     if (user) getOrders();
@@ -76,39 +77,42 @@ const BuyerOrders: React.FC = () => {
               <Tbody>
                 {orders.map((order) => (
                   <Tr>
-                    <Td lineHeight="tall">{order.id}</Td>
-                    <Td lineHeight="tall">
-                      {new Date(order.time).toLocaleString()}
-                    </Td>
-                    <Td lineHeight="tall">
-                      <Link
-                        href={`/products/${order.product.id}`}
-                        color="Highlight"
-                        size="5"
-                      >
-                        {order.product.name}
-                      </Link>
-                    </Td>
-                    <Td lineHeight="tall">
-                      <PriceTag price={order.product.price} />
-                    </Td>
-                    <Td lineHeight="tall">
-                      <Tag
-                        colorScheme={order.status ? "green" : "red"}
-                        size="sm"
-                      >
-                        {order.status ? "Order completed" : "Order Failed"}
-                      </Tag>
-                    </Td>
+                    <Th>Order ID</Th>
+                    <Th>Time</Th>
+                    <Th>Product</Th>
+                    <Th>Sold By</Th>
+                    <Th>Price</Th>
+                    <Th>Status</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          )}
-        </Stack>
-      </Box>
-    </Page>
-  );
-};
-
-export default BuyerOrders;
+                </Thead>
+                <Tbody>
+                  {orders.map((order) => (
+                    <Tr>
+                      <Td lineHeight="tall">{order.id}</Td>
+                      <Td lineHeight="tall">
+                        {new Date(order.time).toLocaleString()}
+                      </Td>
+                      <Td lineHeight="tall">
+                        <Link
+                          href={`/products/${order.product.id}`}
+                          color="gray.900"
+                          size="5"
+                        >
+                          {order.product.name}
+                        </Link>
+                      </Td>
+                      <Td lineHeight='tall'>{order.product.seller.user.name}</Td>
+                      <Td lineHeight="tall"><PriceTag price={order.product.price}/></Td>
+                      <Td lineHeight="tall"><Tag colorScheme={order.status?"green":"red"} size="sm">{order.status? "Succesful": "Failed"}</Tag></Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            )}
+          </Stack>
+        </Box>
+        </Page>
+    );
+  };
+  
+  export default BuyerOrders;

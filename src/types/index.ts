@@ -107,5 +107,11 @@ export interface Order {
     id: string;
     name: string;
     price: number;
-  };
+    seller: {
+      id: string;
+      user: {
+        name: string;
+      }
+    }
+  }
 }
