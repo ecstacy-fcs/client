@@ -65,17 +65,7 @@ const BuyerOrders: React.FC = () => {
             />
           ) : (
             <Table variant="striped" size="sm">
-              <Thead position="sticky" top="0" bg="white">
-                <Tr>
-                  <Th>Order ID</Th>
-                  <Th>Time</Th>
-                  <Th>Product</Th>
-                  <Th>Price</Th>
-                  <Th>Status</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {orders.map((order) => (
+              <Thead>
                   <Tr>
                     <Th>Order ID</Th>
                     <Th>Time</Th>
