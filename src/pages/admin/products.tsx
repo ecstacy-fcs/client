@@ -1,22 +1,55 @@
-import { Flex, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Flex, Heading, Spinner, Text, useToast } from "@chakra-ui/react";
 import * as React from "react";
 import { AdminProductCard } from "~/components/admin/AdminProductCard";
 import Dashboard from "~/components/admin/Dashboard";
 import { ProductGrid } from "~/components/ProductGrid";
 import { useAllProducts } from "~/hooks/useAllProducts";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 
 const Products: React.FC = () => {
   const { products, error, mutate, isLoading } = useAllProducts();
-
+  const toast = useToast();
   const onBan = async (productId: string) => {
-    await fetcher(`products/${productId}/ban`, "POST", {});
-    mutate();
+    const res = await fetcher(`products/${productId}/ban`, "POST", {});
+    if(res.error){
+      toastWrapper(
+        toast,
+        res.error,
+        "Error",
+        res.error
+      );
+    }
+    else{
+      toastWrapper(
+        toast,
+        undefined,
+        "Info",
+        "Banned"
+      );
+      mutate();
+    }
   };
 
   const onUnban = async (productId: string) => {
-    await fetcher(`products/${productId}/unban`, "POST", {});
-    mutate();
+    const res = await fetcher(`products/${productId}/unban`, "POST", {});
+    if(res.error){
+      toastWrapper(
+        toast,
+        res.error,
+        "Error",
+        res.error
+      );
+    }
+    else{
+      toastWrapper(
+        toast,
+        undefined,
+        "Info",
+        "Unbanned"
+      );
+      mutate();
+    }
   };
 
   if (error || (!products && !isLoading)) {
