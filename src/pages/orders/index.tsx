@@ -34,6 +34,11 @@ const BuyerOrders: React.FC = () => {
   const getOrders = async () => {
     if (!user) return;
     const { data } = await fetcher<Order[]>(`buy/orders`);
+    data?.sort((a, b) => {
+        const btime = new Date(b.time);
+        const atime = new Date(a.time);
+        return btime.getTime() - atime.getTime();
+    });
     console.log(data);
     setOrders(data);
   };
