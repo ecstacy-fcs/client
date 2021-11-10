@@ -62,7 +62,7 @@ const ApprovalRequest: React.FC = () => {
               ))}
             </ProductGrid>
           ) : (
-            <Text>No sellers found</Text>
+            <Text>No pending seller approval requests</Text>
           ))}
         {(error || (sellers && !sellers.data)) && (
           <Text>An error occured, please try again!</Text>

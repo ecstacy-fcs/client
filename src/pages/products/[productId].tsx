@@ -185,7 +185,7 @@ const ProductPage: React.FC<ProductProps> = ({ product }) => {
             />
           </HStack>
           <PriceTag price={price} />
-          <Divider orientation="horizontal" p="2" />
+          <Divider orientation="horizontal" p="2" borderColor="gray"/>
           <Text
             fontWeight="semibold"
             pt="4"
