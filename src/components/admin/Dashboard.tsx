@@ -4,6 +4,7 @@ import {
   Spinner,
   Stack,
   useColorModeValue as mode,
+  useToast,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import NextLink from "next/link";
@@ -29,20 +30,29 @@ const Admin: NextPage<{ children: ReactElement }> = ({ children }) => {
   const { isOpen, toggle } = useMobileMenuState();
   const router = useRouter();
   const { user, isLoading } = useUser();
-
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.push("/auth/login");
-    }
-  }, [isLoading]);
+  const toast = useToast();
+  const unauthToast = () =>
+    toast({
+      position: "top",
+      title: "Unauthorized",
+      description: "You are not logged in as an admin",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
 
   useEffect(() => {
     if (user && !isLoading)
       fetcher(`users/${user.id}`, "GET").then((res) => {
         if (res.data && !res.data.adminProfile) {
+          unauthToast();
           router.push("/");
         }
       });
+    if (!isLoading && (!user || !user.admin)) {
+      unauthToast();
+      router.push("/auth/login");
+    }
   }, [user, isLoading]);
 
   if (isLoading || !user) {
