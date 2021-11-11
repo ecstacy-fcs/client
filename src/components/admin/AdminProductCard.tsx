@@ -13,6 +13,7 @@ import {
 import * as React from "react";
 import { Product } from "~/types";
 import { PriceTag } from "../PriceTag";
+import NextLink from "next/link";
 
 interface Props {
   product: Product;
@@ -56,6 +57,11 @@ export const AdminProductCard = (props: Props) => {
         </Stack>
       </Stack>
       <Stack align="center">
+        <NextLink href={`/products/${product.id}`}>
+          <Button colorScheme="purple" isFullWidth>
+            View Product
+          </Button>
+        </NextLink>
         <Button
           colorScheme={buttonColor}
           isFullWidth

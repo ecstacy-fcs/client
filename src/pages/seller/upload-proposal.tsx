@@ -14,7 +14,8 @@ const UploadProposal: React.FC = () => {
   const toast = useToast();
 
   useEffect(() => {
-    if (seller && seller.approved) router.replace("/seller");
+    if (seller && (seller.approved || seller.approvalDocument))
+      router.replace("/seller");
   }, [seller]);
 
   const onChange = async (formData: any) => {
@@ -28,6 +29,7 @@ const UploadProposal: React.FC = () => {
       "Proposal uploaded!",
       "Your proposal will be reviewed by an admin"
     );
+    if (!error) router.push("/seller");
   };
 
   return (

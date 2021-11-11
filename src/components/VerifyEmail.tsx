@@ -4,6 +4,7 @@ import { useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import { useUser } from "~/hooks/useUser";
 import { fetcher } from "~/lib/api";
+import { toastWrapper } from "~/lib/toast";
 
 const VerifyEmail: React.FC<{
   user: {
@@ -19,17 +20,18 @@ const VerifyEmail: React.FC<{
   const [verificationSent, setVerificationSent] = useState<boolean>(false);
   const resendVerificationEmail = async () => {
     setSendingEmail(true);
-    await fetcher("auth/resend-verification-email", "POST");
+    const { data, error } = await fetcher(
+      "auth/resend-verification-email",
+      "POST"
+    );
     setSendingEmail(false);
-    setVerificationSent(true);
-    toast({
-      position: "top",
-      title: "Email sent",
-      description: "Verification email has been resent to your email ID",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    toastWrapper(
+      toast,
+      error,
+      "Email sent",
+      "Verification email has been resent to your email ID"
+    );
+    if (!error || error?.includes("already sent")) setVerificationSent(true);
   };
   return (
     <Container centerContent flex="1" paddingY="10">

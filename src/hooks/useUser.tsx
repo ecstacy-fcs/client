@@ -15,6 +15,7 @@ export const useUser = () => {
       verified: boolean;
       address: string;
       phoneNumber: string;
+      admin: boolean;
     };
   }>("auth/user", fetcher, {
     revalidateOnFocus: false,

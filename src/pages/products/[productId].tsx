@@ -14,6 +14,7 @@ import {
   Skeleton,
   StackProps,
   Text,
+  Tooltip,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -224,7 +225,10 @@ const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
           >
             Product Description:
           </Text>
-          <Text color={useColorModeValue("gray.700", "gray.700")}>
+          <Text
+            color={useColorModeValue("gray.700", "gray.700")}
+            whiteSpace="pre-wrap"
+          >
             {description}
           </Text>
           <Text
@@ -237,34 +241,36 @@ const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
           <Text color={useColorModeValue("gray.700", "gray.700")} mb="4">
             {seller.user.name}
           </Text>
-          <Button
-            colorScheme="purple"
-            size="md"
-            p="3"
-            maxWidth="100"
-            onClick={() => {
-              if (!user && !isLoading) {
-                toastWrapper(
-                  toast,
-                  "You must login before placing an order.",
-                  "Login required!"
-                );
-                router.push("/auth/login");
-              } else if (!user?.address || !user?.phoneNumber) {
-                toastWrapper(
-                  toast,
-                  "Please complete your profile before placing an order",
-                  "Profile Incomplete!"
-                );
-                router.push("/profile");
-              } else {
-                handleOnClick();
-              }
-            }}
-            isLoading={paymentUrl === "loading"}
-          >
-            Buy Now
-          </Button>
+          <Tooltip label="Due to issues with Razorpay, if you get 'Bad request', please refresh the page!">
+            <Button
+              colorScheme="purple"
+              size="md"
+              p="3"
+              maxWidth="100"
+              onClick={() => {
+                if (!user && !isLoading) {
+                  toastWrapper(
+                    toast,
+                    "You must login before placing an order.",
+                    "Login required!"
+                  );
+                  router.push("/auth/login");
+                } else if (!user?.address || !user?.phoneNumber) {
+                  toastWrapper(
+                    toast,
+                    "Please complete your profile before placing an order",
+                    "Profile Incomplete!"
+                  );
+                  router.push("/profile");
+                } else {
+                  handleOnClick();
+                }
+              }}
+              isLoading={paymentUrl === "loading"}
+            >
+              Buy Now
+            </Button>
+          </Tooltip>
         </Box>
       </SimpleGrid>
     </Page>
