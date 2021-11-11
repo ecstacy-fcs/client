@@ -224,7 +224,10 @@ const ProductPage: React.FC<ProductProps> = ({ product, error }) => {
           >
             Product Description:
           </Text>
-          <Text color={useColorModeValue("gray.700", "gray.700")}>
+          <Text
+            color={useColorModeValue("gray.700", "gray.700")}
+            whiteSpace="pre-wrap"
+          >
             {description}
           </Text>
           <Text
