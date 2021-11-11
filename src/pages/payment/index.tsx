@@ -8,40 +8,21 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
-import useSWR from "swr";
+import React, { useEffect, useState } from "react";
 import Page from "~/components/Page";
-import { fetcher } from "~/lib/api";
 
 export default function Component() {
-  const router = useRouter();
-  const razorpay_payment_id = router.query.razorpay_payment_id;
-  const razorpay_payment_link_id = router.query.razorpay_payment_link_id;
-  const razorpay_payment_link_reference_id =
-    router.query.razorpay_payment_link_reference_id;
-  const razorpay_payment_link_status =
-    router.query.razorpay_payment_link_status;
-  const razorpay_signature = router.query.razorpay_signature;
-  let payload: string = "";
-  payload =
-    razorpay_payment_link_id +
-    "|" +
-    razorpay_payment_link_reference_id +
-    "|" +
-    razorpay_payment_link_status +
-    "|" +
-    razorpay_payment_id;
-
-  const req = `payload=${payload}&signature=${razorpay_signature}&orderId=${razorpay_payment_link_reference_id}`;
-
-  const { data, error } = useSWR<{
-    data?: boolean;
-  }>(`payment/validate?${req}`, fetcher, {
-    revalidateOnFocus: false,
-  });
-
-  const isLoading = !data && !error;
-  const status: boolean | undefined = data?.data;
+  const { query } = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  useEffect(() => {
+    if (query.status === "success") {
+      setIsLoading(false);
+    } else if (query.status === "failure") {
+      setError(true);
+      setIsLoading(false);
+    }
+  }, [query]);
 
   return isLoading ? (
     <Page>
@@ -55,7 +36,7 @@ export default function Component() {
         />
       </Box>
     </Page>
-  ) : error || !status ? (
+  ) : error ? (
     <Page>
       <Box textAlign="center" mb={{ base: "10" }} mx="auto">
         <Heading
