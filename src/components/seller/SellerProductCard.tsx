@@ -19,6 +19,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { Badge } from "@chakra-ui/react";
 import NextLink from "next/link";
 import * as React from "react";
 import { fetcher } from "~/lib/api";
@@ -35,7 +36,7 @@ interface Props {
 export const SellerProductCard = (props: Props) => {
   const toast = useToast();
   const { product, rootProps } = props;
-  const { name, images, price } = product;
+  const { name, images, price, banned } = product;
   const {
     isOpen: isDeleteOpen,
     onOpen: onDeleteOpen,
@@ -83,9 +84,11 @@ export const SellerProductCard = (props: Props) => {
           <Stack spacing="1">
             <Text
               fontWeight="medium"
-              color={useColorModeValue("gray.700", "gray.400")}
-            >
+              color={useColorModeValue("gray.700", "gray.400")}>
               {name}
+              {banned? <Badge ml="2" colorScheme="red" flexShrink={0}>
+                {`Banned`}
+            </Badge> : <></>}
             </Text>
             <PriceTag price={price} />
           </Stack>

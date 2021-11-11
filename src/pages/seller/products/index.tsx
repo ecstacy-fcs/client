@@ -1,4 +1,4 @@
-import { Heading, Spinner, Text } from "@chakra-ui/react";
+import { Heading, Spinner, Text, Badge } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ProductGrid } from "~/components/ProductGrid";
 import Dashboard from "~/components/seller/Dashboard";
