@@ -84,11 +84,16 @@ export const SellerProductCard = (props: Props) => {
           <Stack spacing="1">
             <Text
               fontWeight="medium"
-              color={useColorModeValue("gray.700", "gray.400")}>
+              color={useColorModeValue("gray.700", "gray.400")}
+            >
               {name}
-              {banned? <Badge ml="2" colorScheme="red" flexShrink={0}>
-                {`Banned`}
-            </Badge> : <></>}
+              {banned ? (
+                <Badge ml="2" colorScheme="red" flexShrink={0}>
+                  {`Banned`}
+                </Badge>
+              ) : (
+                <></>
+              )}
             </Text>
             <PriceTag price={price} />
           </Stack>
