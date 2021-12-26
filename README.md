@@ -69,7 +69,7 @@ You will need to add the following environment variables to your .env.local file
 
 `NEXT_PUBLIC_API_BASE_URL`
 
-Make sure to add the environment variables for the server too. Refer to .[env.local.example](.env.local) and [api/.env.example](#) for example environment variables.
+Make sure to add the environment variables for the server too. Refer to .[env.local.example](.env.local.example) and [api/.env.example](https://github.com/ecstacy-fcs/api/blob/main/.env.example) for example environment variables.
 
 Run the development server for both client and api:
 ```zsh
